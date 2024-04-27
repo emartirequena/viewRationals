@@ -15,7 +15,7 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from saveImages import make_objects
-from spacetime_index import SpaceTime
+from spacetime import SpaceTime
 from rationals import c
 from utils import getDivisorsAndFactors, divisors, make_video, collect
 from timing import timing, get_duration
