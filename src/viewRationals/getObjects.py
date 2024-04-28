@@ -28,7 +28,7 @@ def _get_next_number_dir(dim, cell: Cell):
     return v * cell.count
 
 
-def make_objects(spacetime, number, dim, accumulate, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime):
+def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime):
     if not spacetime:
         return {}, 0, {}
     if number == 0:
@@ -36,7 +36,11 @@ def make_objects(spacetime, number, dim, accumulate, config, ccolor, view_object
     if ptime > spacetime.len():
         return {}, 0, {}
 
-    view_cells = spacetime.getCells(ptime, accumulate=accumulate)
+    if rationals:
+        view_cells = spacetime.getCellsWithRationals(rationals, ptime, accumulate=accumulate)
+        print(f'------- Num cells with rationals {len(view_cells)}')
+    else:
+        view_cells = spacetime.getCells(ptime, accumulate=accumulate)
     count = len(view_cells)
 
     if not accumulate:

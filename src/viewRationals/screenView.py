@@ -33,7 +33,8 @@ class ScreenView(rendering.View):
                 if not cell:
                     return False
                 count = cell.count
-                self.mainWindow.select_cells(count)
+                self.mainWindow.select_cell(cell)
+                # self.mainWindow.select_cells(count)
                 self.mainWindow.refresh_selection()
             return True
         return False

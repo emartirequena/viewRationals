@@ -6,7 +6,7 @@ import numpy as np
 from multiprocessing import managers
 
 from config import config
-from color import ColorLine
+from color import ColorLine, _convert_color
 from utils import pil2pixmap
 from timing import timing
 from spacetime import SpaceTime
@@ -221,7 +221,7 @@ class Histogram(QtWidgets.QWidget):
         self.hist_size = (self.resx, self.resy)
         self.hist_max = self.config.get('histogram_max')
         self.hist_y_factor = self.config.get('histogram_y_factor')
-        self.hist_background = tuple(self.config.get('histogram_background'))
+        self.hist_background = _convert_color(self.config.get('histogram_background'))
         self.color = ColorLine()
         for knot in self.config.get('colors'):
             self.color.add(knot['alpha'], vec3(*knot['color']))
@@ -290,7 +290,8 @@ class Histogram(QtWidgets.QWidget):
             count = cell.count
             if count > max:
                 max = count
-            if count not in dict_objs: dict_objs[count] = 0
+            if count not in dict_objs: 
+                dict_objs[count] = 0
             dict_objs[count] += 1
 
         self.scene.clear()

@@ -23,6 +23,7 @@ class Config:
                 {'alpha': 0.5, 'color': [0.3, 0.6, 0.5]},
                 {'alpha': 1.0, 'color': [1.0, 0.5, 0.2]}
             ],
+            'background_color': [255, 255, 255],
             'rad_factor': 8.0,
             'rad_pow': 0.8,
             'rad_factor_accum': 2.3,
@@ -40,7 +41,7 @@ class Config:
             'list_color_not_period_prime': [1.0, 0.0, 1.0],
             'list_color_period_special': [0.0, 1.0, 1.0],
             'list_color_period_not_special': [0.0, 0.0, 1.0],
-            'max_octtree_levels': 4
+            'spacetime_algorithm': 2
         }
         if os.path.exists(config_file):
             with open(config_file, 'rt') as fp:
