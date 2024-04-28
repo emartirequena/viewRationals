@@ -293,6 +293,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.color,
             self.views.views[self.views.mode].type,
             self.spacetime,
+            self.selected_rationals,
             self.dim,
             self.number.value(),
             self.period.value(),
@@ -331,6 +332,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def select_rationals(self):
         self.view_selected_rationals = not self.view_selected_rationals
+        if not self.view_selected_rationals:
+            self.selected_rationals = []
+        if self.histogram:
+            self.histogram.set_rationals(self.selected_rationals)
         if self.views:
             self.draw_objects()
             self.views.update()
@@ -341,6 +346,8 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.views:
             self.draw_objects()
             self.views.update()
+        if self.histogram:
+            self.histogram.set_rationals(self.selected_rationals)
         print(f'------- Rationals selected: {self.selected_rationals}')
 
     def select_cells(self, count):
@@ -523,6 +530,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if not self.histogram: 
                 self.histogram = Histogram(self, self.spacetime)
             self.histogram.set_number(int(self.number.value()))
+            self.histogram.set_rationals(self.selected_rationals)
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
@@ -530,6 +538,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print('continue setting number...')
             self.views.reset(objs)
             self.histogram.set_number(int(self.number.value()))
+            self.histogram.set_rationals(self.selected_rationals)
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()

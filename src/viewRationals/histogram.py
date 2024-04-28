@@ -209,6 +209,7 @@ class Histogram(QtWidgets.QWidget):
         self.time = 0
         self.number = 0
         self.number_str = ''
+        self.rationals = []
         self.accumulate = False
         self.moving = False
         self.change_flag = False
@@ -259,6 +260,9 @@ class Histogram(QtWidgets.QWidget):
         self.number = number
         self.scene.clear()
 
+    def set_rationals(self, rationals):
+        self.rationals = rationals
+
     def reset(self):
         img = self.scene.render()
         self.label.setPixmap(pil2pixmap(img))
@@ -283,7 +287,10 @@ class Histogram(QtWidgets.QWidget):
             return
         
         dict_objs = {}
-        view_cells = self.spacetime.getCells(self.time, self.accumulate)
+        if not self.rationals:
+            view_cells = self.spacetime.getCells(self.time, self.accumulate)
+        else:
+            view_cells = self.spacetime.getCellsWithRationals(self.rationals, self.time, self.accumulate)
 
         max = -1
         for cell in view_cells:

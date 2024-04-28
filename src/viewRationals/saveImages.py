@@ -63,7 +63,7 @@ def _get_number_img(number, period, ptime, config):
 
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
-    config, ccolor, shr_spacetime, dim, number, period, factors, accumulate, dim_str, \
+    config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
     image_resx, image_resy, path, rotate, dx, shr_num_video_frames = args
 
@@ -77,7 +77,7 @@ def _create_image(args):
         view.rotateTo3DVideo(dx)
 
     ptime = init_time + frame // factor
-    objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, [], config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+    objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
     if not objs:
         print('------ NOT OBJS')
         return
@@ -167,7 +167,7 @@ def _saveImages(args):
 
     shr_projection, shr_navigation, image_path, init_time, end_time, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
-    ccolor, view_type, shr_spacetime, dim, number, period, factors, \
+    ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
     max_time, shr_num_video_frames = args
     
@@ -213,7 +213,7 @@ def _saveImages(args):
             rotate = True
         params.append((
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
-            config, ccolor, shr_spacetime, dim, number, period, factors, accumulate, dim_str,
+            config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
             image_resx, image_resy, path, rotate, dx, shr_num_video_frames
         ))
