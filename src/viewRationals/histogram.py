@@ -6,7 +6,7 @@ import numpy as np
 from multiprocessing import managers
 
 from config import config
-from color import ColorLine
+from color import ColorLine, _convert_color
 from utils import pil2pixmap
 from timing import timing
 from spacetime import SpaceTime
@@ -209,6 +209,7 @@ class Histogram(QtWidgets.QWidget):
         self.time = 0
         self.number = 0
         self.number_str = ''
+        self.rationals = []
         self.accumulate = False
         self.moving = False
         self.change_flag = False
@@ -221,7 +222,7 @@ class Histogram(QtWidgets.QWidget):
         self.hist_size = (self.resx, self.resy)
         self.hist_max = self.config.get('histogram_max')
         self.hist_y_factor = self.config.get('histogram_y_factor')
-        self.hist_background = tuple(self.config.get('histogram_background'))
+        self.hist_background = _convert_color(self.config.get('histogram_background'))
         self.color = ColorLine()
         for knot in self.config.get('colors'):
             self.color.add(knot['alpha'], vec3(*knot['color']))
@@ -259,6 +260,9 @@ class Histogram(QtWidgets.QWidget):
         self.number = number
         self.scene.clear()
 
+    def set_rationals(self, rationals):
+        self.rationals = rationals
+
     def reset(self):
         img = self.scene.render()
         self.label.setPixmap(pil2pixmap(img))
@@ -283,14 +287,18 @@ class Histogram(QtWidgets.QWidget):
             return
         
         dict_objs = {}
-        view_cells = self.spacetime.getCells(self.time, self.accumulate)
+        if not self.rationals:
+            view_cells = self.spacetime.getCells(self.time, self.accumulate)
+        else:
+            view_cells = self.spacetime.getCellsWithRationals(self.rationals, self.time, self.accumulate)
 
         max = -1
         for cell in view_cells:
             count = cell.count
             if count > max:
                 max = count
-            if count not in dict_objs: dict_objs[count] = 0
+            if count not in dict_objs: 
+                dict_objs[count] = 0
             dict_objs[count] += 1
 
         self.scene.clear()

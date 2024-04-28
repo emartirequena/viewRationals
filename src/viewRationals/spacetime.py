@@ -70,7 +70,8 @@ class HashRationals:
 	def get_rationals(self):
 		rationals = []
 		for item in self.hash:
-			rationals += item.rationals
+			for index in range(len(item.rationals)):
+				rationals += item.rationals[index]['m']
 		return rationals
 
 
@@ -157,6 +158,11 @@ class Space(object):
 			self.indexes[n] = len(self.cells)
 			self.cells.append(Cell(self.dim, self.T, self.n, x, y, z))
 		return self.cells[self.indexes[n]]
+	
+	def getRationals(self, x, y=0, z=0):
+		cell = self.getCell(x, y, z)
+		rationals = cell.get()['rationals']
+		return rationals
 	
 	def countCells(self):
 		return len(self.cells)
@@ -261,6 +267,11 @@ class Spaces:
 			else:
 				return self.accumulates_odd.getCell(x, y, z)
 			
+	def getRationals(self, t, x, y=0, z=0, accumulate=False):
+		cell = self.getCell(t, x, y, z, accumulate=accumulate)
+		rationals = cell.get()['rationals']
+		return rationals
+			
 	def getCells(self, t, accumulate=False):
 		if not accumulate:
 			return self.spaces[t].getCells()
@@ -269,6 +280,16 @@ class Spaces:
 				return self.accumulates_even.getCells()
 			else:
 				return self.accumulates_odd.getCells()
+			
+	def getCellsWithRationals(self, rationals, t, accumulate=False):
+		cells = self.getCells(t, accumulate=accumulate)
+		selected = []
+		set_rationals = set(rationals)
+		for cell in cells:
+			cell_rationals = cell.get()['rationals']
+			if set(cell_rationals).intersection(set_rationals):
+				selected.append(cell)
+		return selected
 
 	def getSpace(self, t, accumulate=False):
 		if not accumulate:
@@ -346,9 +367,10 @@ class SpaceTime(object):
 		self.is_special = False
 		self.manager = MyManager()
 		self.manager.start()
-		self.spaces = self.manager.Spaces(T, n, max, dim)
+		self.spaces: Spaces = self.manager.Spaces(T, n, max, dim)
 		self.rationalSet = []
-		self.algorithm = 2
+		config = Config()
+		self.algorithm = config.get('spacetime_algorithm')
 		self.changed = False
 
 	def __del__(self):
@@ -374,6 +396,9 @@ class SpaceTime(object):
 
 	def getCells(self, t, accumulate=False):
 		return self.spaces.getCells(t, accumulate)
+	
+	def getCellsWithRationals(self, rationals, t, accumulate=False):
+		return self.spaces.getCellsWithRationals(rationals, t, accumulate=accumulate)
 	
 	def getSpace(self, t, accumulate=False):
 		return self.spaces.getSpace(t, accumulate)

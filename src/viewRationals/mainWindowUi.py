@@ -240,6 +240,11 @@ class MainWindowUI:
         mw.actionInvertSelection.triggered.connect(mw.invert_selection)
         mw.menuSelection.addAction(mw.actionInvertSelection)
 
+        mw.actionSelectRationals = QtWidgets.QAction('Select Rationals', mw)
+        mw.actionSelectRationals.setShortcut('U')
+        mw.actionSelectRationals.triggered.connect(mw.select_rationals)
+        mw.menuSelection.addAction(mw.actionSelectRationals)
+
         mw.menu.addMenu(mw.menuSelection)
 
         mw.menuTime = QtWidgets.QMenu('Time')

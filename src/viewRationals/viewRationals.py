@@ -8,19 +8,17 @@ from multiprocessing import managers
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-import numpy as np
 from madcad import vec3, settings
 from mainWindowUi import MainWindowUI
 from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
-from saveImages import make_objects
+from getObjects import get_objects
 from spacetime import SpaceTime
-from rationals import c
 from utils import getDivisorsAndFactors, divisors, make_video, collect
 from timing import timing, get_duration
 from config import config
-from color import ColorLine
+from color import ColorLine, _convert_color
 from histogram import Histogram
 from saveImages import _saveImages, _create_video
 
@@ -46,7 +44,7 @@ class VideoThread(Thread):
         self.single_image = single_image
     
     def run(self):
-        self.parent.setStatus(f'Creating video sequence, please wait...')
+        self.parent.setStatus(f'Creating single image or video sequence, please wait...')
         self.processes = self.func_process(self.args_process)
         self.processes[0].close()
         self.processes[0].join()
@@ -64,12 +62,12 @@ class VideoThread(Thread):
 
     def kill(self):
         if self.processes:
-            self.parent.setStatus('VIDEO CREATION CANCELLED...')
+            self.parent.setStatus('CANCELLED VIDEO CREATION...')
             self.killed = True
             self.processes[0].terminate()
             self.processes[0].close()
             self.processes[0].join()
-            self.parent.cancelVideo()
+            self.parent.timer_video.stop()
             del self.processes
             collect()
             
@@ -83,6 +81,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.count = 0
         self.cell_ids = {}
         self.selected = {}
+        self.selected_rationals = []
+        self.view_selected_rationals = False
         self.views = None
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.rotate3DView)
@@ -110,6 +110,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadConfigColors()
         self._clear_parameters()
         self.showMaximized()
+        settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
 
     def loadConfigColors(self):
         self.color = ColorLine()
@@ -292,6 +293,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.color,
             self.views.views[self.views.mode].type,
             self.spacetime,
+            self.selected_rationals,
             self.dim,
             self.number.value(),
             self.period.value(),
@@ -327,6 +329,26 @@ class MainWindow(QtWidgets.QMainWindow):
     def _switch_display(self, count, state=None):
         for id in self.cell_ids[count]:
             self.views.switch_display_id(id, state=state)
+
+    def select_rationals(self):
+        self.view_selected_rationals = not self.view_selected_rationals
+        if not self.view_selected_rationals:
+            self.selected_rationals = []
+        if self.histogram:
+            self.histogram.set_rationals(self.selected_rationals)
+        if self.views:
+            self.draw_objects()
+            self.views.update()
+
+    def select_cell(self, cell):
+        self.selected_rationals = cell.get()['rationals']
+        self.view_selected_rationals = True
+        if self.views:
+            self.draw_objects()
+            self.views.update()
+        if self.histogram:
+            self.histogram.set_rationals(self.selected_rationals)
+        print(f'------- Rationals selected: {self.selected_rationals}')
 
     def select_cells(self, count):
         if not count:
@@ -406,8 +428,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if not int(self.number.value()):
             return
         
-        print(f'need_compute: {self.need_compute}, changed_spacetime: {self.changed_spacetime}')
-        
+        self.view_selected_rationals = False
+        self.deselect_all()
+
         if not self.need_compute:
             self.draw_objects()
             self.period_changed = False
@@ -415,8 +438,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         app.setOverrideCursor(QtCore.Qt.WaitCursor)
         time1 = time()
-
-        self.deselect_all()
 
         n = int(self.number.value())
 
@@ -452,12 +473,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @timing
     def draw_objects(self, frame=0):
+        rationals = []
+        if self.view_selected_rationals:
+            rationals = self.selected_rationals
         frame = self.timeWidget.value()
-        objs, count_cells, self.cell_ids = make_objects(
+        objs, count_cells, self.cell_ids = get_objects(
             self.spacetime,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
+            rationals,
             self.config,
             self.color,
             self.view_objects,
@@ -472,11 +497,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @timing
     def make_objects(self, frame):
-        objs, _, _ = make_objects(
+        rationals = []
+        if self.view_selected_rationals:
+            rationals = self.selected_rationals
+        objs, _, _ = get_objects(
             self.spacetime,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
+            rationals,
             self.config,
             self.color,
             self.view_objects,
@@ -501,6 +530,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if not self.histogram: 
                 self.histogram = Histogram(self, self.spacetime)
             self.histogram.set_number(int(self.number.value()))
+            self.histogram.set_rationals(self.selected_rationals)
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
@@ -508,6 +538,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print('continue setting number...')
             self.views.reset(objs)
             self.histogram.set_number(int(self.number.value()))
+            self.histogram.set_rationals(self.selected_rationals)
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
@@ -616,7 +647,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setStatus('Divisors computed. Select now a number from the list and press the Compute button')
 
     def _to_qt_list_color(self, color_name):
-        return QtGui.QColor(*[int(255 * x) for x in self.config.get(color_name)])
+        return QtGui.QColor(*[int(255 * x) for x in _convert_color(self.config.get(color_name))])
 
     def fillDivisors(self, T: int):
         not_period = self._to_qt_list_color('list_color_not_period')

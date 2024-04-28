@@ -1,11 +1,21 @@
+from copy import copy
 from madcad import vec3
 from madcad.mathutils import lerp
+
+
+def _convert_color(color):
+    color_out = copy(color)
+    if color_out[0] > 1.0 or color_out[1] > 1.0 or color_out[2] > 1.0:
+        color_out[0] /= 255.0
+        color_out[1] /= 255.0
+        color_out[2] /= 255.0
+    return color_out
 
 
 class ColorKnot:
     def __init__(self, alpha: float, value) -> None:
         self.alpha = alpha
-        self.value = value
+        self.value =  _convert_color(value)
 
 
 class ColorLine:

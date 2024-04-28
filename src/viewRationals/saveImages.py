@@ -8,9 +8,10 @@ import numpy as np
 from madcad import vec3, settings, Axis, X, Y, Z, Box, cylinder, brick, icosphere, cone
 
 from views import ViewRender
-from makeObjects import make_objects
+from getObjects import get_objects
 from utils import make_video, collect
 from timing import timing
+from color import _convert_color
 
 settings_file = r'settings.txt'
 
@@ -47,24 +48,27 @@ def _makePath(accumulate, factors, image_path, dim_str, period, number, single_i
     return path
 
 
-def _get_number_img(number, period, ptime):
-    img = Image.new('RGBA', (500, 40), (255, 255, 255, 255))
+def _get_number_img(number, period, ptime, config):
+    background = (*[int(x) for x in config.get('background_color')], 255)
+    img = Image.new('RGBA', (500, 40), background)
     draw = ImageDraw.Draw(img)
     string = f'number: {number:,.0f} period: {period:02d} time: {ptime}'.replace(',', '.')
     width = int(draw.textlength(string) + 10)
     img.resize((width, 40))
     font = ImageFont.FreeTypeFont('NotoMono-Regular.ttf', size=24)
-    draw.text((0, 0), string, font=font, fill=(0, 0, 0))
+    foreground = (*(int(255-x) for x in background[:3]), 255)
+    draw.text((0, 0), string, font=font, fill=foreground)
     return img
 
 
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
-    config, ccolor, shr_spacetime, dim, number, period, factors, accumulate, dim_str, \
+    config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
     image_resx, image_resy, path, rotate, dx, shr_num_video_frames = args
 
     settings.load(settings_file)
+    settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
 
     view = ViewRender(view_type)
     view.set_projection(shr_projection.value)
@@ -73,7 +77,7 @@ def _create_image(args):
         view.rotateTo3DVideo(dx)
 
     ptime = init_time + frame // factor
-    objs, _, _ = make_objects(shr_spacetime, number, dim, accumulate, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+    objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
     if not objs:
         print('------ NOT OBJS')
         return
@@ -91,7 +95,7 @@ def _create_image(args):
     print(f'------- save: {file_name}, time: {ptime}')
     shr_num_video_frames.value += 1
 
-    number_img = _get_number_img(number, period, ptime)
+    number_img = _get_number_img(number, period, ptime, config)
     img.alpha_composite(number_img, (10, image_resy - 40))
     del number_img
 
@@ -163,7 +167,7 @@ def _saveImages(args):
 
     shr_projection, shr_navigation, image_path, init_time, end_time, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
-    ccolor, view_type, shr_spacetime, dim, number, period, factors, \
+    ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
     max_time, shr_num_video_frames = args
     
@@ -209,7 +213,7 @@ def _saveImages(args):
             rotate = True
         params.append((
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
-            config, ccolor, shr_spacetime, dim, number, period, factors, accumulate, dim_str,
+            config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
             image_resx, image_resy, path, rotate, dx, shr_num_video_frames
         ))
