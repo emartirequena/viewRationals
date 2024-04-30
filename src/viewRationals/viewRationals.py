@@ -347,8 +347,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.draw_objects()
             self.views.update()
         if self.histogram:
+            self.histogram.clear()
             self.histogram.set_rationals(self.selected_rationals)
-        print(f'------- Rationals selected: {self.selected_rationals}')
 
     def select_cells(self, count):
         if not count:
@@ -491,7 +491,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.maxTime.value(),
             frame
         )
-        self.make_view(objs=objs, count_cells=count_cells)
+        self.make_view(objs, count_cells)
         del objs
         collect()
 

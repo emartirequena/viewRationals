@@ -2,6 +2,7 @@ import numpy as np
 import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
 from spacetime import Cell, c
+from utils import get_alpha
 
 
 def _get_next_number_dir(dim, cell: Cell):
@@ -38,10 +39,12 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
 
     if rationals:
         view_cells = spacetime.getCellsWithRationals(rationals, ptime, accumulate=accumulate)
-        print(f'------- Num cells with rationals {len(view_cells)}')
     else:
         view_cells = spacetime.getCells(ptime, accumulate=accumulate)
     count = len(view_cells)
+
+    normalize_alpha = config.get('normalize_alpha')
+    alpha_pow = config.get('alpha_pow')
 
     if not accumulate:
         rad_factor = config.get('rad_factor')
@@ -57,11 +60,14 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
     max = -1
     count = 0
     for cell in view_cells:
-        if cell.count > max:
-            max = cell.count
-        if cell.count > 0:
+        cell_count = cell.count
+        if rationals:
+            cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
+        if cell_count > max:
+            max = cell_count
+        if cell_count > 0:
             count += 1
-        total += cell.count
+        total += cell_count
 
     max_spaces_time = spacetime.getMaxTime(accumulate)
     
@@ -71,10 +77,10 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
 
     if view_objects:
         for cell in view_cells:
-            alpha = float(cell.count) / float(max)
-            rad = math.pow(alpha / rad_factor, rad_pow)
-            if rad < rad_min:
-                rad = rad_min
+            cell_count = cell.count
+            if rationals:
+                cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
+            alpha, rad = get_alpha(cell_count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
             if dim == 3:
@@ -82,7 +88,7 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
             elif dim == 2:
                 obj = cylinder(vec3(cell.x, 0, cell.y), vec3(cell.x, alpha*10, cell.y), rad)
             else:
-                height = 14 * float(cell.count) / float(total)
+                height = 14 * float(cell_count) / float(number)
                 obj = brick(vec3(cell.x - c, 0, 0), vec3(cell.x + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj

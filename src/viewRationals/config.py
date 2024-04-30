@@ -24,6 +24,8 @@ class Config:
                 {'alpha': 1.0, 'color': [1.0, 0.5, 0.2]}
             ],
             'background_color': [255, 255, 255],
+            'normalize_alpha': False,
+            'alpha_pow': 2.0,
             'rad_factor': 8.0,
             'rad_pow': 0.8,
             'rad_factor_accum': 2.3,
