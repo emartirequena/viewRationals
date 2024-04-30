@@ -5,7 +5,7 @@ from copy import copy
 import subprocess
 from PIL import Image
 from PyQt5 import QtGui
-from math import sqrt
+from math import sqrt, pow
 
 def lerp(t, ta, a, tb, b):
     return a + (b-a)*(t-ta)/(tb-ta)
@@ -67,6 +67,16 @@ def make_video(
     print(*options)
     subprocess.run(options)
     return True
+
+
+def get_alpha(count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min):
+    div = number
+    if normalize_alpha:
+        div = max
+    alpha = pow(float(count) / float(div), alpha_pow)
+    rad = pow(alpha * rad_factor, rad_pow)
+    rad = rad_min if rad < rad_min else rad
+    return alpha, rad
 
 
 def appendEs2Sequences(sequences, es):

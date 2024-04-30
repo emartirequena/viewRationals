@@ -10,6 +10,7 @@ from color import ColorLine, _convert_color
 from utils import pil2pixmap
 from timing import timing
 from spacetime import SpaceTime
+from utils import get_alpha
 
 epsilon = 5.
 colors = [(100, 100, 100), (200, 100, 0), (150, 80, 0), (255, 255, 0)]
@@ -292,6 +293,9 @@ class Histogram(QtWidgets.QWidget):
         else:
             view_cells = self.spacetime.getCellsWithRationals(self.rationals, self.time, self.accumulate)
 
+        normalize_alpha = self.config.get('normalize_alpha')
+        alpha_pow = self.config.get('alpha_pow')
+
         max = -1
         for cell in view_cells:
             count = cell.count
@@ -303,7 +307,7 @@ class Histogram(QtWidgets.QWidget):
 
         self.scene.clear()
         for count in dict_objs.keys():
-            alpha = float(count) / float(max)
+            alpha, _ = get_alpha(count, self.number, max, normalize_alpha, alpha_pow, 1, 1, 1)
             pos = float(count)
             if self.parent() and self.parent().is_selected(count):
                 color = vec3(255, 255, 255)
@@ -332,7 +336,8 @@ class Histogram(QtWidgets.QWidget):
 
     def mousePressEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier:
-            self.scene.init_select_area(a0.pos().x())
+            # self.scene.init_select_area(a0.pos().x())
+            ...
         else:
             self.old_pos = float(a0.pos().x())
             self.scene.select_area = None
@@ -341,7 +346,8 @@ class Histogram(QtWidgets.QWidget):
 
     def mouseMoveEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier: 
-            self.scene.move_select_area(a0.pos().x())
+            # self.scene.move_select_area(a0.pos().x())
+            ...
         else:
             self.moving = True
             pos = float(a0.pos().x())
@@ -352,17 +358,18 @@ class Histogram(QtWidgets.QWidget):
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier: 
-            selected_items = self.scene.end_select_area()
-            for item in selected_items:
-                self.parent().select_cells(item.count)
-            self.parent().refresh_selection()
-        else:
-            if not self.moving:
-                item = self.scene.itemat(a0.pos().x())
-                if item:
-                    self.parent().select_cells(item.count)
-                    self.parent().refresh_selection()
-            self.moving = False
+            ...
+            # selected_items = self.scene.end_select_area()
+            # for item in selected_items:
+            #     self.parent().select_cells(item.count)
+            # self.parent().refresh_selection()
+        # else:
+            # if not self.moving:
+            #     item = self.scene.itemat(a0.pos().x())
+            #     if item:
+            #         self.parent().select_cells(item.count)
+            #         self.parent().refresh_selection()
+            # self.moving = False
         a0.accept()
 
     def wheelEvent(self, a0: QWheelEvent) -> None:

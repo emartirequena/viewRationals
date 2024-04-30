@@ -68,10 +68,11 @@ class HashRationals:
 				return True
 	
 	def get_rationals(self):
-		rationals = []
+		rationals: list[int] = []
 		for item in self.hash:
 			for index in range(len(item.rationals)):
 				rationals += item.rationals[index]['m']
+		rationals.sort()
 		return rationals
 
 
@@ -267,9 +268,9 @@ class Spaces:
 			else:
 				return self.accumulates_odd.getCell(x, y, z)
 			
-	def getRationals(self, t, x, y=0, z=0, accumulate=False):
-		cell = self.getCell(t, x, y, z, accumulate=accumulate)
-		rationals = cell.get()['rationals']
+	def getRationals(self, t, x, y=0, z=0, accumulate=False) -> list[int]:
+		cell: Cell = self.getCell(t, x, y, z, accumulate=accumulate)
+		rationals: list[int] = cell.get()['rationals']
 		return rationals
 			
 	def getCells(self, t, accumulate=False):

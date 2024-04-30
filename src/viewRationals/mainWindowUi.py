@@ -225,23 +225,23 @@ class MainWindowUI:
 
         mw.menuSelection = QtWidgets.QMenu('Selection')
 
-        mw.actionSelectAll = QtWidgets.QAction('Select All', mw)
-        mw.actionSelectAll.setShortcut('A')
-        mw.actionSelectAll.triggered.connect(mw.select_all)
-        mw.menuSelection.addAction(mw.actionSelectAll)
+        # mw.actionSelectAll = QtWidgets.QAction('Select All', mw)
+        # mw.actionSelectAll.setShortcut('A')
+        # mw.actionSelectAll.triggered.connect(mw.select_all)
+        # mw.menuSelection.addAction(mw.actionSelectAll)
         
-        mw.actionDeselectAll = QtWidgets.QAction('Deselect All', mw)
-        mw.actionDeselectAll.setShortcut('D')
-        mw.actionDeselectAll.triggered.connect(mw.deselect_all)
-        mw.menuSelection.addAction(mw.actionDeselectAll)
+        # mw.actionDeselectAll = QtWidgets.QAction('Deselect All', mw)
+        # mw.actionDeselectAll.setShortcut('D')
+        # mw.actionDeselectAll.triggered.connect(mw.deselect_all)
+        # mw.menuSelection.addAction(mw.actionDeselectAll)
         
-        mw.actionInvertSelection = QtWidgets.QAction('Invert Selection', mw)
-        mw.actionInvertSelection.setShortcut('Shift+A')
-        mw.actionInvertSelection.triggered.connect(mw.invert_selection)
-        mw.menuSelection.addAction(mw.actionInvertSelection)
+        # mw.actionInvertSelection = QtWidgets.QAction('Invert Selection', mw)
+        # mw.actionInvertSelection.setShortcut('Shift+A')
+        # mw.actionInvertSelection.triggered.connect(mw.invert_selection)
+        # mw.menuSelection.addAction(mw.actionInvertSelection)
 
-        mw.actionSelectRationals = QtWidgets.QAction('Select Rationals', mw)
-        mw.actionSelectRationals.setShortcut('U')
+        mw.actionSelectRationals = QtWidgets.QAction('View All', mw)
+        mw.actionSelectRationals.setShortcut('A')
         mw.actionSelectRationals.triggered.connect(mw.select_rationals)
         mw.menuSelection.addAction(mw.actionSelectRationals)
 
