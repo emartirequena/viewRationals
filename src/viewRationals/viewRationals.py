@@ -428,6 +428,10 @@ class MainWindow(QtWidgets.QMainWindow):
         if not int(self.number.value()):
             return
         
+        if self.selected_rationals:
+            del self.selected_rationals
+            self.selected_rationals = None
+
         self.view_selected_rationals = False
         self.deselect_all()
 
