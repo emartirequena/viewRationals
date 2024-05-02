@@ -94,7 +94,10 @@ class ScreenView(rendering.View):
                         self.label.close()
                     cell_rationals = cell.get()['rationals']
                     selected_rationals = self.mainWindow.selected_rationals
-                    intersect = list(set(cell_rationals).intersection(set(selected_rationals)))
+                    if selected_rationals:
+                        intersect = list(set(cell_rationals).intersection(set(selected_rationals)))
+                    else:
+                        intersect = cell_rationals
                     if not intersect:
                         intersect = cell_rationals
                     self.label = Label(self, 
