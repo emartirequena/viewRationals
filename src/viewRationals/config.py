@@ -29,7 +29,7 @@ class Config:
             'rad_factor': 8.0,
             'rad_pow': 0.8,
             'rad_factor_accum': 2.3,
-            'rad_pow_accum': 0.3,
+            'rad_pow_accum': 1.0,
             'rad_min': 0.02,
             'max_faces': 20,
             'faces_pow': 0.2,

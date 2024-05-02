@@ -117,7 +117,7 @@ def _create_video(args):
     path, image_resx, image_resy, init_time, end_time, \
     prefix, suffix, num_frames, turn_angle, config, \
     number, period, factors, accumulate, dim_str,\
-    shr_num_video_frames = args
+    shr_num_video_frames, clean_images = args
 
     shr_num_video_frames.value = -1
 
@@ -158,6 +158,9 @@ def _create_video(args):
     print(f'------- copying {main_video_name} \n-------      to {dest_video_name}')
     shutil.copyfile(main_video_name, dest_video_name)
 
+    if clean_images:
+        _del_folder(path)
+
     del args
     collect('save video')
 
@@ -169,7 +172,7 @@ def _saveImages(args):
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
     ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
-    max_time, shr_num_video_frames = args
+    max_time, shr_num_video_frames, clean_images = args
     
     number = int(number)
     period = int(period)
@@ -222,7 +225,7 @@ def _saveImages(args):
         path, image_resx, image_resy, init_time, end_time,
         prefix, suffix, num_frames, turn_angle, config,
         number, period, factors, accumulate, dim_str,
-        shr_num_video_frames
+        shr_num_video_frames, clean_images
     ) if not single_image else ()
 
     num_cpus = int(cpu_count() * 0.8)

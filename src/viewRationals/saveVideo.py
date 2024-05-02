@@ -52,10 +52,16 @@ class SaveVideoWidget(QtWidgets.QDialog):
         self.suffix = QtWidgets.QLineEdit(self)
         self.gridlayout.addWidget(self.suffix, 5, 1)
 
-        self.label5 = QtWidgets.QLabel('Subfolder')
-        self.gridlayout.addWidget(self.label5, 6, 0)
+        self.label8 = QtWidgets.QLabel('Subfolder')
+        self.gridlayout.addWidget(self.label8, 6, 0)
         self.subfolder = QtWidgets.QLineEdit(self)
         self.gridlayout.addWidget(self.subfolder, 6, 1)
+
+        self.label9 = QtWidgets.QLabel('Clean images')
+        self.gridlayout.addWidget(self.label9, 7, 0)
+        self.cleanImages = QtWidgets.QCheckBox(self)
+        self.cleanImages.setChecked(True)
+        self.gridlayout.addWidget(self.cleanImages, 7, 1)
 
         self.hlayout = QtWidgets.QHBoxLayout()
         self.hlayout.addStretch()
@@ -91,7 +97,8 @@ class SaveVideoWidget(QtWidgets.QDialog):
             self.prefix.text(),
             self.suffix.text(),
             self.video_frames.value(),
-            self.turn_degrees.value()
+            self.turn_degrees.value(),
+            self.cleanImages.isChecked()
         )
 
 

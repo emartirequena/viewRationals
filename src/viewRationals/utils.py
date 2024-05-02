@@ -76,6 +76,7 @@ def get_alpha(count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_po
     alpha = pow(float(count) / float(div), alpha_pow)
     rad = pow(alpha * rad_factor, rad_pow)
     rad = rad_min if rad < rad_min else rad
+    rad = 1.0 if rad > 1.0 else rad
     return alpha, rad
 
 

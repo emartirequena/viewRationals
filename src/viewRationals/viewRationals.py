@@ -5,6 +5,7 @@ from multiprocessing import freeze_support, Manager
 from threading import Thread
 from copy import deepcopy
 from multiprocessing import managers
+import traceback
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -129,6 +130,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.histogram:
                 self.histogram.clear()
         else:
+            print('------- making view in _clear_view()')
             self.make_view(0)
         if self.cell_ids:
             del self.cell_ids
@@ -136,13 +138,15 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.selected:
             del self.selected
         self.selected = {}
-        collect('_clear_view')
+        collect()
         self.timer.stop()
 
     def _clear_parameters(self):
         self.period.setValue(1)
         self.period_changed = False
+        self.timeWidget.valueChanged.disconnect(self.draw_objects)
         self.maxTime.setValue(0)
+        self.timeWidget.valueChanged.connect(self.draw_objects)
         self.number.setValue(0)
         self.divisors.clear()
         self.factorsLabel.setText('')
@@ -240,7 +244,7 @@ class MainWindow(QtWidgets.QMainWindow):
         frame = int(self.time.value())
         self.saveVideo(init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1)
 
-    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, turn_angle=0):
+    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, turn_angle=0, clean_images=True):
         if self.views.mode not in ['1D', '2D', '3D']:
             QtWidgets.QMessageBox.critical(self, 'ERROR', 'Split 3D view is not allowed for videos')
             return
@@ -304,7 +308,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.actionViewTime.isChecked(),
             self.actionViewNextNumber.isChecked(),
             self.maxTime.value(),
-            self.shr_num_video_frames
+            self.shr_num_video_frames,
+            clean_images
         )
 
         self.timer_video.start(1000)
@@ -465,8 +470,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.time.value() != self.maxTime.value():
             self.time.setValue(self.maxTime.value())
-        else:
-            self.draw_objects()
+        self.draw_objects()
 
         collect('Compute')
         
@@ -497,7 +501,7 @@ class MainWindow(QtWidgets.QMainWindow):
         )
         self.make_view(objs, count_cells)
         del objs
-        collect()
+        collect('draw_objects')
 
     @timing
     def make_objects(self, frame):
@@ -646,8 +650,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.factorsLabel.setText(label)
         self.label_num_divisors.setText(f'{len(self.divisors)}')
         self.cycles = (4 if T < 8 else (3 if T < 17 else 2))
+        self.timeWidget.valueChanged.disconnect(self.draw_objects)
         self.maxTime.setValue(T * self.cycles)
+        # self.timeWidget.setValue(T * self.cycles)
         self.maxTime.setSingleStep(T)
+        self.timeWidget.valueChanged.connect(self.draw_objects)
         self.setStatus('Divisors computed. Select now a number from the list and press the Compute button')
 
     def _to_qt_list_color(self, color_name):

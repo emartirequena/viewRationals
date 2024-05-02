@@ -162,7 +162,7 @@ class Scene:
     def init_select_area(self, begin: int):
         self.select_area = SelectArea(begin, self)
 
-    def move_select_area(self, end: int):
+    def expand_select_area(self, end: int):
         if self.select_area:
             self.select_area.set_end(end)
 
@@ -336,8 +336,7 @@ class Histogram(QtWidgets.QWidget):
 
     def mousePressEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier:
-            # self.scene.init_select_area(a0.pos().x())
-            ...
+            self.scene.init_select_area(a0.pos().x())
         else:
             self.old_pos = float(a0.pos().x())
             self.scene.select_area = None
@@ -346,8 +345,7 @@ class Histogram(QtWidgets.QWidget):
 
     def mouseMoveEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier: 
-            # self.scene.move_select_area(a0.pos().x())
-            ...
+            self.scene.expand_select_area(a0.pos().x())
         else:
             self.moving = True
             pos = float(a0.pos().x())
@@ -358,18 +356,17 @@ class Histogram(QtWidgets.QWidget):
 
     def mouseReleaseEvent(self, a0: QMouseEvent) -> None:
         if a0.modifiers() & QtCore.Qt.ShiftModifier: 
-            ...
-            # selected_items = self.scene.end_select_area()
-            # for item in selected_items:
-            #     self.parent().select_cells(item.count)
-            # self.parent().refresh_selection()
-        # else:
-            # if not self.moving:
-            #     item = self.scene.itemat(a0.pos().x())
-            #     if item:
-            #         self.parent().select_cells(item.count)
-            #         self.parent().refresh_selection()
-            # self.moving = False
+            selected_items = self.scene.end_select_area()
+            for item in selected_items:
+                self.parent().select_cells(item.count)
+            self.parent().refresh_selection()
+        else:
+            if not self.moving:
+                item = self.scene.itemat(a0.pos().x())
+                if item:
+                    self.parent().select_cells(item.count)
+                    self.parent().refresh_selection()
+            self.moving = False
         a0.accept()
 
     def wheelEvent(self, a0: QWheelEvent) -> None:

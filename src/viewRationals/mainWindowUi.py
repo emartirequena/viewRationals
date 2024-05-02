@@ -230,10 +230,10 @@ class MainWindowUI:
         # mw.actionSelectAll.triggered.connect(mw.select_all)
         # mw.menuSelection.addAction(mw.actionSelectAll)
         
-        # mw.actionDeselectAll = QtWidgets.QAction('Deselect All', mw)
-        # mw.actionDeselectAll.setShortcut('D')
-        # mw.actionDeselectAll.triggered.connect(mw.deselect_all)
-        # mw.menuSelection.addAction(mw.actionDeselectAll)
+        mw.actionDeselectAll = QtWidgets.QAction('Deselect All', mw)
+        mw.actionDeselectAll.setShortcut('D')
+        mw.actionDeselectAll.triggered.connect(mw.deselect_all)
+        mw.menuSelection.addAction(mw.actionDeselectAll)
         
         # mw.actionInvertSelection = QtWidgets.QAction('Invert Selection', mw)
         # mw.actionInvertSelection.setShortcut('Shift+A')
