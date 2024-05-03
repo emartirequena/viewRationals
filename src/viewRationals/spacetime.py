@@ -170,6 +170,12 @@ class Space(object):
 
 	def getCells(self):
 		return self.cells
+	
+	def countPaths(self):
+		num_paths = 0
+		for cell in self.cells:
+			num_paths += cell.count
+		return num_paths
 
 	def add(self, time, reminders, digits, m, next_digit, x, y, z):
 		cell = self.getCell(x, y, z)
@@ -318,6 +324,15 @@ class Spaces:
 		self.accumulates_even.load(input['accumulates_even'])
 		self.accumulates_odd.load(input['accumulates_odd'])
 
+	def countPaths(self, t, accumulate=False):
+		if not accumulate:
+			return self.spaces[t].countPaths()
+		else:
+			if t%2:
+				return self.accumulates_odd.countPahts()
+			else:
+				return self.accumulates_even.countPaths()
+
 class MyManager(managers.BaseManager):
 	...
 
@@ -406,6 +421,9 @@ class SpaceTime(object):
 	
 	def getMaxTime(self, accumulate=False):
 		return self.spaces.getMaxTime(accumulate)
+	
+	def countPaths(self, t, accumulate=False):
+		return self.spaces.countPaths(t, accumulate=accumulate)
 	
 	@timing
 	def setRationalSet(self, n: int, is_special: bool = False):

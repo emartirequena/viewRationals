@@ -48,7 +48,9 @@ class VideoThread(Thread):
         self.parent.setStatus(f'Creating single image or video sequence, please wait...')
         self.processes = self.func_process(self.args_process)
         self.processes[0].close()
+        print(f'>>>>>>> Close create images...')
         self.processes[0].join()
+        print(f'>>>>>>> Join create images')
         if self.processes[1] and not self.killed and not self.single_image:
             self.func_video(self.processes[1])
             self.parent.setStatus(f'Video saved for number {int(self.parent.number.value()):d} in {get_duration():.2f} secs')
@@ -89,6 +91,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.timer.timeout.connect(self.rotate3DView)
         self.timer_video = QtCore.QTimer(self)
         self.timer_video.timeout.connect(self.message_video)
+        self.timer_video_count = 0
         self.turntable_angle = 0.005
         self.first_number_set = False
         self.changed_spacetime = True
@@ -107,6 +110,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.numbers = {}
         self.config = config
         self.color = None
+        self.statusLabel.setFont(QtGui.QFont('Courier'))
         self.files_path = self.config.get('files_path')
         self.loadConfigColors()
         self._clear_parameters()
@@ -312,6 +316,7 @@ class MainWindow(QtWidgets.QMainWindow):
             clean_images
         )
 
+        self.timer_video_count = 0
         self.timer_video.start(1000)
         self.video_thread = VideoThread(self, _saveImages, args, _create_video, single_image)
         self.video_thread.start()
@@ -324,12 +329,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.video_thread.kill()
 
     def message_video(self):
+        l = ['|', '/', '-', '\\']
         if self.shr_num_video_frames.value < 0:
             self.timer_video.stop()
         elif self.shr_num_video_frames.value == 0:
             self.setStatus('Initializing video creation. Please wait...')
         else:
-            self.setStatus(f'Creating video, num frames: {self.shr_num_video_frames.value} / {self.max_video_frames}')
+            e = l[self.timer_video_count % 4]
+            self.setStatus(f'{e} Creating video, num frames: {self.shr_num_video_frames.value} / {self.max_video_frames}')
+            self.timer_video_count += 1
 
     def _switch_display(self, count, state=None):
         for id in self.cell_ids[count]:
@@ -407,7 +415,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def print_selection(self):
         selected_cells, selected_paths = self.get_selected_paths()
-        max = self.number.value() or 1
+        if self._check_accumulate():
+            max = self.spacetime.countPaths(int(self.time.value()), True)
+        else:
+            max = int(self.number.value()) or 1
         if selected_cells == 0:
             self.setStatus('Selected cells: 0')
             return

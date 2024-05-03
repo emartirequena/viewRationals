@@ -17,9 +17,11 @@ class ViewRender:
         self.render_scene = rendering.Scene(options=None)
         self.render_view = RenderView(self.render_scene, share=False)
 
-    def __del__(self):
-        del self.render_scene
-        del self.render_view
+    # def __del__(self):
+    #     if self.render_scene:
+    #         del self.render_scene
+    #     if self.render_view:
+    #         del self.render_view
 
     def set_projection(self, projection):
         self.render_view.set_projection(projection)
