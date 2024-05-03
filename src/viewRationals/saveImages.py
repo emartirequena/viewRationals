@@ -228,9 +228,9 @@ def _saveImages(args):
         shr_num_video_frames, clean_images
     ) if not single_image else ()
 
-    num_cpus = int(cpu_count() * 0.8)
+    num_cpus = int(cpu_count() * 0.75)
     chunksize = (range_frames // num_cpus) or 1
-    print(f'------- range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
+    print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
     pool.imap(func=_create_image, iterable=params, chunksize=chunksize)
