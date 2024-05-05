@@ -18,10 +18,8 @@ class ViewRender:
         self.render_view = RenderView(self.render_scene, share=False)
 
     # def __del__(self):
-    #     if self.render_scene:
-    #         del self.render_scene
-    #     if self.render_view:
-    #         del self.render_view
+    #     del self.render_scene
+    #     del self.render_view
 
     def set_projection(self, projection):
         self.render_view.set_projection(projection)
@@ -45,6 +43,11 @@ class ViewRender:
     def rotateTo3DVideo(self, dx):
         if self.type in ['3D', '3DVIEW']:
             self.render_view.navigation.yaw = dx*math.pi
+
+    def moveTo(self, x, y=0., z=0.):
+        self.render_view.navigation.center.x = x
+        self.render_view.navigation.center.y = y
+        self.render_view.navigation.center.z = z
 
 
 class View(QtWidgets.QWidget):
@@ -168,6 +171,14 @@ class View(QtWidgets.QWidget):
     def rotate3DVideo(self, dx):
         if self.type in ['3D', '3DVIEW']:
             self.view.navigation.yaw += dx*math.pi
+
+    def moveTo(self, x, y=0., z=0.):
+        if self.view and self.view.navigation:
+            self.view.navigation.center.x = x
+            self.view.navigation.center.y = y
+            self.view.navigation.center.z = z
+            self.view.update()
+            self.update()
 
 
 class Views(QtWidgets.QWidget):
@@ -312,6 +323,13 @@ class Views(QtWidgets.QWidget):
             else:
                 name = '3DVIEW'
             self.views[name].rotate3DVideo(dx)
+
+    def moveTo(self, x, y=0, z=0):
+        if self.mode == '3DSPLIT':
+            for view in self.views.values():
+                view.moveTo(x, y, z)
+        else:
+            self.views[self.mode].moveTo(x, y, z)                                                                                                                                                  
 
     def switch_display_id(self, id, state=None):
         view: View

@@ -1,7 +1,6 @@
 import os
 import shutil
 import math
-import time
 from multiprocessing import Pool, cpu_count, Manager
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
@@ -60,12 +59,11 @@ def _get_number_img(number, period, ptime, config):
     draw.text((0, 0), string, font=font, fill=foreground)
     return img
 
-
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
     config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
-    image_resx, image_resy, path, rotate, dx, shr_num_video_frames = args
+    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames = args
 
     settings.load(settings_file)
     settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
@@ -77,6 +75,11 @@ def _create_image(args):
         view.rotateTo3DVideo(dx)
 
     ptime = init_time + frame // factor
+
+    if center:
+        p = ptime * np.array(center) / center_time
+        view.moveTo(p[0], p[1], p[2])
+
     objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
     if not objs:
         print('------ NOT OBJS')
@@ -91,13 +94,13 @@ def _create_image(args):
     if accumulate:
         accum_str = 'Accum_'
 
-    file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
-    print(f'------- save: {file_name}, time: {ptime}')
-    shr_num_video_frames.value += 1
-
     number_img = _get_number_img(number, period, ptime, config)
     img.alpha_composite(number_img, (10, image_resy - 40))
     del number_img
+
+    file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
+    print(f'------- save: {file_name}, time: {ptime}')
+    shr_num_video_frames.value += 1
 
     fname = os.path.join(path, file_name)
     img.save(fname)
@@ -172,7 +175,7 @@ def _saveImages(args):
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
     ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
-    max_time, shr_num_video_frames, clean_images = args
+    max_time, shr_num_video_frames, clean_images, center, center_time = args
     
     number = int(number)
     period = int(period)
@@ -218,7 +221,7 @@ def _saveImages(args):
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
             config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
-            image_resx, image_resy, path, rotate, dx, shr_num_video_frames
+            image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames
         ))
 
     args_video = (
@@ -228,11 +231,12 @@ def _saveImages(args):
         shr_num_video_frames, clean_images
     ) if not single_image else ()
 
-    num_cpus = int(cpu_count() * 0.75)
+    num_cpus = int(cpu_count() * 0.5)
+    num_cpus = 8
     chunksize = (range_frames // num_cpus) or 1
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
-    pool.imap(func=_create_image, iterable=params, chunksize=chunksize)
+    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize)
 
     return (pool, args_video)
