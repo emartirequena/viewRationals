@@ -5,7 +5,7 @@ from multiprocessing import freeze_support, Manager
 from threading import Thread
 from copy import deepcopy
 from multiprocessing import managers
-import traceback
+import numpy as np
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -45,22 +45,25 @@ class VideoThread(Thread):
         self.single_image = single_image
     
     def run(self):
+        self.parent.statusLabel.setFont(QtGui.QFont('Courier'))
         self.parent.setStatus(f'Creating single image or video sequence, please wait...')
         self.processes = self.func_process(self.args_process)
         self.processes[0].close()
         print(f'>>>>>>> Close create images...')
         self.processes[0].join()
         print(f'>>>>>>> Join create images')
-        if self.processes[1] and not self.killed and not self.single_image:
+        if not self.killed and not self.single_image and self.processes[1]:
             self.func_video(self.processes[1])
             self.parent.setStatus(f'Video saved for number {int(self.parent.number.value()):d} in {get_duration():.2f} secs')
         elif not self.killed:
             self.parent.setStatus(f'Image saved for number {int(self.parent.number.value()):d} in {get_duration():.2f} secs')
-        else:
-            self.killed = False
+        self.parent.statusLabel.setFont(QtGui.QFont('Arial'))
         self.parent.shr_num_video_frames.value = -1
         del self.args_process
-        del self.processes
+        if not self.killed:
+            del self.processes
+        else:
+            self.killed = False
         collect()
 
     def kill(self):
@@ -85,6 +88,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cell_ids = {}
         self.selected = {}
         self.selected_rationals = []
+        self.selected_center = None
+        self.selected_time = None
         self.view_selected_rationals = False
         self.views = None
         self.timer = QtCore.QTimer(self)
@@ -110,7 +115,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.numbers = {}
         self.config = config
         self.color = None
-        self.statusLabel.setFont(QtGui.QFont('Courier'))
+        self.statusLabel.setFont(QtGui.QFont('Arial'))
         self.files_path = self.config.get('files_path')
         self.loadConfigColors()
         self._clear_parameters()
@@ -148,9 +153,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def _clear_parameters(self):
         self.period.setValue(1)
         self.period_changed = False
-        self.timeWidget.valueChanged.disconnect(self.draw_objects)
+        self.timeWidget.valueChanged.disconnect(self.timeChanged)
         self.maxTime.setValue(0)
-        self.timeWidget.valueChanged.connect(self.draw_objects)
+        self.timeWidget.valueChanged.connect(self.timeChanged)
         self.number.setValue(0)
         self.divisors.clear()
         self.factorsLabel.setText('')
@@ -233,6 +238,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if t < self.maxTime.value():
             self.timeWidget.setValue(t + 1)
 
+    def timeChanged(self):
+        if self.selected_center:
+            self._select_time_changed()
+        self.draw_objects()
+
     def setStatus(self, txt: str):
         print(f'status: {txt}')
         self.statusLabel.setText(str(txt))
@@ -313,7 +323,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.actionViewNextNumber.isChecked(),
             self.maxTime.value(),
             self.shr_num_video_frames,
-            clean_images
+            clean_images,
+            self.selected_center,
+            self.selected_time
         )
 
         self.timer_video_count = 0
@@ -336,7 +348,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.setStatus('Initializing video creation. Please wait...')
         else:
             e = l[self.timer_video_count % 4]
-            self.setStatus(f'{e} Creating video, num frames: {self.shr_num_video_frames.value} / {self.max_video_frames}')
+            self.setStatus(f'{e} Creating video, num frames {self.shr_num_video_frames.value} / {self.max_video_frames}')
             self.timer_video_count += 1
 
     def _switch_display(self, count, state=None):
@@ -350,6 +362,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.histogram:
             self.histogram.set_rationals(self.selected_rationals)
         if self.views:
+            self.select_center(0, 0, 0)
             self.draw_objects()
             self.views.update()
 
@@ -362,6 +375,26 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.histogram:
             self.histogram.clear()
             self.histogram.set_rationals(self.selected_rationals)
+
+    def select_center(self, x, y=0, z=0):
+        self.selected_center = (x, y, z)
+        self.selected_time = self.timeWidget.value()
+        self._select_time_changed()
+        print(f'******* Setting center to ({x}, {y}, {z})')
+
+    def deselect_center(self):
+        self.selected_center = None
+        self.selected_time = None
+
+    def _select_time_changed(self):
+        if not self.selected_center:
+            return
+        v = np.array(self.selected_center) / self.selected_time
+        p = v * self.timeWidget.value()
+        self.views.moveTo(p[0], p[1], p[2])
+        self.views.update()
+        self.update()
+        print(f'******* Move center to ({p[0]}, {p[1]}, {p[2]})')
 
     def select_cells(self, count):
         if not count:
@@ -447,6 +480,10 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.selected_rationals:
             del self.selected_rationals
             self.selected_rationals = None
+
+        if self.selected_center:
+            self.select_center(0, 0, 0)
+            self.deselect_center()
 
         self.view_selected_rationals = False
         self.deselect_all()
@@ -661,11 +698,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.factorsLabel.setText(label)
         self.label_num_divisors.setText(f'{len(self.divisors)}')
         self.cycles = (4 if T < 8 else (3 if T < 17 else 2))
-        self.timeWidget.valueChanged.disconnect(self.draw_objects)
+        self.timeWidget.valueChanged.disconnect(self.timeChanged)
         self.maxTime.setValue(T * self.cycles)
         # self.timeWidget.setValue(T * self.cycles)
         self.maxTime.setSingleStep(T)
-        self.timeWidget.valueChanged.connect(self.draw_objects)
+        self.timeWidget.valueChanged.connect(self.timeChanged)
         self.setStatus('Divisors computed. Select now a number from the list and press the Compute button')
 
     def _to_qt_list_color(self, color_name):

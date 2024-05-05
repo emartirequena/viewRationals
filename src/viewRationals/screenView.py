@@ -86,6 +86,8 @@ class ScreenView(rendering.View):
                         return False
                     self.mainWindow.select_cell(cell)
                     self.mainWindow.refresh_selection()
+                    if evt.modifiers() == QtCore.Qt.ShiftModifier:
+                        self.mainWindow.select_center(cell.x, cell.y, cell.z)
                     if self.label:
                         self.label.close()
                         self.label = None
@@ -102,7 +104,6 @@ class ScreenView(rendering.View):
                         intersect = cell_rationals
                     self.label = Label(self, 
                         rationals=intersect, 
-                        # rationals = selected_rationals,
                         number=self.mainWindow.number.value(), 
                         dim=self.mainWindow.dim, 
                         posx=evt.x(), posy=evt.y()
