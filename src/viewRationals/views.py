@@ -46,8 +46,12 @@ class ViewRender:
 
     def moveTo(self, x, y=0., z=0.):
         self.render_view.navigation.center.x = x
-        self.render_view.navigation.center.y = y
-        self.render_view.navigation.center.z = z
+        if self.type != '2D':
+            self.render_view.navigation.center.y = y
+            self.render_view.navigation.center.z = z
+        else:
+            self.render_view.navigation.center.z = y
+            self.render_view.navigation.center.y = z
 
 
 class View(QtWidgets.QWidget):
@@ -175,8 +179,12 @@ class View(QtWidgets.QWidget):
     def moveTo(self, x, y=0., z=0.):
         if self.view and self.view.navigation:
             self.view.navigation.center.x = x
-            self.view.navigation.center.y = y
-            self.view.navigation.center.z = z
+            if self.type != '2D':
+                self.view.navigation.center.y = y
+                self.view.navigation.center.z = z
+            else:
+                self.view.navigation.center.z = y
+                self.view.navigation.center.y = z
             self.view.update()
             self.update()
 
@@ -329,7 +337,7 @@ class Views(QtWidgets.QWidget):
             for view in self.views.values():
                 view.moveTo(x, y, z)
         else:
-            self.views[self.mode].moveTo(x, y, z)                                                                                                                                                  
+            self.views[self.mode].moveTo(x, y, z)
 
     def switch_display_id(self, id, state=None):
         view: View

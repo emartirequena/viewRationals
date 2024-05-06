@@ -1,7 +1,8 @@
 import os
 import shutil
 import math
-from multiprocessing import Pool, cpu_count, Manager
+from multiprocessing import Pool, cpu_count
+from threading import Lock
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from madcad import vec3, settings, Axis, X, Y, Z, Box, cylinder, brick, icosphere, cone
@@ -13,6 +14,7 @@ from timing import timing
 from color import _convert_color
 
 settings_file = r'settings.txt'
+mutex = Lock()
 
 
 def _del_folder(folder):
@@ -80,12 +82,16 @@ def _create_image(args):
         p = ptime * np.array(center) / center_time
         view.moveTo(p[0], p[1], p[2])
 
+    mutex.acquire()
     objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+    mutex.release()
     if not objs:
         print('------ NOT OBJS')
         return
 
+    mutex.acquire()
     img = view.render(image_resx, image_resy, objs)
+    mutex.release()
     if not img:
         print('------- NOT IMG')
         return
@@ -117,20 +123,13 @@ def _create_image(args):
 def _create_video(args):
     print('------- CREATING VIDEO')
 
-    path, image_resx, image_resy, init_time, end_time, \
-    prefix, suffix, num_frames, turn_angle, config, \
+    path, image_resx, image_resy, frame_rate, \
+    prefix, suffix, config, \
     number, period, factors, accumulate, dim_str,\
     shr_num_video_frames, clean_images = args
 
     shr_num_video_frames.value = -1
 
-    if accumulate and turn_angle == 0.:
-        frame_rate = config.get('frame_rate_accum')
-    else:
-        frame_rate = config.get('frame_rate')
-        if turn_angle == 0.0 and num_frames > 1 and end_time > init_time:
-            frame_rate = float(end_time - init_time) / float(num_frames)
-            num_frames = end_time - init_time
     ffmpeg_path = config.get('ffmpeg_path')
     video_path = config.get('video_path')
     video_format = config.get('video_format')
@@ -171,7 +170,7 @@ def _create_video(args):
 @timing
 def _saveImages(args):
 
-    shr_projection, shr_navigation, image_path, init_time, end_time, \
+    shr_projection, shr_navigation, image_path, init_time, end_time, frame_rate, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
     ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
@@ -225,8 +224,8 @@ def _saveImages(args):
         ))
 
     args_video = (
-        path, image_resx, image_resy, init_time, end_time,
-        prefix, suffix, num_frames, turn_angle, config,
+        path, image_resx, image_resy, frame_rate,
+        prefix, suffix, config,
         number, period, factors, accumulate, dim_str,
         shr_num_video_frames, clean_images
     ) if not single_image else ()

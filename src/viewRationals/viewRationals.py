@@ -258,7 +258,7 @@ class MainWindow(QtWidgets.QMainWindow):
         frame = int(self.time.value())
         self.saveVideo(init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1)
 
-    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, turn_angle=0, clean_images=True):
+    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, clean_images=True):
         if self.views.mode not in ['1D', '2D', '3D']:
             QtWidgets.QMessageBox.critical(self, 'ERROR', 'Split 3D view is not allowed for videos')
             return
@@ -269,12 +269,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         app.setOverrideCursor(QtCore.Qt.WaitCursor)
         image_path = self.config.get('image_path')
-        frame_rate = self.config.get('frame_rate')
+        frame_rate = fps
         single_image = False
         if num_frames == 1:
             single_image = True
-        if turn_angle > 0:
-            frame_rate = 25.0
         if num_frames == 0:
             if end_frame == 0:
                 num_frames = int(self.maxTime.value() * frame_rate)
@@ -302,6 +300,7 @@ class MainWindow(QtWidgets.QMainWindow):
             image_path,
             init_frame,
             end_frame,
+            frame_rate,
             subfolder,
             prefix,
             suffix,
