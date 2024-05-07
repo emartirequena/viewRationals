@@ -16,7 +16,7 @@
         {"alpha": 0.30, "color": [255,  82,  31]},
         {"alpha": 1.00, "color": [255, 157,   0]}
     ],
-    "background_color": [10, 10, 20],
+    "background_color": [255, 255, 255],
     "normalize_alpha": false,
     "alpha_pow": 0.6,
     "rad_factor": 0.75,
@@ -30,7 +30,7 @@
     "histogram_resy": 150,
     "histogram_max": 10000,
     "histogram_y_factor": 0.75,
-    "histogram_background": [0.1, 0.1, 0.1],
+    "histogram_background": [250, 250, 255],
     "list_color_not_period": [180, 0, 0],
     "list_color_not_period_prime": [255, 0, 255],
     "list_color_period_special": [0, 160, 160],
