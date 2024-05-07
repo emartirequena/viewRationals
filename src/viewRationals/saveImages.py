@@ -5,7 +5,8 @@ from multiprocessing import Pool, cpu_count
 from threading import Lock
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
-from madcad import vec3, settings, Axis, X, Y, Z, Box, cylinder, brick, icosphere, cone
+from madcad import vec3, settings
+import traceback
 
 from views import ViewRender
 from getObjects import get_objects
@@ -83,14 +84,26 @@ def _create_image(args):
         view.moveTo(p[0], p[1], p[2])
 
     mutex.acquire()
-    objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+    try:
+        objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+    except Exception as e:
+        print(f'ERROR creating objs: {str(e)}')
+        print(traceback.print_exc())
+        raise e
+    
     mutex.release()
     if not objs:
         print('------ NOT OBJS')
         return
 
     mutex.acquire()
-    img = view.render(image_resx, image_resy, objs)
+    try:
+        img = view.render(image_resx, image_resy, objs)
+    except Exception as e:
+        print(f'ERROR rendering image: {str(e)}')
+        print(traceback.print_exc())
+        raise e
+
     mutex.release()
     if not img:
         print('------- NOT IMG')
@@ -167,6 +180,10 @@ def _create_video(args):
     collect('save video')
 
 
+def _error_callback(val):
+    print(f'ERROR: {str(val)}')
+    print(traceback.print_exc())
+
 @timing
 def _saveImages(args):
 
@@ -174,7 +191,7 @@ def _saveImages(args):
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
     ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
-    max_time, shr_num_video_frames, clean_images, center, center_time = args
+    max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus = args
     
     number = int(number)
     period = int(period)
@@ -230,12 +247,10 @@ def _saveImages(args):
         shr_num_video_frames, clean_images
     ) if not single_image else ()
 
-    num_cpus = int(cpu_count() * 0.5)
-    num_cpus = 8
     chunksize = (range_frames // num_cpus) or 1
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
-    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize)
+    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, callback=_error_callback)
 
     return (pool, args_video)

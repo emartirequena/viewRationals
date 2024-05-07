@@ -258,7 +258,7 @@ class MainWindow(QtWidgets.QMainWindow):
         frame = int(self.time.value())
         self.saveVideo(init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1)
 
-    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, clean_images=True):
+    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, clean_images=True, num_cpus=8):
         if self.views.mode not in ['1D', '2D', '3D']:
             QtWidgets.QMessageBox.critical(self, 'ERROR', 'Split 3D view is not allowed for videos')
             return
@@ -324,7 +324,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.shr_num_video_frames,
             clean_images,
             self.selected_center,
-            self.selected_time
+            self.selected_time,
+            num_cpus
         )
 
         self.timer_video_count = 0
