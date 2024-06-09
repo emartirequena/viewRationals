@@ -134,7 +134,8 @@ class Rational():
 
 if __name__ == '__main__':
     dim = 1
-    T = 10
-    n = (2**dim)**int(T) - 1
-    r = Rational(8, 33, dim=dim)
-    print(r, r.reminders_list(), r.path(), r.digit(1), r.position(10), r.period)
+    T = 6
+    n = (2**dim)**T - 1
+    n = 7
+    r = Rational(1, n, dim=dim)
+    print(r, r.digits, r.reminders, sum(r.digits), sum(r.digits) % 7)

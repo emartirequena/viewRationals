@@ -66,7 +66,7 @@ def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
     config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
-    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames = args
+    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend = args
 
     settings.load(settings_file)
     settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
@@ -113,9 +113,10 @@ def _create_image(args):
     if accumulate:
         accum_str = 'Accum_'
 
-    number_img = _get_number_img(number, period, ptime, config)
-    img.alpha_composite(number_img, (10, image_resy - 40))
-    del number_img
+    if legend:
+        number_img = _get_number_img(number, period, ptime, config)
+        img.alpha_composite(number_img, (10, image_resy - 40))
+        del number_img
 
     file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
     print(f'------- save: {file_name}, time: {ptime}')
@@ -191,7 +192,8 @@ def _saveImages(args):
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
     ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
-    max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus = args
+    max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus, \
+    legend, image_resx, image_resy = args \
     
     number = int(number)
     period = int(period)
@@ -207,9 +209,6 @@ def _saveImages(args):
         path = _makePath(accumulate, factors, image_path, dim_str, period, number, single_image, subfolder)
     except Exception as e:
         print(f'ERROR: {str(e)}')
-
-    image_resx = config.get('image_resx')
-    image_resy = config.get('image_resy')
 
     if num_frames == 0:
         num_frames = end_time - init_time + 1
@@ -237,7 +236,7 @@ def _saveImages(args):
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
             config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
-            image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames
+            image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend
         ))
 
     args_video = (

@@ -258,7 +258,10 @@ class MainWindow(QtWidgets.QMainWindow):
         frame = int(self.time.value())
         self.saveVideo(init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1)
 
-    def saveVideo(self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, clean_images=True, num_cpus=8):
+    def saveVideo(
+            self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, 
+            clean_images=True, legend=True, num_cpus=8, resx=1920, resy=1080
+        ):
         if self.views.mode not in ['1D', '2D', '3D']:
             QtWidgets.QMessageBox.critical(self, 'ERROR', 'Split 3D view is not allowed for videos')
             return
@@ -325,7 +328,10 @@ class MainWindow(QtWidgets.QMainWindow):
             clean_images,
             self.selected_center,
             self.selected_time,
-            num_cpus
+            num_cpus,
+            legend,
+            resx,
+            resy
         )
 
         self.timer_video_count = 0
@@ -811,7 +817,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.changed_spacetime = True
 
     def callSaveVideo(self):
-        widget = SaveVideoWidget(self, self.timeWidget.value(), self.maxTime.value(), self.views.mode, self.saveVideo)
+        print(f'Video: ({self.config.get("image_resx")}, {self.config.get("image_resy")})')
+        widget = SaveVideoWidget(
+            self, self.timeWidget.value(), self.maxTime.value(), self.views.mode, 
+            self.config.get('image_resx'), self.config.get('image_resy'), self.saveVideo
+        )
         widget.show()
 
     def save(self):
