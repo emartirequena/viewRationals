@@ -2,8 +2,10 @@ from PyQt5 import QtWidgets
 from multiprocessing import cpu_count
 
 class SaveVideoWidget(QtWidgets.QDialog):
-    def __init__(self, parent, current_frame, max_time, views_mode, callback) -> None:
+    def __init__(self, parent, current_frame, max_time, views_mode, resx, resy, callback) -> None:
         super().__init__(parent)
+
+        print(f'Video Widget: ({resx}, {resy})')
 
         self.callback = callback
         
@@ -48,7 +50,7 @@ class SaveVideoWidget(QtWidgets.QDialog):
         self.num_cpu = QtWidgets.QSpinBox(self)
         self.num_cpu.setMinimum(1)
         self.num_cpu.setMaximum(cpu_count())
-        self.num_cpu.setValue(int(cpu_count() * 0.8))
+        self.num_cpu.setValue(int(cpu_count() * 0.5))
         self.gridlayout.addWidget(self.num_cpu, 4, 1)
 
         self.label4 = QtWidgets.QLabel('Turn degrees')
@@ -74,11 +76,31 @@ class SaveVideoWidget(QtWidgets.QDialog):
         self.subfolder = QtWidgets.QLineEdit(self)
         self.gridlayout.addWidget(self.subfolder, 8, 1)
 
-        self.label9 = QtWidgets.QLabel('Clean images')
+        self.label9 = QtWidgets.QLabel('Legend')
         self.gridlayout.addWidget(self.label9, 9, 0)
+        self.noLegend = QtWidgets.QCheckBox(self)
+        self.noLegend.setChecked(True)
+        self.gridlayout.addWidget(self.noLegend, 9, 1)
+
+        self.label10 = QtWidgets.QLabel('Clean images')
+        self.gridlayout.addWidget(self.label10, 10, 0)
         self.cleanImages = QtWidgets.QCheckBox(self)
         self.cleanImages.setChecked(True)
-        self.gridlayout.addWidget(self.cleanImages, 9, 1)
+        self.gridlayout.addWidget(self.cleanImages, 10, 1)
+
+        self.labelresx = QtWidgets.QLabel('res x')
+        self.gridlayout.addWidget(self.labelresx, 11, 0)
+        self.resx = QtWidgets.QSpinBox(self)
+        self.resx.setMaximum(10000)
+        self.resx.setValue(resx)
+        self.gridlayout.addWidget(self.resx, 11, 1)
+
+        self.labelresy = QtWidgets.QLabel('res y')
+        self.gridlayout.addWidget(self.labelresy, 12, 0)
+        self.resy = QtWidgets.QSpinBox(self)
+        self.resy.setMaximum(10000)
+        self.resy.setValue(resy)
+        self.gridlayout.addWidget(self.resy, 12, 1)
 
         self.hlayout = QtWidgets.QHBoxLayout()
         self.hlayout.addStretch()
@@ -121,7 +143,10 @@ class SaveVideoWidget(QtWidgets.QDialog):
             self.fps.value(),
             self.turn_degrees.value(),
             self.cleanImages.isChecked(),
-            self.num_cpu.value()
+            self.noLegend.isChecked(),
+            self.num_cpu.value(),
+            self.resx.value(),
+            self.resy.value()
         )
 
 

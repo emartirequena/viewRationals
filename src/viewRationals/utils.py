@@ -23,7 +23,7 @@ def collect(s=''):
         gc.collect(1)
         gc.collect()
 
-def pil2pixmap(img):
+def pil2pixmap(img): 
     if img.mode == "RGB":
         r, g, b = img.split()
         img = Image.merge("RGB", (b, g, r))
@@ -43,10 +43,10 @@ def make_video(
         ffmpeg_path: str, 
         in_sequence_path: str, 
         out_video_path: str, 
-        video_codec: str='prores', 
-        video_format: str='mov', 
-        frame_rate: int=1, 
-        bit_rate: int=4000, 
+        video_codec: str='libx264', 
+        video_format: str='mp4', 
+        frame_rate: int=25, 
+        bit_rate ='20M', 
         image_resx: int=1920, 
         image_resy: int=1080
 ):
