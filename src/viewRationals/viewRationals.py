@@ -256,7 +256,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def saveImage(self, subfolder=''):
         if subfolder == False: subfolder = ''
         frame = int(self.time.value())
-        self.saveVideo(init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1)
+        self.saveVideo(
+            init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1,
+            resx=self.config.get('image_resx'),
+            resy=self.config.get('image_resy')
+        )
 
     def saveVideo(
             self, init_frame=0, end_frame=0, subfolder='', prefix='', suffix='', num_frames=0, fps=1.0, turn_angle=0, 

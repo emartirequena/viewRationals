@@ -2,8 +2,7 @@ import json
 import os
 from config import Config
 from openpyxl import Workbook
-from random import randint
-from multiprocessing import Pool, freeze_support, get_context
+from multiprocessing import Pool, freeze_support
 from multiprocessing.managers import BaseManager
 from utils import getPeriod, divisors
 from timing import timing
