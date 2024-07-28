@@ -1,20 +1,38 @@
-import scipy as sc
-from sympy import nsimplify
-from random import shuffle, seed
-from time import time
+def num_ones(seq: list[int]) -> tuple[int]:
+    nx = 0
+    ny = 0
+    nz = 0
+    for d in seq:
+        nx += d % 2
+        ny += (d // 2) % 2
+        nz += (d // 4) % 2
+    return nx, ny, nz
 
-from rationals import Rational
 
+def get_digits(m: int, n: int, dim: int):
+    base = 2**dim
+    digits = []
+    rem = m
+    digit = rem * base // n
+    while True:
+        digits.append(digit)
+        prod = rem * base
+        rem = prod % n
+        digit = prod // n
+        if rem == m:
+            break
+    return digits
+    
 
 class Transform:
-    def __init__(self, dim, n, nx, ny=0, nz=0):
+    def __init__(self, dim: int, n: int, nx: float|int, ny: float|int=0, nz: float|int=0):
+        print('Transform', dim, n, nx, ny, nz)
         self.dim = dim
-        self.n = n
-        self.base = 2**self.dim
+        self.base = 2**dim
         self.set_velocity(n, nx, ny, nz)
 
     def _set_plug_input(self):
-        ratio = self.n // self.base + 1
+        ratio = self.n // self.base
 
         self.plug_input = {}
         p = 0
@@ -25,83 +43,107 @@ class Transform:
                     break
                 self.plug_input[str(i)].append(str(p))
                 p += 1
+        if p < self.n:
+            while p < self.n:
+                self.plug_input[str(self.base - 1)].append(str(p))
+                p += 1
 
-        # self.m = m
-        # self.n = n
-        # self.dim = dim
-        # self.base = 2**dim
-
-        # self.plug_input = {}
-        # i = 0
-        # j = 0
-        # bucket = self.m
-        # ci = 0
-        # cj = 0
-        # for _ in range(self.base):
-        #     self.plug_input[str(i)] = []
-        #     while bucket > 0:
-        #         self.plug_input[str(i)].append(str(j))
-        #         j = (j + 1) % self.n
-        #         bucket -= 1
-        #         cj += 1
-        #     i = (i + 1) % self.base
-        #     ci += 1
-        #     if self.base - ci <= 1:
-        #         bucket = self.n - cj
-        #     elif (self.n - cj) // self.m <= 1:
-        #         bucket = 1
-        #     else:
-        #         bucket = self.m
-
-    def set_velocity(self, n, nx, ny=0, nz=0):
-        seed(time())
+    def set_velocity(self, n: int, vx: float|int, vy: float|int=0, vz: float|int=0):
         self.n = n
+        if type(vx) is float or type(vy) is float or type(vz) is float:
+            self.vx = vx
+            self.vy = vy
+            self.vz = vz
+            if abs(vx) > 0.5 or abs(vy) > 0.5 or abs(vz) > 0.5:
+                raise Exception(f'Error: abs speed exceeds 0.5 ({vx}, {vy}, {vz})')
+            self.nx = int((vx+1)*n/2)
+            self.ny = int((vy+1)*n/2)
+            self.nz = int((vz+1)*n/2)
+            print(self.n, self.nx, self.ny, self.nz)
+        elif type(vx) is int and type(vy) is int and type (vz) is int:
+            self.nx = vx
+            self.ny = vy
+            self.nz = vz
+            self.vx = vx/n - 0.5
+            self.vz = vy/n - 0.5
+            self.vx = vz/n - 0.5
+        else:
+            raise Exception(f'Error: incongruent parameters ({self.vx}, {self.vy}, {self.vz})')
+
         self._set_plug_input()
 
-        ones_x = [1 for _ in range(nx)] + [0 for _ in range(n - nx)]
-        shuffle(ones_x)
-        
-        ones_y = [1 for _ in range(ny)] + [0 for _ in range(n - ny)]
-        shuffle(ones_y)
-        
-        ones_z = [1 for _ in range(nz)] + [0 for _ in range(n - nz)]
-        shuffle(ones_z)
+        self.output_modes = []
+        keys = {}
+        end = 2**(self.dim*n) - 1
+        for m in range(end):
 
-        while True:
-            flag = False
-            for offset in range(n):
-                self.plug_output = {}
-                out = set()
-                for i in range(n):
-                    pos = (i + offset) % n
-                    k = ones_x[pos]
-                    if dim > 1:
-                        k += ones_y[i] * 2
-                    if dim > 2:
-                        k += ones_z[i] * 4
-                    out.add(k)
-                    self.plug_output[str(i)] = [str(k)]
-                if len(out) == self.base:
-                    flag = True
-                    break
-            if flag:
-                break
-            shuffle(ones_x)
+            seq = get_digits(m, end, self.dim)
+            mx, my, mz = num_ones(seq) 
+            if mx != self.nx or my != self.ny or mz != self.nz:
+                continue
 
+            plug_output = {}
+            out = set()
+            for pos in range(n):
+                k = seq[pos%len(seq)]
+                out.add(k)
+                plug_output[str(pos)] = [str(k)]
+
+            if len(out) == self.base:
+                res_mode = {key: val for key, val in sorted(plug_output.items(), key=lambda ele: ele[1][0])}
+                res_form = {key: val for key, val in sorted(plug_output.items(), key=lambda ele: ele[0])}
+                smode = ''.join([ele[0] for ele in res_mode.values()])
+                sform = ''.join([ele[0] for ele in res_form.values()])
+                if smode not in keys:
+                    keys[smode] = {}
+                elif sform not in keys[smode]:
+                    keys[smode][sform] = res_form
+
+        for mode in range(len(keys)):
+            index_mode = list(keys.keys())[mode]
+            forms = list(keys[index_mode].values())
+            self.output_modes.append(forms)
+
+        for mode in range(len(self.output_modes)):
+            print(mode, len(self.output_modes[mode]))
+            
     def print(self):
-        print(f'{self.plug_input}\n{self.plug_output}')
+        print(self.plug_input)
+        for mode in range(self.get_num_modes()):
+            print(self.output_modes[mode])
 
-    def transform(self, digits: str):
+    def get_num_modes(self):
+        return len(self.output_modes)
+    
+    def get_num_forms(self, mode):
+        return len(self.output_modes[mode])
+    
+    def get_output_mode(self, mode):
+        return self.output_modes[mode]
+    
+    def get_output_form(self, mode, form):
+        return self.output_modes[mode][form]
+    
+    def get_plug_input(self):
+        return self.plug_input
+    
+    def get_num_seqs(self):
+        num = 0
+        for elem in self.plug_input.values():
+            num += len(elem)
+        return num
+
+    def transform(self, digits: str, mode: int=0, form: int=0) -> list[str]:
         seqs = self._input2mid(digits)
         output = []
         for seq in seqs:
             d = ''
             for i in seq:
-                d += self.plug_output[i][0]
+                d += self.output_modes[mode][form][i][0]
             output.append(d)
         return output
 
-    def _input2mid(self, digits: str):
+    def _input2mid(self, digits: str, level=0):
         outputs = []
 
         if not digits:
@@ -110,88 +152,13 @@ class Transform:
         i = digits[0]
         for d in self.plug_input[i]:
             if len(digits) == 1:
-                outputs.append(d)
+                outputs.append([d])
             else:
-                seqs = self._input2mid(digits[1:])
+                seqs = self._input2mid(digits[1:], level+1)
                 if not seqs:
-                    outputs.append(d)
+                    outputs.append([d])
                 else:
                     for seq in seqs:
-                        outputs.append(d + seq)
+                        outputs.append([d] + seq)
         return outputs
-
-def sum(digits):
-    total = 0
-    for d in digits:
-        total += int(d)
-    return total
-
-
-def position(digits, dim):
-    c = 0.5
-    x = 0.0
-    y = 0.0
-    z = 0.0
-    for d in digits:
-        nd = int(d)
-        x += c - nd % 2
-        if dim > 1:
-            y += c - (nd // 2) % 2
-        if dim > 2:
-            z += c - (nd // 4) % 2
-    l = len(digits)
-    nx = int(c * l - x)
-    ny = int(c * l - y) if dim > 1 else 0
-    nz = int(c * l - z) if dim > 2 else 0
-    pos = int(nx + (l+1) * (ny + (l+1) * nz))
-    return pos
-
-
-if __name__ == '__main__':
-    dim = 2
-    base = 2**dim
-    n = 7
-    nx = 2
-    ny = 4
-
-    transform = Transform(dim, n, nx, ny)
-    # transform.plug_output = {'0': ['0'], '1': ['0'], '2': ['0'], '3': ['1'], '4': ['2'], '5': ['2'], '6': ['3'], '7': ['3'], '8': ['3'], '9': ['3']}
-    transform.print()
-
-    nd = 8
-    max = base**nd
-    inputs = []
-    for n in range(max):
-        s = ''
-        for _ in range(nd):
-            s += str(n % base)
-            n //= base
-        inputs.append(s)
-
-    outputs = {}
-    for input in inputs:
-        seqs = transform.transform(input)
-        for seq in seqs:
-            if seq not in outputs:
-                outputs[seq] = 0
-            outputs[seq] += 1
-
-    total = 0
-    space = {}
-    for digits, num in outputs.items():
-        pos = position(digits, dim)
-        if pos not in space:
-            space[pos] = 0
-        space[pos] += num
-        total += num
-
-    l = 0
-    for _ in range(nd+1):
-        for x in range(nd+1):
-            num = space.get(l, 0)
-            weight = num / total
-            s = f'{weight:0.6f}'.replace('.', ',')
-            print(f'{s}', end='; ' if x < nd else '')
-            l += 1
-        print('', end='\n')
 
