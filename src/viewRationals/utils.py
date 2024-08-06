@@ -1,3 +1,4 @@
+import sys
 import os
 import gc
 from functools import reduce
@@ -176,6 +177,15 @@ def getPeriod(n: int, base: int) -> int:
         p = p + 1
     return p
 
+def getDivisorsOfPeriod(n: int, period: int, base: int):
+    output = []
+    divs = divisors(n)
+    for div in divs:
+        if getPeriod(div, base) != period:
+            continue
+        output.append(div)
+    return output
 
 if __name__ == '__main__':
-    print(getDivisorsAndFactors(4**4-1, 4))
+    getDivisorsOfPeriod(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+    

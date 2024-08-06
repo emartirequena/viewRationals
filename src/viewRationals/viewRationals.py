@@ -461,7 +461,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self._check_accumulate():
             max = self.spacetime.countPaths(int(self.time.value()), True)
         else:
-            max = int(self.number.value()) or 1
+            max = int(self.number.value() + 1)
         if selected_cells == 0:
             self.setStatus('Selected cells: 0')
             return
