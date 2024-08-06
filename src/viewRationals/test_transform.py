@@ -4,7 +4,7 @@ from openpyxl import Workbook
 from time import time
 from rationals import Rational
 from transform import Transform
-from multiprocessing import Pool, cpu_count, managers
+from multiprocessing import Pool, cpu_count, managers, freeze_support
 import gc
 
 
@@ -20,10 +20,10 @@ def count_ones(seq: list[list[str]]) -> tuple[int]:
     return nx, ny, nz
 
 
-class MyManager(managers.BaseManager):
-	...
+# class MyManager(managers.BaseManager):
+# 	...
 
-MyManager.register('Transform', Transform)
+# MyManager.register('Transform', Transform)
 
 
 def transform_digits(args):
@@ -215,6 +215,10 @@ def main3(fname, dim, n, T, nd, nx, ny=0, nz=0):
 
     print(f'({nd}, {nx}, {ny}) modes: {tr.get_num_modes()}')
 
+    nmodes = tr.get_num_modes()
+    if nmodes == 0:
+        raise Exception(f'ERROR: There are no modes for this transformation')
+    
     for mode in range(tr.get_num_modes()):
         
         # -------------------------------------------------
@@ -304,8 +308,9 @@ def main3(fname, dim, n, T, nd, nx, ny=0, nz=0):
 
 
 if __name__ == '__main__':
+    freeze_support()
     if len(sys.argv) < 4:
-        print(f'syntax: test2 <dim> <n> <T> <nd> <nx> [<ny> [<nz>]]')
+        print(f'syntax: test_transform.py <dim> <n> <T> <nd> <nx> [<ny> [<nz>]]')
         exit()
     dim = int(sys.argv[1])
     n = int(sys.argv[2])
