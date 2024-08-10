@@ -126,10 +126,10 @@ class Cell(object):
 		self.next_digits = dict(zip([x for x in range(2**self.dim)], [0 for _ in range(2**self.dim)]))
 		for x in [x for x in range(2**self.dim)]:
 			self.next_digits[x] = next_digits[str(x)]
-		self.rationals = HashRationals(self.n)
-		for rational in rationals:
-			for m in rational['m']:
-				self.rationals.add(m, rational['m'], rational['digits'], rational['time'])
+		# self.rationals = HashRationals(self.n)
+		# for rational in rationals:
+		# 	for m in rational['m']:
+		# 		self.rationals.add(m, rational['m'], rational['digits'], rational['time'])
 
 
 class Space(object):
