@@ -102,7 +102,6 @@ def cartesianproduct(lists) :
 def primefactors(n: int) -> list[int]:
     """lists prime factors, from greatest to smallest"""
     i:int = 3
-    # limit:int = n // (4 if n < 100000000 else 4096)
     limit:int = int(sqrt(float(n)))
     while i <= limit:
         if n % i == 0:
@@ -178,14 +177,19 @@ def getPeriod(n: int, base: int) -> int:
     return p
 
 def getDivisorsOfPeriod(n: int, period: int, base: int):
-    output = []
     divs = divisors(n)
-    for div in divs:
-        if getPeriod(div, base) != period:
-            continue
-        output.append(div)
-    return output
+    return divs[1:]
 
 if __name__ == '__main__':
-    getDivisorsOfPeriod(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+    if len(sys.argv) != 3:
+        print(f'Syntax: python utils.py <n> <base>')
+        exit()
+
+    n = int(sys.argv[1])
+    base = int(sys.argv[2])
+    divs = divisors(n)
+    for div in divs:
+        print(div)
+    print(f'num divisors: {len(divs)}')
+    print(f'period: {getPeriod(n, base)}')
     

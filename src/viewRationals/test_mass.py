@@ -10,7 +10,7 @@ root = r'C:\Users\emart\OneDrive\Documentos\Enrique\ArticuloRacionales\hojas'
 def main(maxT: int, base: int, name: str):
     output = []
     for T in range(2, maxT + 1, 2):
-        n = int(base**(T/2) + 1)
+        n = int(base**(T/2)) + 1
         a = (T*2) + 2
         print(T, n)
 
@@ -56,5 +56,3 @@ if __name__ == '__main__':
         exit()
 
     main(int(sys.argv[1]), int(sys.argv[2]), sys.argv[3])
-
-
