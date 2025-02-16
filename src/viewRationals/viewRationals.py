@@ -49,9 +49,9 @@ class VideoThread(Thread):
         self.parent.setStatus(f'Creating single image or video sequence, please wait...')
         self.processes = self.func_process(self.args_process)
         self.processes[0].close()
-        print(f'>>>>>>> Close create images...')
+        # print(f'>>>>>>> Close create images...')
         self.processes[0].join()
-        print(f'>>>>>>> Join create images')
+        # print(f'>>>>>>> Join create images')
         if not self.killed and not self.single_image and self.processes[1]:
             self.func_video(self.processes[1])
             self.parent.setStatus(f'Video saved for number {int(self.parent.number.value()):d} in {get_duration():.2f} secs')
@@ -139,7 +139,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.histogram:
                 self.histogram.clear()
         else:
-            print('------- making view in _clear_view()')
+            # print('------- making view in _clear_view()')
             self.make_view(0)
         if self.cell_ids:
             del self.cell_ids
@@ -196,11 +196,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self._clear_parameters()
 
     def setTimeInit(self):
-        print('------- set init time')
+        # print('------- set init time')
         self.timeWidget.setValue(0)
 
     def setTimeEnd(self):
-        print('------- set max time')
+        # print('------- set max time')
         self.timeWidget.setValue(self.maxTime.value())
 
     def moveNextCycle(self):
@@ -227,13 +227,13 @@ class MainWindow(QtWidgets.QMainWindow):
             self.timeWidget.setValue(0)
 
     def decrementTime(self):
-        print('------- decrement time...')
+        # print('------- decrement time...')
         t = self.timeWidget.value()
         if t > 0:
             self.timeWidget.setValue(t - 1)
 
     def incrementTime(self):
-        print('------- increment time...')
+        # print('------- increment time...')
         t = self.timeWidget.value()
         if t < self.maxTime.value():
             self.timeWidget.setValue(t + 1)
@@ -259,7 +259,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.saveVideo(
             init_frame=frame, end_frame=frame, subfolder=subfolder, num_frames=1,
             resx=self.config.get('image_resx'),
-            resy=self.config.get('image_resy')
+            resy=self.config.get('image_resy'),
+            legend=self.config.get('image_legend')
         )
 
     def saveVideo(
@@ -390,7 +391,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.selected_center = (x, y, z)
         self.selected_time = self.timeWidget.value()
         self._select_time_changed()
-        print(f'******* Setting center to ({x}, {y}, {z})')
+        # print(f'******* Setting center to ({x}, {y}, {z})')
 
     def deselect_center(self):
         self.selected_center = None
@@ -404,7 +405,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.views.moveTo(p[0], p[1], p[2])
         self.views.update()
         self.update()
-        print(f'******* Move center to ({p[0]}, {p[1]}, {p[2]})')
+        # print(f'******* Move center to ({p[0]}, {p[1]}, {p[2]})')
 
     def select_cells(self, count):
         if not count:
@@ -585,12 +586,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def make_view(self, objs=None, count_cells=0):
         objs = objs or {}
         if not self.views:
-            print("view doesn't exists...")
+            # print("view doesn't exists...")
             self.views = Views(self, parent=self)
             self.viewLayout.addWidget(self.views)
             
         elif not self.first_number_set:
-            print('setting first number...')
+            # print('setting first number...')
             self.first_number_set = True
             self.views.initialize(objs)
             if not self.histogram: 
@@ -601,7 +602,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
         else:
-            print('continue setting number...')
+            # print('continue setting number...')
             self.views.reset(objs)
             self.histogram.set_number(int(self.number.value()))
             self.histogram.set_rationals(self.selected_rationals)
@@ -703,14 +704,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setStatus('Computing divisors...')
         self.need_compute = True
         T = int(self.period.value())
-        self.fillDivisors(T)
+        own_divisors, num_divisors = self.fillDivisors(T)
         label = self.get_factors(list(self.numbers.keys())[-1])
         self.factorsLabel.setText(label)
-        self.label_num_divisors.setText(f'{len(self.divisors)}')
+        self.label_num_divisors.setText(f'{own_divisors} / {num_divisors}')
         self.cycles = (4 if T < 8 else (3 if T < 17 else 2))
         self.timeWidget.valueChanged.disconnect(self.timeChanged)
         self.maxTime.setValue(T * self.cycles)
-        # self.timeWidget.setValue(T * self.cycles)
         self.maxTime.setSingleStep(T)
         self.timeWidget.valueChanged.connect(self.timeChanged)
         self.setStatus('Divisors computed. Select now a number from the list and press the Compute button')
@@ -718,11 +718,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def _to_qt_list_color(self, color_name):
         return QtGui.QColor(*[int(255 * x) for x in _convert_color(self.config.get(color_name))])
 
-    def fillDivisors(self, T: int):
+    def fillDivisors(self, T: int) -> int:
         not_period = self._to_qt_list_color('list_color_not_period')
         not_period_prime = self._to_qt_list_color('list_color_not_period_prime')
         period_special = self._to_qt_list_color('list_color_period_special')
         period_not_special = self._to_qt_list_color('list_color_period_not_special')
+
+        own_divisors = 0
 
         a = int(2 ** self.dim)
         b = int(T)
@@ -740,6 +742,8 @@ class MainWindow(QtWidgets.QMainWindow):
             x: int = record['number']
             factors: dict = record['factors']
             period: int = record['period']
+            if period == T:
+                own_divisors += 1
             item = QtWidgets.QListWidgetItem(f'{x} ({period}) = {self.get_factors(x)}')
             is_prime: bool = True if x in factors.keys() and factors[x] == 1 else False
             is_special: bool = False
@@ -756,6 +760,8 @@ class MainWindow(QtWidgets.QMainWindow):
                     item.setForeground(period_not_special)
             item.setData(Qt.UserRole, is_special)
             self.divisors.addItem(item)
+
+        return own_divisors, len(self.numbers)
                 
     def setNumber(self, index):
         self.need_compute = True

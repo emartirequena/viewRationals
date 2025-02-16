@@ -15,6 +15,7 @@ a = Analysis(
 		('.\\src\\viewRationals\\NotoMono-Regular.ttf', '.'),
 		('C:\\Python310\\Lib\\site-packages\\madcad\\shaders\\*.*', '.\\madcad\\shaders'),
 		('C:\\Python310\\Lib\\site-packages\\madcad\\textures\\*.*', '.\\madcad\\textures'),
+		('C:\\Python310\\Lib\\site-packages\\freetype\*.*', '.\\freetype'),
 	],
     hiddenimports=['madcad', 'glcontext', 'PyQt5', 'sip'],
     hookspath=[],

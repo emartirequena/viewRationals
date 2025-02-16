@@ -17,9 +17,10 @@ def check_ffmpeg(ffmpeg_path: str) -> bool:
 
 
 def collect(s=''):
-    if s:
-        print(f'------- {max(gc.collect(2), gc.collect(1), gc.collect())} objects cleaned for {s}...')
-    else:
+    # if s:
+    #     print(f'------- {max(gc.collect(2), gc.collect(1), gc.collect())} objects cleaned for {s}...')
+    # else:
+    if not s:
         gc.collect(2)
         gc.collect(1)
         gc.collect()
@@ -176,14 +177,20 @@ def getPeriod(n: int, base: int) -> int:
         p = p + 1
     return p
 
-def getDivisorsOfPeriod(n: int, period: int, base: int):
+def getDivisorsOfPeriod(n: int, base: int):
+    period = getPeriod(n, base)
     divs = divisors(n)
-    return divs[1:]
+    out = []
+    for div in divs:
+        if getPeriod(div, base) != period:
+            continue
+        out.append(div)
+    return out
 
-if __name__ == '__main__':
+def printDivisors():
     if len(sys.argv) != 3:
         print(f'Syntax: python utils.py <n> <base>')
-        exit()
+        return
 
     n = int(sys.argv[1])
     base = int(sys.argv[2])
@@ -192,4 +199,7 @@ if __name__ == '__main__':
         print(div)
     print(f'num divisors: {len(divs)}')
     print(f'period: {getPeriod(n, base)}')
-    
+
+
+if __name__ == '__main__':
+    printDivisors()
