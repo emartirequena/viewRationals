@@ -448,7 +448,7 @@ class SpaceTime(object):
 	@timing
 	def addRationalSet(self, t=0, x=0, y=0, z=0):
 		self.spaces.clear()
-		print(f'algorithm: {self.algorithm}')
+		# print(f'algorithm: {self.algorithm}')
 
 		if self.algorithm == 0:
 			for r in self.rationalSet:

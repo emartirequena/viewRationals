@@ -3,6 +3,8 @@ import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
 from spacetime import Cell, c
 from utils import get_alpha
+from config import config
+from color import _convert_color
 
 
 def _get_next_number_dir(dim, cell: Cell):
@@ -123,6 +125,8 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
             num_id += 1
 
     if view_next_number: 
+        length_factor = config.get('next_pos_length')
+        rad_factor = config.get('next_pos_rad')
         min_dir = 1000000
         max_dir = -1000000
         for cell in view_cells:
@@ -146,17 +150,18 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
             mod_dir = k
 
             base = vec3(cell.x, cell.y, cell.z)
-            dir_len = 5.0
+            dir_len = 5.0 * length_factor
             if dim == 1:
                 base = vec3(cell.x, 0.0, -1.0)
-                dir_len = 3.0
+                dir_len = 3.0 * length_factor
             elif dim == 2:
                 base = vec3(cell.x, 0, cell.y)
 
             color = vec3(0.6, 0.8, 1.0)
+            color = vec3(*_convert_color(config.get('next_pos_color')))
 
             top = base + dir * dir_len * 0.6
-            rad = mod_dir * 0.4 * 0.8
+            rad = mod_dir * 0.4 * 0.8 * rad_factor
             obj = cylinder(top, base, rad)
             obj.option(color=color)
             objs[num_id] = obj
@@ -164,7 +169,7 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
 
             base = top
             top = base + dir * dir_len * 0.4
-            rad = mod_dir * 0.4
+            rad = mod_dir * 0.4 * rad_factor
             obj = cone(top, base, rad) 
             obj.option(color=color)
             objs[num_id] = obj

@@ -12,7 +12,7 @@ def timing(f):
         ret = f(*args, **kwargs)
         end_time = time.time()
         last_duration = end_time - init_time
-        print(f'------- {f.__name__:s}() took {last_duration:.2f} secs')
+        # print(f'------- {f.__name__:s}() took {last_duration:.2f} secs')
         return ret
     return wrap
 
