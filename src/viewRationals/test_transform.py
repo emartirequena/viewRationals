@@ -215,11 +215,11 @@ def main3(fname, dim, n, T, nd, nx, ny=0, nz=0):
 
     print(f'({nd}, {nx}, {ny}) modes: {tr.get_num_modes()}')
 
-    nmodes = tr.get_num_modes()
-    if nmodes == 0:
+    num_modes = tr.get_num_modes()
+    if num_modes == 0:
         raise Exception(f'ERROR: There are no modes for this transformation')
     
-    for mode in range(tr.get_num_modes()):
+    for mode in range(num_modes):
         
         # -------------------------------------------------
         ws = wb.create_sheet(str(mode))
@@ -309,7 +309,7 @@ def main3(fname, dim, n, T, nd, nx, ny=0, nz=0):
 
 if __name__ == '__main__':
     freeze_support()
-    if len(sys.argv) < 4:
+    if not (5 < len(sys.argv) < 8):
         print(f'syntax: test_transform.py <dim> <n> <T> <nd> <nx> [<ny> [<nz>]]')
         exit()
     dim = int(sys.argv[1])
