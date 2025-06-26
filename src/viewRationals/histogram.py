@@ -375,27 +375,3 @@ class Histogram(QtWidgets.QWidget):
         self.scene.scale(pos, step)
         self.reset()
         a0.accept()
-
-
-if __name__ == '__main__':
-    import sys
-    from spacetime import SpaceTime
-
-    n = 32769
-    T = 10
-    max = 30
-    dim = 3
-
-    spacetime = SpaceTime(T=T, max=max, dim=dim)
-    spacetime.setRationalSet(n)
-    spacetime.addRationalSet()
-
-    app = QtWidgets.QApplication(sys.argv)
-
-    histogram = Histogram()
-    histogram.set_number(n)
-    histogram.set_spacetime(spacetime)
-    histogram.set_time(max, max)
-    histogram.show()
-
-    sys.exit(app.exec())

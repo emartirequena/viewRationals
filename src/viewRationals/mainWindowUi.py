@@ -289,6 +289,14 @@ class MainWindowUI:
 
         mw.menu.addMenu(mw.menuTime)
 
+        mw.menuTransform = QtWidgets.QMenu('Transform')
+        mw.actionTransform = QtWidgets.QAction('Transform', mw.centralWidget())
+        mw.actionTransform.setShortcut('Crtl+T')
+        mw.actionTransform.setShortcutContext(QtCore.Qt.ApplicationShortcut)
+        mw.actionTransform.triggered.connect(mw.applyTransform)
+        mw.menuTransform.addAction(mw.actionTransform)
+        mw.menu.addMenu(mw.menuTransform)
+
         mw.statusBar = QtWidgets.QStatusBar(mw)
         mw.statusLabel = QtWidgets.QLabel()
         mw.statusBar.addWidget(mw.statusLabel)

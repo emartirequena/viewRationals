@@ -1,7 +1,9 @@
 import numpy as np
 import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
-from spacetime import Cell, c
+from spacetime_numba import SpaceTime
+from cell_numba import Cell
+from rationals_numba import c   
 from utils import get_alpha
 from config import config
 from color import _convert_color
@@ -31,7 +33,24 @@ def _get_next_number_dir(dim, cell: Cell):
     return v * cell.count
 
 
-def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime):
+def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime):
+    """
+    Get objects for the spacetime visualization.
+
+    Parameters:
+    - spacetime: The spacetime object.
+    - number: The number of objects to create.
+    - dim: The dimension of the spacetime.
+    - accumulate: Whether to accumulate the objects.
+    - rationals: The list of rational numbers to check.
+    - config: The configuration object.
+    - ccolor: The color configuration object.
+    - view_objects: Whether to view objects.
+    - view_time: Whether to view time.
+    - view_next_number: Whether to view the next number.
+    - max_time: The maximum time value.
+    - ptime: The current time value.
+    """
     if not spacetime:
         return {}, 0, {}
     if number == 0:
@@ -40,10 +59,11 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
         return {}, 0, {}
 
     if rationals:
-        view_cells = spacetime.getCellsWithRationals(rationals, ptime, accumulate=accumulate)
+        view_cells = spacetime.getCellsWithRationals(rationals, ptime, accumulate)
     else:
-        view_cells = spacetime.getCells(ptime, accumulate=accumulate)
+        view_cells = spacetime.getCells(ptime, accumulate)
     count = len(view_cells)
+    print(f"Number of cells at time {ptime}: {count}")
 
     normalize_alpha = config.get('normalize_alpha')
     alpha_pow = config.get('alpha_pow')
@@ -55,6 +75,7 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
         rad_factor = config.get('rad_factor_accum')
         rad_pow = config.get('rad_pow_accum')
     rad_min = config.get('rad_min')
+
     max_faces = config.get('max_faces')
     faces_pow = config.get('faces_pow')
 
@@ -63,13 +84,13 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
     count = 0
     for cell in view_cells:
         cell_count = cell.count
-        if rationals:
-            cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
-        if cell_count > max:
-            max = cell_count
         if cell_count > 0:
+            if rationals:
+                cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
+            if cell_count > max:
+                max = cell_count
             count += 1
-        total += cell_count
+            total += cell_count
 
     max_spaces_time = spacetime.getMaxTime(accumulate)
     
@@ -90,7 +111,8 @@ def get_objects(spacetime, number, dim, accumulate, rationals, config, ccolor, v
             elif dim == 2:
                 obj = cylinder(vec3(cell.x, 0, cell.y), vec3(cell.x, alpha*10, cell.y), rad)
             else:
-                height = 14 * float(cell_count) / float(number)
+                # height = 14 * float(cell_count) / float(number)
+                height = 14 * float(cell_count) / float(total)
                 obj = brick(vec3(cell.x - c, 0, 0), vec3(cell.x + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj

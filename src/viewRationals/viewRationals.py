@@ -15,22 +15,24 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime import SpaceTime
+from spacetime_numba import SpaceTime, addRationalSet
 from utils import getDivisorsAndFactors, divisors, make_video, collect
 from timing import timing, get_duration
 from config import config
 from color import ColorLine, _convert_color
 from histogram import Histogram
 from saveImages import _saveImages, _create_video
+from transform_numba import Transform
+from transformWidget import TransformWidget
 
 
 settings_file = r'settings.txt'
 opengl_version = (3,3)
 
-class MyManager(managers.BaseManager):
-	...
+# class MyManager(managers.BaseManager):
+# 	...
 
-MyManager.register('SpaceTime', SpaceTime)
+# MyManager.register('SpaceTime', SpaceTime)
 
 
 class VideoThread(Thread):
@@ -106,9 +108,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.view_objects = True
         self.view_time = False
         self.view_next_number = False
-        self.manager = MyManager()
-        self.manager.start()
-        self.spacetime: SpaceTime = self.manager.SpaceTime(2, 2, 2, 1)
+        # self.manager = MyManager()
+        # self.manager.start()
+        # self.spacetime: SpaceTime = self.manager.SpaceTime(2, 2, 2, 1)
+        self.spacetime: SpaceTime = SpaceTime(2, 2, 2, 1)
+        self.transform = Transform()
         self.video_thread = None
         self.factors = ''
         self.num = 0
@@ -511,7 +515,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.changed_spacetime:
             self.setStatus('Creating incremental spacetime...')
-            self.spacetime.reset(self.period.value(), n, self.maxTime.value(), dim=self.dim)
+            self.spacetime.reset(self.period.value(), n, self.maxTime.value(), self.dim)
             self.changed_spacetime = False
             self.need_compute = False
 
@@ -521,7 +525,16 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spacetime.setRationalSet(n, self.is_special)
 
         self.setStatus(f'Adding rational set for number: {n}...')
-        self.spacetime.addRationalSet()
+        addRationalSet(
+            self.spacetime.rationalSet,
+            self.spacetime.transform,
+            self.dim,
+            self.spacetime.T,
+            self.spacetime.spaces,
+            self.spacetime.is_special,
+            self.spacetime.max_val,
+            0, 0.0, 0.0, 0.0
+        )
         self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
@@ -887,6 +900,10 @@ class MainWindow(QtWidgets.QMainWindow):
             app.restoreOverrideCursor()
             time2 = time()
             self.setStatus(f'File {os.path.basename(in_file_name)} loaded in {time2 - time1:0.2f} segs')
+
+    def applyTransform(self):
+        transformWidget = TransformWidget(self.spacetime.transform, self.dim, self)
+        transformWidget.show()
 
 
 if __name__=="__main__":
