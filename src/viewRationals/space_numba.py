@@ -1,5 +1,6 @@
 from numba import int32, float64
 from numba.experimental import jitclass
+from numba import types
 from numba.typed import List
 from numba.types import ListType
 import numpy as np
@@ -64,18 +65,19 @@ class Space:
         return self.num_cells
 
     def getCells(self):
+        """ Obtener una lista de celdas con sus datos."""
         return self.cells
-    
+
     def countPaths(self):
         num_paths = 0
         for i in range(self.num_cells):
             num_paths += self.cells[i].get_count()
         return num_paths
 
-    def add(self, time, digits, m, next_digit, x, y, z):
+    def add(self, count, time, m, next_digit, x, y, z):
         cell: Cell = self.getCell(x, y, z)
         if cell is not None:
-            cell.add(time, digits, m, next_digit)
+            cell.add(count, time, m, next_digit)
 
     def clear(self):
         # Crear nuevas estructuras en lugar de usar del

@@ -1,44 +1,65 @@
 import numpy as np
 import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
-from spacetime_numba import SpaceTime
 from cell_numba import Cell
 from rationals_numba import c   
 from utils import get_alpha
-from config import config
 from color import _convert_color
 
 
 def _get_next_number_dir(dim, cell: Cell):
+    next_digits = cell.get_next_digits()
     if dim == 1:
-        v1 = np.array([ 1,  0,  0]) * cell.next_digits[0]
-        v2 = np.array([-1,  0,  0]) * cell.next_digits[1]
+        v1 = np.array([ 1,  0,  0]) * next_digits[0]
+        v2 = np.array([-1,  0,  0]) * next_digits[1]
         v = (v1 + v2) / 2.0
     elif dim == 2:
-        v1 = np.array([ 1,  0,  1]) * cell.next_digits[0]
-        v2 = np.array([-1,  0,  1]) * cell.next_digits[1]
-        v3 = np.array([ 1,  0, -1]) * cell.next_digits[2]
-        v4 = np.array([-1,  0, -1]) * cell.next_digits[3]
+        v1 = np.array([ 1,  0,  1]) * next_digits[0]
+        v2 = np.array([-1,  0,  1]) * next_digits[1]
+        v3 = np.array([ 1,  0, -1]) * next_digits[2]
+        v4 = np.array([-1,  0, -1]) * next_digits[3]
         v = (v1 + v2 + v3 + v4) / 4.0
     else:
-        v1 = np.array([ 1,  1,  1]) * cell.next_digits[0]
-        v2 = np.array([-1,  1,  1]) * cell.next_digits[1]
-        v3 = np.array([ 1,  1, -1]) * cell.next_digits[2]
-        v4 = np.array([-1,  1, -1]) * cell.next_digits[3]
-        v5 = np.array([ 1, -1,  1]) * cell.next_digits[4]
-        v6 = np.array([-1, -1,  1]) * cell.next_digits[5]
-        v7 = np.array([ 1, -1, -1]) * cell.next_digits[6]
-        v8 = np.array([-1, -1, -1]) * cell.next_digits[7]
+        v1 = np.array([ 1,  1,  1]) * next_digits[0]
+        v2 = np.array([-1,  1,  1]) * next_digits[1]
+        v3 = np.array([ 1,  1, -1]) * next_digits[2]
+        v4 = np.array([-1,  1, -1]) * next_digits[3]
+        v5 = np.array([ 1, -1,  1]) * next_digits[4]
+        v6 = np.array([-1, -1,  1]) * next_digits[5]
+        v7 = np.array([ 1, -1, -1]) * next_digits[6]
+        v8 = np.array([-1, -1, -1]) * next_digits[7]
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
     return v * cell.count
 
+def _num_intersect_rationals(rationals, cell_rationals):
+    """
+    Count the number of rationals that intersect with the cell's rationals.
 
-def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime):
+    Parameters:
+    - rationals: The list of rational numbers to check.
+    - cell_rationals: The list of rational numbers in the cell.
+
+    Returns:
+    - The count of intersecting rationals.
+    """
+    if not rationals:
+        return 0
+    if not cell_rationals:
+        return 0
+    count = 0
+    for i in range(len(rationals)):
+        for j in range(len(cell_rationals)):
+            if rationals[i] == cell_rationals[j]:
+                count += 1
+                break
+    return count
+
+def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
 
     Parameters:
-    - spacetime: The spacetime object.
+    - view_cells: The cells to visualize.
     - number: The number of objects to create.
     - dim: The dimension of the spacetime.
     - accumulate: Whether to accumulate the objects.
@@ -50,20 +71,16 @@ def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config
     - view_next_number: Whether to view the next number.
     - max_time: The maximum time value.
     - ptime: The current time value.
+    - max_spaces_time: The maximum time across all spaces.
     """
-    if not spacetime:
+    if not view_cells:
         return {}, 0, {}
     if number == 0:
         return {}, 0, {}
-    if ptime > spacetime.len():
-        return {}, 0, {}
 
-    if rationals:
-        view_cells = spacetime.getCellsWithRationals(rationals, ptime, accumulate)
-    else:
-        view_cells = spacetime.getCells(ptime, accumulate)
     count = len(view_cells)
-    print(f"Number of cells at time {ptime}: {count}")
+    if count == 0:
+        return {}, 0, {}
 
     normalize_alpha = config.get('normalize_alpha')
     alpha_pow = config.get('alpha_pow')
@@ -82,18 +99,17 @@ def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config
     total = 0
     max = -1
     count = 0
-    for cell in view_cells:
+    for i in range(len(view_cells)):
+        cell: Cell = view_cells[i]
         cell_count = cell.count
         if cell_count > 0:
-            if rationals:
-                cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
+            if len(rationals) > 0:
+                cell_count = _num_intersect_rationals(rationals, cell.get_rationals())
             if cell_count > max:
                 max = cell_count
             count += 1
             total += cell_count
 
-    max_spaces_time = spacetime.getMaxTime(accumulate)
-    
     num_id = 0
     objs = {}
     cell_ids = {}
@@ -101,19 +117,19 @@ def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config
     if view_objects:
         for cell in view_cells:
             cell_count = cell.count
-            if rationals:
-                cell_count = len(set(rationals).intersection(set(cell.get()['rationals'])))
+            if len(rationals) > 0:
+                cell_count = _num_intersect_rationals(rationals, cell.get_rationals())
             alpha, rad = get_alpha(cell_count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
+            pos = (cell.x, cell.y, cell.z)
             if dim == 3:
-                obj = icosphere(vec3(cell.x, cell.y, cell.z), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
+                obj = icosphere(vec3(pos[0], pos[1], pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
             elif dim == 2:
-                obj = cylinder(vec3(cell.x, 0, cell.y), vec3(cell.x, alpha*10, cell.y), rad)
+                obj = cylinder(vec3(pos[0], 0, pos[1]), vec3(pos[0], alpha*10, pos[1]), rad)
             else:
-                # height = 14 * float(cell_count) / float(number)
                 height = 14 * float(cell_count) / float(total)
-                obj = brick(vec3(cell.x - c, 0, 0), vec3(cell.x + c, 1, height))
+                obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
             if cell.count not in cell_ids:
@@ -131,19 +147,21 @@ def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config
                 continue
             color = ccolor.getColor(alpha)
 
+            pos = (cell.x, cell.y, cell.z)
             if dim == 3:
                 f = 4 * rad
-                obj = icosahedron(vec3(cell.x, cell.y, cell.z), f)
+                obj = icosahedron(vec3(pos[0], pos[1], pos[2]), f)
             elif dim == 2:
-                obj = brick(vec3(cell.x - c, 0, cell.y - c), vec3(cell.x + c, alpha*10, cell.y + c))
+                obj = brick(vec3(pos[0] - c, 0, pos[1] - c), vec3(pos[0] + c, alpha*10, pos[1] + c))
             else:
                 height = 14 * alpha
-                obj = brick(vec3(cell.x - c, 0, 0), vec3(cell.x + c, 1, height))
+                obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            if cell.count not in cell_ids:
-                cell_ids[cell.count] = []
-            cell_ids[cell.count].append(num_id)
+            num = cell['count']
+            if num not in cell_ids:
+                cell_ids[num] = []
+            cell_ids[num].append(num_id)
             num_id += 1
 
     if view_next_number: 
@@ -171,13 +189,14 @@ def get_objects(spacetime: SpaceTime, number, dim, accumulate, rationals, config
             dir = dir * k / mod_dir
             mod_dir = k
 
-            base = vec3(cell.x, cell.y, cell.z)
+            pos = (cell.x, cell.y, cell.z)
+            base = vec3(pos[0], pos[1], pos[2])
             dir_len = 5.0 * length_factor
             if dim == 1:
-                base = vec3(cell.x, 0.0, -1.0)
+                base = vec3(pos[0], 0.0, -1.0)
                 dir_len = 3.0 * length_factor
             elif dim == 2:
-                base = vec3(cell.x, 0, cell.y)
+                base = vec3(pos[0], 0, pos[1])
 
             color = vec3(0.6, 0.8, 1.0)
             color = vec3(*_convert_color(config.get('next_pos_color')))

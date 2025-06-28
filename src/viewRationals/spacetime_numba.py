@@ -3,6 +3,7 @@ from numba.experimental import jitclass
 from numba.typed import List
 from numba.types import ListType
 import numpy as np
+from time import time
 
 from spaces_numba import Spaces
 from space_numba import Space
@@ -117,6 +118,7 @@ class SpaceTime:
     def addRationalSet(self, t, x, y, z):
         """Add a set of rationals to the spaces."""
         addRationalSet(
+            self.n,
             self.rationalSet, 
             self.transform, 
             self.dim, 
@@ -152,21 +154,41 @@ def create_spacetime(T, n, max_val, dim=1):
     """Factory function to create a SpaceTime instance."""
     return SpaceTime(T, n, max_val, dim)
 
-# Non-jitclass utility function to add a rational set to spaces
-def addRationalSet(rationalset, transform: Transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
+# jitclass utility function to add a rational set to spaces
+def addRationalSet(n, rationalset, transform: Transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
     """Add a single rational to spaces."""
+    hash = {}
+    print(f"Transforming rational set with {len(rationalset)} rationals")
+    init  = time()
     for r in rationalset:
         paths = transform.transform_path(r.path_uint8(T))
         for path in paths:
-            rat = Rational()
-            rat.from_digits(path, dim)
-            digits = rat.path_uint8(T)
-            for rt in range(max_val + 1):
-                px, py, pz = rat.position(t+rt)
-                px += x
-                py += y
-                pz += z
-                m = rat.m
-                next_digit = digits[(t+rt+1) % T]
-                time = rat.time(t+rt)
-                spaces.add(is_special, t+rt, digits, m, next_digit, time, T, px, py, pz)
+            spath = uint8_array_to_string(path)
+            if spath not in hash:
+                hash[spath] = 1
+            else:
+                hash[spath] += 1
+    end = time()
+    print(f'Transformation took {end - init:.2f} seconds')
+
+    print(f'Adding {len(hash)} unique paths to spaces at time {t}')
+    init = time()
+    base = 2 ** (dim * T) - 1
+    for spath in hash:
+        count = hash[spath]
+        path = string_to_uint8_array(spath)
+        rat = Rational()
+        rat.from_digits(path, dim)
+        digits = rat.path_uint8(T)
+        for rt in range(max_val + 1):
+            px, py, pz = rat.position(t+rt)
+            px += x
+            py += y
+            pz += z
+            m = int(rat.m * n / base)
+            next_digit = digits[(t+rt+1) % T]
+            rtime = rat.time(t+rt)
+            spaces.add(count, is_special, t+rt, m, next_digit, rtime, T, px, py, pz)
+    end = time()
+    print(f'Adding took {end - init:.2f} seconds')
+

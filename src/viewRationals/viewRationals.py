@@ -6,6 +6,8 @@ from threading import Thread
 from copy import deepcopy
 from multiprocessing import managers
 import numpy as np
+from numba.typed import List
+from numba import int32
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -24,6 +26,8 @@ from histogram import Histogram
 from saveImages import _saveImages, _create_video
 from transform_numba import Transform
 from transformWidget import TransformWidget
+
+from cell_numba import Cell
 
 
 settings_file = r'settings.txt'
@@ -305,6 +309,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.num_video_frames = 0
         self.max_video_frames = deepcopy(num_frames)
         self.shr_num_video_frames = manager.Value(int, self.num_video_frames)
+        cells = self.spacetime.getCells(int(self.time.value()), accumulate=self._check_accumulate())
 
         args = (
             shr_projection,
@@ -381,8 +386,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.draw_objects()
             self.views.update()
 
-    def select_cell(self, cell):
-        self.selected_rationals = cell.get()['rationals']
+    def select_cell(self, cell: Cell):
+        cell_rationals = cell.get_rationals()
+        self.selected_rationals = []
+        for count in range(len(cell_rationals)):
+            self.selected_rationals.append(int(cell_rationals[count]))
         self.view_selected_rationals = True
         if self.views:
             self.draw_objects()
@@ -487,7 +495,7 @@ class MainWindow(QtWidgets.QMainWindow):
             total_paths += count * len(self.selected[count])
         return num_cells, total_paths
 
-    @timing
+    #@timing
     def compute(self, nada=False):
         if not int(self.number.value()):
             return
@@ -526,6 +534,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setStatus(f'Adding rational set for number: {n}...')
         addRationalSet(
+            self.spacetime.n,
             self.spacetime.rationalSet,
             self.spacetime.transform,
             self.dim,
@@ -551,14 +560,21 @@ class MainWindow(QtWidgets.QMainWindow):
 
         app.restoreOverrideCursor()
 
-    @timing
+    #@timing
     def draw_objects(self, frame=0):
         rationals = []
-        if self.view_selected_rationals:
-            rationals = self.selected_rationals
+        if not self.view_selected_rationals:
+            cells = self.spacetime.getCells(int(self.timeWidget.value()), self._check_accumulate())
+        else:
+            rationals = List.empty_list(int32)
+            for m in self.selected_rationals:
+                rationals.append(m)
+            cells = self.spacetime.getCellsWithRationals(rationals, int(self.timeWidget.value()), self._check_accumulate())
+        if not cells:
+            return
         frame = self.timeWidget.value()
         objs, count_cells, self.cell_ids = get_objects(
-            self.spacetime,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -569,19 +585,27 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_time,
             self.view_next_number, 
             self.maxTime.value(),
-            frame
+            frame,
+            self.spacetime.getMaxTime(self._check_accumulate())
         )
         self.make_view(objs, count_cells)
         del objs
         collect('draw_objects')
 
-    @timing
+    #@timing
     def make_objects(self, frame):
         rationals = []
-        if self.view_selected_rationals:
+        cells = None
+        if not self.spacetime.rationalSet:
+            cells = self.spacetime.getCells(int(self.timeWidget.value()), accumulate=self._check_accumulate())
+        else:
             rationals = self.selected_rationals
+            cells = self.spacetime.getCellsWithRationals(rationals, int(self.timeWidget.value()), accumulate=self._check_accumulate())
+        if not cells:
+            return
+        frame = self.timeWidget.value()
         objs, _, _ = get_objects(
-            self.spacetime,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -592,7 +616,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_time,
             self.view_next_number, 
             self.maxTime.value(),
-            frame
+            frame,
+            self.spacetime.getMaxTime(self._check_accumulate())
         )
         return objs
 

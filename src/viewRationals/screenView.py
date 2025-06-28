@@ -78,12 +78,12 @@ class ScreenView(rendering.View):
                     x = center.x
                     y = center.y
                     z = center.z
-                cell = spacetime.getCell(t, x, y, z, accumulate=self.mainWindow._check_accumulate())
+                cell = spacetime.getCell(t, x, y, z, self.mainWindow._check_accumulate())
                 if not cell:
                     return False
                 if evt.button() == QtCore.Qt.LeftButton:
-                    if self.mainWindow.selected_rationals:
-                        return False
+                    # if self.mainWindow.selected_rationals:
+                    #     return False
                     self.mainWindow.select_cell(cell)
                     self.mainWindow.refresh_selection()
                     if evt.modifiers() == QtCore.Qt.ShiftModifier:
@@ -94,7 +94,7 @@ class ScreenView(rendering.View):
                 elif evt.button() == QtCore.Qt.RightButton:
                     if self.label:
                         self.label.close()
-                    cell_rationals = cell.get()['rationals']
+                    cell_rationals = cell.get_rationals()
                     selected_rationals = self.mainWindow.selected_rationals
                     if selected_rationals:
                         intersect = list(set(cell_rationals).intersection(set(selected_rationals)))

@@ -22,7 +22,7 @@ class HashRationalsItem:
         self.indexes = np.full(1000, -1, dtype=np.int32)      # Inicializa índices con -1
         self.count = 0
 
-    def add(self, m, digits, time):
+    def add(self, m, time):
         if not (self.min <= m <= self.max):
             return False
 
@@ -63,18 +63,30 @@ class HashRationals:
         
         # Llenar la lista directamente
         for i in range(0, num, size):
-            max_val = min(i + size - 1, num - 1)
+            max_val = i + size - 1
             self.hash_list.append(HashRationalsItem(i, max_val))
 
-    def add(self, m, digits, time):
-        for item in self.hash_list:
-            if item.add(m, digits, time):
+    def add(self, m, time):
+        """Añade un número racional a la lista de hashrationals."""
+        # Verificar si el número está dentro del rango de algún HashRationalsItem
+        for i in range(len(self.hash_list)):
+            item: HashRationalsItem = self.hash_list[i]
+            if item.add(m, time):
+                return True
+        # Si no se pudo añadir, hay que crear un nuevo HashRationalsItem
+        if len(self.hash_list) < self.num // self.size:
+            min_val = self.size * len(self.hash_list)
+            max_val = min_val + self.size - 1
+            new_item = HashRationalsItem(min_val, max_val)
+            if new_item.add(m, time):
+                self.hash_list.append(new_item)
                 return True
         return False
 
     def get_rationals(self):
         rationals = List.empty_list(int32)  # Usar List tipada para compatibilidad con Numba
-        for item in self.hash_list:
+        for i in range(len(self.hash_list)):
+            item: HashRationalsItem = self.hash_list[i]
             for i in range(item.count):
                 rationals.append(item.rationals[i, 0])
         rationals.sort()  # Ordenar directamente la lista tipada
