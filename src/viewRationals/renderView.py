@@ -3,7 +3,7 @@ import numpy as np
 import moderngl as mgl
 from copy import deepcopy
 from madcad import rendering, uvec2, fmat4
-from utils import collect
+from gc import collect
 
 
 class RenderView(rendering.Offscreen):

@@ -7,6 +7,8 @@ import numpy as np
 from space_numba import Space, save_space, load_space, cell_type
 from rationals_numba import c
 
+from gc import collect
+
 # Obtenemos el tipo de Space FUERA del código compilado
 space_type = Space.class_type.instance_type
 
@@ -40,12 +42,12 @@ class Spaces:
         self.accumulates_even = Space(even_t, dim, T, n)
         self.accumulates_odd = Space(odd_t, dim, T, n)
 
-    def add(self, is_special, t, digits, m, next_digit, time, cycle, x, y, z):
-        """        Agrega un nuevo número racional a los espacios correspondientes.
+    def add(self, count, is_special, t, m, next_digit, time, cycle, x, y, z):
+        """ Agrega un nuevo número racional a los espacios correspondientes.
         Args:
+            count: Cantidad de números racionales.
             is_special: Indica si el número es especial.
             t: Tiempo del ciclo actual.
-            digits: Cantidad de dígitos del número.
             m: Numerador del número racional.
             next_digit: Índice del siguiente dígito.
             time: Tiempo asociado al número.
@@ -55,7 +57,7 @@ class Spaces:
         if t < 0 or t > self.max:
             return
         
-        self.spaces[t].add(time, digits, m, next_digit, x, y, z)
+        self.spaces[t].add(count, time, m, next_digit, x, y, z)
         
         # para los numeros especiales anadimos 
         # solo el ultimo ciclo en los espacios acumulados
@@ -79,9 +81,10 @@ class Spaces:
             
         # Agregar a acumulados
         if t % 2 == 0:
-            self.accumulates_even.add(time, digits, m, next_digit, x, y, z)
+            self.accumulates_even.add(count, time, m, next_digit, x, y, z)
         else:
-            self.accumulates_odd.add(time, digits, m, next_digit, x, y, z)
+            self.accumulates_odd.add(count, time, m, next_digit, x, y, z)
+
 
     def getMaxTime(self, accumulate):
         max_time = -1.0
@@ -151,7 +154,7 @@ class Spaces:
         selected = List.empty_list(cell_type)
         
         # Crear array para comparación más eficiente
-        target_rationals = np.array(rationals_array, dtype=np.int32)
+        # target_rationals = np.array(rationals_array, dtype=np.int32)
         
         for i in range(len(cells)):
             cell = cells[i]
@@ -160,8 +163,8 @@ class Spaces:
             # Verificar intersección manualmente (sin usar sets)
             has_intersection = False
             for j in range(len(cell_rationals)):
-                for k in range(len(target_rationals)):
-                    if cell_rationals[j] == target_rationals[k]:
+                for k in range(len(rationals_array)):
+                    if cell_rationals[j] ==rationals_array[k]:
                         has_intersection = True
                         break
                 if has_intersection:

@@ -22,7 +22,7 @@ class HashRationalsItem:
         self.indexes = np.full(1000, -1, dtype=np.int32)      # Inicializa índices con -1
         self.count = 0
 
-    def add(self, m, digits, time):
+    def add(self, m, time):
         if not (self.min <= m <= self.max):
             return False
 
@@ -66,9 +66,9 @@ class HashRationals:
             max_val = min(i + size - 1, num - 1)
             self.hash_list.append(HashRationalsItem(i, max_val))
 
-    def add(self, m, digits, time):
+    def add(self, m, time):
         for item in self.hash_list:
-            if item.add(m, digits, time):
+            if item.add(m, time):
                 return True
         return False
 

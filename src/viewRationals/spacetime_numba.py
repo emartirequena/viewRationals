@@ -1,12 +1,14 @@
-from numba import uint8, int32, float64, boolean, njit, types
+from numba import int32, int64, boolean, njit, types
 from numba.experimental import jitclass
-from numba.typed import List
+from numba.typed import List, Dict
 from numba.types import ListType
 import numpy as np
+from time import time
+from gc import collect
 
 from spaces_numba import Spaces
 from space_numba import Space
-from rationals_numba import Rational
+from rationals_numba import Rational, _digits2rational
 from transform_numba import Transform
 from utils_numba import *
 
@@ -117,6 +119,7 @@ class SpaceTime:
     def addRationalSet(self, t, x, y, z):
         """Add a set of rationals to the spaces."""
         addRationalSet(
+            self.n,
             self.rationalSet, 
             self.transform, 
             self.dim, 
@@ -152,21 +155,34 @@ def create_spacetime(T, n, max_val, dim=1):
     """Factory function to create a SpaceTime instance."""
     return SpaceTime(T, n, max_val, dim)
 
-# Non-jitclass utility function to add a rational set to spaces
-def addRationalSet(rationalset, transform: Transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
+# jitclass utility function to add a rational set to spaces
+@njit
+def addRationalSet(n, rationalset, transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
     """Add a single rational to spaces."""
+    hash = Dict.empty(key_type=int64, value_type=int64)
+    base = 2 ** dim
+    num = base ** T - 1
     for r in rationalset:
         paths = transform.transform_path(r.path_uint8(T))
         for path in paths:
-            rat = Rational()
-            rat.from_digits(path, dim)
-            digits = rat.path_uint8(T)
-            for rt in range(max_val + 1):
-                px, py, pz = rat.position(t+rt)
-                px += x
-                py += y
-                pz += z
-                m = rat.m
-                next_digit = digits[(t+rt+1) % T]
-                time = rat.time(t+rt)
-                spaces.add(is_special, t+rt, digits, m, next_digit, time, T, px, py, pz)
+            m, _ = _digits2rational(path, base)
+            m = int(m * n / num)
+            if m in hash:
+                hash[m] += 1
+            else:
+                hash[m] = 1
+    
+    # print(f"Rational set size: {len(rationalset)}, Hash size: {len(hash)}")
+    for m in hash:
+        count = hash[m]
+        rat = Rational(m, n, dim)
+        digits = rat.path_uint8(T)
+        for rt in range(max_val + 1):
+            px, py, pz = rat.position(t+rt)
+            px += x
+            py += y
+            pz += z
+            next_digit = digits[(t+rt+1) % T]
+            rtime = rat.time(t+rt)
+            spaces.add(count, is_special, t+rt, m, next_digit, rtime, T, px, py, pz)
+

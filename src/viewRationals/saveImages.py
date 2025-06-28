@@ -7,10 +7,11 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from madcad import vec3, settings
 import traceback
+from gc import collect
 
 from views import ViewRender
 from getObjects import get_objects
-from utils import make_video, collect
+from utils import make_video
 from timing import timing
 from color import _convert_color
 

@@ -6,6 +6,8 @@ from threading import Thread
 from copy import deepcopy
 from multiprocessing import managers
 import numpy as np
+from numba.typed import List
+from numba import int32
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -382,7 +384,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.views.update()
 
     def select_cell(self, cell):
-        self.selected_rationals = cell.get()['rationals']
+        self.selected_rationals = cell.get_rationals()
         self.view_selected_rationals = True
         if self.views:
             self.draw_objects()
@@ -525,16 +527,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spacetime.setRationalSet(n, self.is_special)
 
         self.setStatus(f'Adding rational set for number: {n}...')
+        # self.spacetime.addRationalSet(0, 0, 0, 0)
         addRationalSet(
+            self.spacetime.n,
             self.spacetime.rationalSet,
             self.spacetime.transform,
-            self.dim,
+            self.spacetime.dim,
             self.spacetime.T,
             self.spacetime.spaces,
             self.spacetime.is_special,
             self.spacetime.max_val,
-            0, 0.0, 0.0, 0.0
-        )
+            0, 0, 0, 0
+        )         
         self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
@@ -544,7 +548,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.time.setValue(self.maxTime.value())
         self.draw_objects()
 
-        collect('Compute')
+        collect()
         
         time2 = time()
         self.setStatus(f'Rationals set for number {n:,.0f} computed in {time2-time1:,.2f} secs')
@@ -553,12 +557,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @timing
     def draw_objects(self, frame=0):
+        frame = self.timeWidget.value()
         rationals = []
         if self.view_selected_rationals:
             rationals = self.selected_rationals
-        frame = self.timeWidget.value()
+            view_cells = self.spacetime.getCellsWithRationals(rationals, frame, self._check_accumulate())
+        else:
+            view_cells = self.spacetime.getCells(frame, self._check_accumulate())
         objs, count_cells, self.cell_ids = get_objects(
-            self.spacetime,
+            view_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -569,19 +576,22 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_time,
             self.view_next_number, 
             self.maxTime.value(),
-            frame
+            frame,
+            self.spacetime.getMaxTime(self._check_accumulate())
         )
+
         self.make_view(objs, count_cells)
         del objs
-        collect('draw_objects')
+        collect()
 
     @timing
     def make_objects(self, frame):
         rationals = []
         if self.view_selected_rationals:
             rationals = self.selected_rationals
+        view_cells = self.spacetime.getCells(frame, self._check_accumulate())
         objs, _, _ = get_objects(
-            self.spacetime,
+            view_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -592,7 +602,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_time,
             self.view_next_number, 
             self.maxTime.value(),
-            frame
+            frame,
+            self.spacetime.getMaxTime(self._check_accumulate())
         )
         return objs
 
@@ -661,7 +672,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reselect_cells()
         self.views.update()
         self.views.setFocus()
-        collect('swap_3d_view')
+        collect()
 
     def turntable(self):
         if self.views.mode not in ['3D', '3DSPLIT']:

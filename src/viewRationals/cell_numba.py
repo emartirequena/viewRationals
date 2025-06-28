@@ -47,11 +47,11 @@ class Cell:
         self.next_digits = np.zeros(2**self.dim, dtype=np.int32)  # Reemplaza el dict
         self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
 
-    def add(self, time, digits, m, next_digit):
-        self.count += 1
+    def add(self, count, time, m, next_digit):
+        self.count += count
         self.time += time
-        self.next_digits[next_digit] += 1
-        self.rationals.add(m, digits, time)  # Usa el método de HashRationals (3 parámetros)
+        self.next_digits[next_digit] += count
+        self.rationals.add(m, time)  # Usa el método de HashRationals (3 parámetros)
 
     def clear(self):
         self.count = 0

@@ -1,9 +1,11 @@
 from copy import copy
 from madcad import rendering
 from PyQt5 import QtCore, QtWidgets
+from gc import collect
 
-from utils import collect, getPeriod
-
+from utils import getPeriod
+from spacetime_numba import SpaceTime
+from cell_numba import Cell
 
 def getRationalsSeqs(rationals: list[int], number, dim) -> list[list[int]]:
     result = []
@@ -68,7 +70,7 @@ class ScreenView(rendering.View):
         if obj:
             center = self.scene.item(obj).box.center
             t = self.mainWindow.timeWidget.value()
-            spacetime = self.mainWindow.spacetime
+            spacetime: SpaceTime = self.mainWindow.spacetime
             if spacetime:
                 if self.mainWindow.dim == 2:
                     x = center.x
@@ -78,7 +80,7 @@ class ScreenView(rendering.View):
                     x = center.x
                     y = center.y
                     z = center.z
-                cell = spacetime.getCell(t, x, y, z, accumulate=self.mainWindow._check_accumulate())
+                cell: Cell = spacetime.getCell(t, x, y, z, self.mainWindow._check_accumulate())
                 if not cell:
                     return False
                 if evt.button() == QtCore.Qt.LeftButton:
@@ -94,7 +96,7 @@ class ScreenView(rendering.View):
                 elif evt.button() == QtCore.Qt.RightButton:
                     if self.label:
                         self.label.close()
-                    cell_rationals = cell.get()['rationals']
+                    cell_rationals = cell.get_rationals()
                     selected_rationals = self.mainWindow.selected_rationals
                     if selected_rationals:
                         intersect = list(set(cell_rationals).intersection(set(selected_rationals)))

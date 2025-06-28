@@ -12,7 +12,7 @@ def _digits2rational(digits_uint8, base):
     m = 0
     l = len(digits_uint8)
     for i in range(l):
-        d = int(digits_uint8[l - i - 1])
+        d = int64(digits_uint8[l - i - 1])
         m += d * base**i
     n = base**l - 1
     return m, n

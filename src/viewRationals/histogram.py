@@ -9,7 +9,7 @@ from config import config
 from color import ColorLine, _convert_color
 from utils import pil2pixmap
 from timing import timing
-from spacetime import SpaceTime
+from spacetime_numba import SpaceTime
 from utils import get_alpha
 
 epsilon = 5.

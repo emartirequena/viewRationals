@@ -72,10 +72,10 @@ class Space:
             num_paths += self.cells[i].get_count()
         return num_paths
 
-    def add(self, time, digits, m, next_digit, x, y, z):
+    def add(self, count, time, m, next_digit, x, y, z):
         cell: Cell = self.getCell(x, y, z)
         if cell is not None:
-            cell.add(time, digits, m, next_digit)
+            cell.add(count, time, m, next_digit)
 
     def clear(self):
         # Crear nuevas estructuras en lugar de usar del
