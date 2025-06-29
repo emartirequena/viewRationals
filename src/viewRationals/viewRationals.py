@@ -8,6 +8,7 @@ from multiprocessing import managers
 import numpy as np
 from numba.typed import List
 from numba import int32
+from gc import collect
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -18,7 +19,7 @@ from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
 from spacetime_numba import SpaceTime, addRationalSet
-from utils import getDivisorsAndFactors, divisors, make_video, collect
+from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
 from config import config
 from color import ColorLine, _convert_color
@@ -527,6 +528,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spacetime.setRationalSet(n, self.is_special)
 
         self.setStatus(f'Adding rational set for number: {n}...')
+<<<<<<< Updated upstream
         # self.spacetime.addRationalSet(0, 0, 0, 0)
         addRationalSet(
             self.spacetime.n,
@@ -539,6 +541,20 @@ class MainWindow(QtWidgets.QMainWindow):
             self.spacetime.max_val,
             0, 0, 0, 0
         )         
+=======
+        self.spacetime.addRationalSet(0, 0, 0, 0)
+        # addRationalSet(
+        #     self.spacetime.n,
+        #     self.spacetime.rationalSet,
+        #     self.spacetime.transform,
+        #     self.spacetime.dim,
+        #     self.spacetime.T,
+        #     self.spacetime.spaces,
+        #     self.spacetime.is_special,
+        #     self.spacetime.max_val,
+        #     0, 0, 0, 0
+        # )         
+>>>>>>> Stashed changes
         self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
@@ -558,7 +574,7 @@ class MainWindow(QtWidgets.QMainWindow):
     @timing
     def draw_objects(self, frame=0):
         frame = self.timeWidget.value()
-        rationals = []
+        rationals = List.empty_list(int32)  # Use typed List for rationals
         if self.view_selected_rationals:
             rationals = self.selected_rationals
             view_cells = self.spacetime.getCellsWithRationals(rationals, frame, self._check_accumulate())

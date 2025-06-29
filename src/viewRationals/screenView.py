@@ -1,11 +1,18 @@
+from numba import int32, float64, types
+from numba.typed import List
+
 from copy import copy
 from madcad import rendering
 from PyQt5 import QtCore, QtWidgets
 from gc import collect
 
 from utils import getPeriod
+<<<<<<< Updated upstream
 from spacetime_numba import SpaceTime
 from cell_numba import Cell
+=======
+
+>>>>>>> Stashed changes
 
 def getRationalsSeqs(rationals: list[int], number, dim) -> list[list[int]]:
     result = []
@@ -23,6 +30,27 @@ def getRationalsSeqs(rationals: list[int], number, dim) -> list[list[int]]:
         result.append(l)
     del r
     collect()
+    return result
+
+
+def intersectRationals(rationals: list[int], cell_rationals: list[int]) -> list[int]:
+    """
+    Count the number of rationals that intersect with the cell's rationals.
+
+    Parameters:
+    - rationals: The list of rational numbers to check.
+    - cell_rationals: The list of rational numbers in the cell.
+
+    Returns:
+    - The count of intersecting rationals.
+    """
+    if not rationals or not cell_rationals:
+        return []
+    result = List.empty_list(int32)
+    for i in range(len(rationals)):
+        for j in range(len(cell_rationals)):
+            if rationals[i] == cell_rationals[j]:
+                result.append(rationals[i])
     return result
 
 
@@ -84,7 +112,7 @@ class ScreenView(rendering.View):
                 if not cell:
                     return False
                 if evt.button() == QtCore.Qt.LeftButton:
-                    if self.mainWindow.selected_rationals:
+                    if self.mainWindow.view_selected_rationals:
                         return False
                     self.mainWindow.select_cell(cell)
                     self.mainWindow.refresh_selection()
@@ -99,7 +127,7 @@ class ScreenView(rendering.View):
                     cell_rationals = cell.get_rationals()
                     selected_rationals = self.mainWindow.selected_rationals
                     if selected_rationals:
-                        intersect = list(set(cell_rationals).intersection(set(selected_rationals)))
+                        intersect = intersectRationals(selected_rationals, cell_rationals)
                     else:
                         intersect = cell_rationals
                     if not intersect:

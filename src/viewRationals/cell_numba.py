@@ -1,4 +1,4 @@
-from numba import int32, float64
+from numba import int32, float64, types
 from numba.experimental import jitclass
 from numba.typed import List
 import numpy as np
@@ -30,7 +30,8 @@ cell_spec = [
     ('count', int32),
     ('time', float64),
     ('next_digits', int32[:]),  # Array para reemplazar el diccionario
-    ('rationals', hash_rationals_type),  # Usar el tipo pre-definido
+    # ('rationals', hash_rationals_type),  # Usar el tipo pre-definido
+    ('rationals', types.ListType(int32)),
 ]
 
 @jitclass(cell_spec)
@@ -45,19 +46,23 @@ class Cell:
         self.count = 0
         self.time = 0.0
         self.next_digits = np.zeros(2**self.dim, dtype=np.int32)  # Reemplaza el dict
-        self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
+        # self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
+        self.rationals = List.empty_list(int32)  # Usar List para almacenar los racionales
 
     def add(self, count, time, m, next_digit):
         self.count += count
         self.time += time
         self.next_digits[next_digit] += count
-        self.rationals.add(m, time)  # Usa el método de HashRationals (3 parámetros)
+        # self.rationals.add(m, time)  # Usa el método de HashRationals (3 parámetros)
+        if m not in self.rationals:
+            self.rationals.append(m)  # Añade el racional directamente a la lista
 
     def clear(self):
         self.count = 0
         self.time = 0.0
         self.next_digits.fill(0)  # Reinicia el array
-        self.rationals = HashRationals(self.n, 100000)  # Reinicia la instancia de HashRationals
+        # self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
+        self.rationals = List.empty_list(int32) # Usar List para almacenar los racionales  
 
     def get_pos(self):
         return (self.x, self.y, self.z)
@@ -72,12 +77,12 @@ class Cell:
         return self.next_digits.copy()
     
     def get_rationals(self):
-        return self.rationals.get_rationals()
+        # return self.rationals.get_rationals()
+        return self.rationals
 
     def set(self, count, time, next_digits_array):
         self.count = count
         self.time = time
-        # Copiar solo los elementos válidos del array
-        min_len = min(len(self.next_digits), len(next_digits_array))
+        min_len = len(next_digits_array)
         for i in range(min_len):
             self.next_digits[i] = next_digits_array[i]

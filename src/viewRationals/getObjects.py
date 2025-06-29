@@ -73,17 +73,23 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
     - view_next_number: Whether to view the next number.
     - max_time: The maximum time value.
     - ptime: The current time value.
+<<<<<<< Updated upstream
+=======
+    - max_spaces_time: The maximum time across all spaces.
+>>>>>>> Stashed changes
     Returns:
     - A dictionary of objects, the count of cells, and a dictionary of cell IDs.
     """
+    objs = {}
+    cell_ids = {}
     if not view_cells:
-        return {}, 0, {}
+        return objs, 0, cell_ids
     if number == 0:
-        return {}, 0, {}
+        return objs, 0, cell_ids
 
     count = len(view_cells)
     if count == 0:
-        return {}, 0, {}
+        return objs, 0, cell_ids
 
     normalize_alpha = config.get('normalize_alpha')
     alpha_pow = config.get('alpha_pow')
@@ -114,8 +120,6 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
             total += cell_count
 
     num_id = 0
-    objs = {}
-    cell_ids = {}
 
     if view_objects:
         for cell in view_cells:
