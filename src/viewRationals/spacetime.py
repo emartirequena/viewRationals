@@ -8,6 +8,7 @@ from rationals import Rational, c
 from timing import timing, get_last_duration
 from utils import collect, divisors
 from config import Config
+from transform import Transform
 
 
 spacetime = None
@@ -126,10 +127,6 @@ class Cell(object):
 		self.next_digits = dict(zip([x for x in range(2**self.dim)], [0 for _ in range(2**self.dim)]))
 		for x in [x for x in range(2**self.dim)]:
 			self.next_digits[x] = next_digits[str(x)]
-		# self.rationals = HashRationals(self.n)
-		# for rational in rationals:
-		# 	for m in rational['m']:
-		# 		self.rationals.add(m, rational['m'], rational['digits'], rational['time'])
 
 
 class Space(object):
@@ -217,7 +214,7 @@ class Spaces:
 		self.n = n
 		self.max = max
 		self.dim = dim
-		self.spaces = [Space(t, dim, T, n) for t in range(max + 1)]
+		self.spaces: list[Space] = [Space(t, dim, T, n) for t in range(max + 1)]
 		self.accumulates_even = Space(max if T%2 == 0 else max-1, dim, T, n, name='even')
 		self.accumulates_odd  = Space(max if T%2 == 1 else max-1, dim, T, n, name='odd' )
 
@@ -360,7 +357,11 @@ def add_rational1(args):
 
 
 def add_rational2(args):
-	spaces, is_special, pT, max, r, t, x, y, z = args
+	_, is_special, pT, max, _, t, x, y, z, count = args
+	if count % 1000 == 0:
+		print(f'{count:9d}'+'\b'*9, end='', flush=True)
+	spaces: Spaces = args[0]
+	r: Rational = args[4]
 	for rt in range(0, max + 1):
 		px, py, pz = r.position(rt)
 		px += x
@@ -445,51 +446,61 @@ class SpaceTime(object):
 	def set_algorithm(self, algo):
 		self.algorithm = algo
 
+	def algorithm0(self, transform: Transform, t=0, x=0, y=0, z=0):
+		""" Algorithm 0: simple transformation of paths. """
+		count = 0
+		for r in self.rationalSet:
+			paths = transform.transform(r.path(self.T))
+			for path in paths:
+				if count % 1000 == 0:
+					print(f'{count:9d}'+'\b'*9, end='', flush=True)
+				count += 1
+				rat = Rational()
+				rat.from_digits(path, self.dim)
+				add_rational2((self.spaces, self.is_special, self.T, self.max, rat, t, x, y, z, count))
+
+		print(' ', flush=True)
+		print(f'------- Total paths: {count}', flush=True)
+		self.changed = False
+
+	def algorithm1(self, transform: Transform, t=0, x=0, y=0, z=0):
+		""" Algorithm 1: parallel transformation of paths. """
+		num_cpus = int(cpu_count() * 0.8)
+		chunksize = ((len(self.rationalSet)) // num_cpus) or 1
+		p = Pool(num_cpus)
+		params = []
+		count = 0
+		for r in self.rationalSet:
+			paths = transform.transform(r.path(self.T))
+			for path in paths:
+				if count % 1000 == 0:
+					print(f'{count:9d}'+'\b'*9, end='', flush=True)
+				count += 1
+				rat = Rational()
+				rat.from_digits(path, self.dim)
+				params.append((self.spaces, self.is_special, self.T, self.max, rat, t, x, y, z, count))
+		
+		print(' ', flush=True)
+		print(f'------- Total paths: {count}', flush=True)
+
+		p.imap(func=add_rational2, iterable=params, chunksize=chunksize)
+		p.close()
+		p.join()
+
+		del params
+		collect()
+
 	@timing
-	def addRationalSet(self, t=0, x=0, y=0, z=0):
+	def addRationalSet(self, transform: Transform, t=0, x=0, y=0, z=0):
 		self.spaces.clear()
-		# print(f'algorithm: {self.algorithm}')
+		print(f'algorithm: {self.algorithm}')
 
 		if self.algorithm == 0:
-			for r in self.rationalSet:
-				add_rational2((self.spaces, self.is_special, self.T, self.max, r, t, x, y, z))
-
+			self.algorithm0(transform, t, x, y, z)
 		elif self.algorithm == 1:
-			num_cpus = int(cpu_count() * 0.8)
-			chunksize = ((self.max * len(self.rationalSet)) // num_cpus) or 1
-			p = Pool(num_cpus)
-			params = []
-			for r in self.rationalSet:
-				for rt in range(self.max + 1):
-					params.append((r, rt, t, x, y, z))
-			results = p.imap(func=add_rational1, iterable=params, chunksize=chunksize)
-			p.close()
-			p.join()
-
-			for result in results:
-				pt, reminders, digits, m, next_digit, time, px, py, pz = result
-				self.spaces.add(self.is_special, pt, reminders, digits, m, next_digit, time, self.T, px, py, pz)
-				del result
-
-			del params
-			del results
-			collect()
-
-		elif self.algorithm == 2:
-			num_cpus = int(cpu_count() * 0.8)
-			chunksize = ((len(self.rationalSet)) // num_cpus) or 1
-			p = Pool(num_cpus)
-			params = []
-			for r in self.rationalSet:
-				params.append((self.spaces, self.is_special, self.T, self.max, r, t, x, y, z))
-
-			p.imap(func=add_rational2, iterable=params, chunksize=chunksize)
-			p.close()
-			p.join()
-
-			del params
-			collect()
-
+			self.algorithm1(transform, t, x, y, z)
+		
+		print(' ')
 		self.changed = False
 
 	def reset(self, T, num, max, dim):
@@ -554,5 +565,3 @@ if __name__ == '__main__':
 			row += 1
 
 	wb.save(fname)
-		
-

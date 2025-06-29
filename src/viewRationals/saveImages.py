@@ -7,10 +7,11 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from madcad import vec3, settings
 import traceback
+from gc import collect
 
 from views import ViewRender
 from getObjects import get_objects
-from utils import make_video, collect
+from utils import make_video
 from timing import timing
 from color import _convert_color
 
@@ -68,6 +69,8 @@ def _create_image(args):
     view_objects, view_time, view_next_number, max_time, \
     image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend = args
 
+    print(f'------- create image')
+
     settings.load(settings_file)
     settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
 
@@ -123,7 +126,11 @@ def _create_image(args):
     shr_num_video_frames.value += 1
 
     fname = os.path.join(path, file_name)
-    img.save(fname)
+    try:
+        img.save(fname)
+    except Exception as e:
+        print(f'ERROR saving image {fname}: {str(e)}')
+        raise e
 
     del args
     del objs
@@ -250,6 +257,7 @@ def _saveImages(args):
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
+    # pool.map(func=_create_image, iterable=params, chunksize=chunksize)
     pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, callback=_error_callback)
 
     return (pool, args_video)

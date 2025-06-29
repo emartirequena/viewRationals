@@ -1,6 +1,7 @@
+from numba import njit
 import sys
 import os
-import gc
+# from gc import collect
 from functools import reduce
 from copy import copy
 import subprocess
@@ -15,15 +16,13 @@ def lerp(t, ta, a, tb, b):
 def check_ffmpeg(ffmpeg_path: str) -> bool:
     return os.path.exists(ffmpeg_path)
 
-
-def collect(s=''):
-    # if s:
-    #     print(f'------- {max(gc.collect(2), gc.collect(1), gc.collect())} objects cleaned for {s}...')
-    # else:
-    if not s:
-        gc.collect(2)
-        gc.collect(1)
-        gc.collect()
+# def collect(s=''):
+#     if s:
+#         print(f'------- {max(gc.collect(2), gc.collect(1), gc.collect())} objects cleaned for {s}...')
+#     else:
+#         gc.collect(2)
+#         gc.collect(1)
+#         gc.collect()
 
 def pil2pixmap(img): 
     if img.mode == "RGB":

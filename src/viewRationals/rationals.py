@@ -1,6 +1,3 @@
-import numpy as np
-import atexit
-
 c = 0.5
 
 def _digits2rational(digits: str, base):
@@ -13,22 +10,23 @@ def _digits2rational(digits: str, base):
     return m, n
 
 class Rational():
-    def __init__(self, m: int, n: int, dim=1):
+    def __init__(self, m: int=0, n: int=0, dim=1):
         self.m = m
         self.n = n
         self.dim = dim
-        self.period =self.getPeriod()
+        self.period = 0
 
         self.digits: list = []
         self.reminders: list = []
-        self.digits, self.reminders = self.getSequence()
-        self.positions = [self.getPosition(t) for t in range(self.period + 1)]
-        # atexit.register(self.cleanup)
+        if self.n != 0:
+            self.period =self.getPeriod()
+            self.digits, self.reminders = self.getSequence()
+            self.positions = [self.getPosition(t) for t in range(self.period + 1)]
 
     def __del__(self):
         del self.positions
 
-    def reset(self, m, n, dim=1):
+    def set(self, m, n, dim=1):
         self.__init__(m, n, dim)
 
     def from_digits(self, digits: str, dim: int):
@@ -57,7 +55,7 @@ class Rational():
             reminders.append(reminder)
             reminder = (reminder * base) % self.n
             digit = reminder * base // self.n
-            if reminder == self.m:
+            if reminder == 0 or reminder == self.m:
                 break
         return (digits, reminders)
 
