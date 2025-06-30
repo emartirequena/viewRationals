@@ -164,6 +164,7 @@ def getDivisorsAndFactors(n: int, base: int) -> dict:
     divisors = {k: v for k, v in sorted(divisors.items(), key=lambda item: item[1]['number'])}
     return divisors
 
+@njit
 def getPeriod(n: int, base: int) -> int:
     if n == 1:
         return 1

@@ -1,5 +1,6 @@
-from numba import int32, float64, types
+from numba import int32, njit
 from numba.typed import List
+from numba.types import ListType
 
 from copy import copy
 from madcad import rendering
@@ -7,32 +8,33 @@ from PyQt5 import QtCore, QtWidgets
 from gc import collect
 
 from utils import getPeriod
-<<<<<<< Updated upstream
 from spacetime_numba import SpaceTime
 from cell_numba import Cell
-=======
 
->>>>>>> Stashed changes
 
-def getRationalsSeqs(rationals: list[int], number, dim) -> list[list[int]]:
-    result = []
-    r = copy(list(rationals))
+@njit
+def getRationalsSeqs(rationals, number, dim):
+    result = List()
+    r = List.empty_list(int32)
+    for x in rationals: # Copy rationals to a new list
+        r.append(x)
     base = 2**dim
     period = getPeriod(number, base)
     while len(r) > 0:
-        l = []
+        l = List.empty_list(int32)
         n = r[0]
         for _ in range(period):
-            if n in r:
-                l.append(n)
-                r.remove(n)
+            for i in range(len(r)):
+                if r[i] == n:
+                    l.append(n)
+                    r.remove(n)
+                    break
             n = n*base % number
         result.append(l)
-    del r
-    collect()
     return result
 
 
+@njit
 def intersectRationals(rationals: list[int], cell_rationals: list[int]) -> list[int]:
     """
     Count the number of rationals that intersect with the cell's rationals.
@@ -44,13 +46,17 @@ def intersectRationals(rationals: list[int], cell_rationals: list[int]) -> list[
     Returns:
     - The count of intersecting rationals.
     """
-    if not rationals or not cell_rationals:
-        return []
     result = List.empty_list(int32)
+    if len(rationals) == 0 or len(cell_rationals) == 0:
+        return result
     for i in range(len(rationals)):
+        has_intersection = False
         for j in range(len(cell_rationals)):
             if rationals[i] == cell_rationals[j]:
-                result.append(rationals[i])
+                has_intersection = True
+                break
+        if has_intersection:
+            result.append(rationals[i])
     return result
 
 
@@ -70,7 +76,8 @@ class Label(QtWidgets.QWidget):
         label = QtWidgets.QLabel(f'({len(rationals)})')
         layout.addWidget(label)
         result = getRationalsSeqs(rationals, number, dim)
-        for line in result:
+        for i in range(min(len(result), 20)):
+            line = result[i]
             label = QtWidgets.QLabel(', '.join([f'{int(x):d}' for x in line]))
             layout.addWidget(label)
         self.setLayout(layout)

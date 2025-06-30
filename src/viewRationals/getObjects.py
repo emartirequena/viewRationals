@@ -9,6 +9,7 @@ from utils import get_alpha
 from color import _convert_color
 
 
+@njit
 def _get_next_number_dir(dim, cell: Cell):
     next_digits = cell.get_next_digits()
     if dim == 1:
@@ -33,6 +34,7 @@ def _get_next_number_dir(dim, cell: Cell):
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
     return v * cell.count
 
+@njit
 def _num_intersect_rationals(rationals, cell_rationals):
     """
     Count the number of rationals that intersect with the cell's rationals.
@@ -50,10 +52,14 @@ def _num_intersect_rationals(rationals, cell_rationals):
         return 0
     count = 0
     for i in range(len(rationals)):
+        has_intersection = False
         for j in range(len(cell_rationals)):
             if rationals[i] == cell_rationals[j]:
+                has_intersection = True
                 count += 1
                 break
+        if has_intersection:
+            continue
     return count
 
 def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
@@ -73,10 +79,6 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
     - view_next_number: Whether to view the next number.
     - max_time: The maximum time value.
     - ptime: The current time value.
-<<<<<<< Updated upstream
-=======
-    - max_spaces_time: The maximum time across all spaces.
->>>>>>> Stashed changes
     Returns:
     - A dictionary of objects, the count of cells, and a dictionary of cell IDs.
     """

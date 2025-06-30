@@ -4,6 +4,8 @@ from numba.experimental import jitclass
 from numba.types import ListType
 import numpy as np
 
+hash_size = 1000  # Tamaño por defecto para HashRationalsItem
+
 # Especificación para HashRationalsItem
 hash_rationals_item_spec = [
     ('min', int32),
@@ -18,10 +20,10 @@ class HashRationalsItem:
     def __init__(self, min, max):
         self.min = min
         self.max = max
-        self.rationals = np.zeros((1000, 3), dtype=np.int32)  # [m, count, time]
-        self.indexes = np.full(1000, -1, dtype=np.int32)      # Inicializa índices con -1
+        self.rationals = np.zeros((hash_size, 3), dtype=np.int32)  # [m, count, time]
+        self.indexes = np.full(hash_size, -1, dtype=np.int32)      # Inicializa índices con -1
         self.count = 0
-
+        
     def add(self, m, time):
         if not (self.min <= m <= self.max):
             return False
@@ -55,16 +57,21 @@ hash_rationals_spec = [
 
 @jitclass(hash_rationals_spec)
 class HashRationals:
-    def __init__(self, num, size=100000):
+    def __init__(self, num, size=hash_size):
         self.num = num
         self.size = size
         # Crear lista vacía con el tipo correcto (sin usar class_type aquí)
         self.hash_list = List.empty_list(hash_rationals_item_type)
+
+        # calcula el valor de tamaño si no se proporciona
+        s = hash_size // num + 1
         
         # Llenar la lista directamente
-        for i in range(0, num, size):
-            max_val = min(i + size - 1, num - 1)
-            self.hash_list.append(HashRationalsItem(i, max_val))
+        old_max = 0
+        for i in range(0, s):
+            max_val = (i + 1) * num - 1
+            self.hash_list.append(HashRationalsItem(old_max, max_val))
+            old_max = max_val + 1
 
     def add(self, m, time):
         for item in self.hash_list:

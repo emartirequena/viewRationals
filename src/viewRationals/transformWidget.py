@@ -74,14 +74,14 @@ class TransformWidget(QtWidgets.QDialog):
             self.ui.vy.setValue(int(self.transform.my))
             self.ui.vz.setValue(int(self.transform.mz))
 
-        for i in range(self.transform.get_num_inputs()):
+        for i in range(min(1000, self.transform.get_num_inputs())):
             input = get_input_plugin_as_string(self.transform, i)
             self.ui.InputList.addItem(input)
             self.ui.InputList.item(i).setData(QtCore.Qt.UserRole, i)
         if self.transform.get_input_plugin_idx() >= 0:
             self.ui.InputList.setCurrentRow(self.transform.get_input_plugin_idx())
             
-        for i in range(self.transform.get_num_outputs()):
+        for i in range(min(1000, self.transform.get_num_outputs())):
             output = get_output_plugin_as_string(self.transform, i)
             self.ui.OutputList.addItem(output)
             self.ui.OutputList.item(i).setData(QtCore.Qt.UserRole, i)

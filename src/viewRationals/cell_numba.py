@@ -3,7 +3,7 @@ from numba.experimental import jitclass
 from numba.typed import List
 import numpy as np
 
-from hashrationals_numba import HashRationals, hash_rationals_item_type
+from hashrationals_numba import HashRationals, hash_rationals_item_type, hash_size
 
 # obtiene el diccionario de la celda
 def get_cell_dict(cell):
@@ -30,8 +30,7 @@ cell_spec = [
     ('count', int32),
     ('time', float64),
     ('next_digits', int32[:]),  # Array para reemplazar el diccionario
-    # ('rationals', hash_rationals_type),  # Usar el tipo pre-definido
-    ('rationals', types.ListType(int32)),
+    ('rationals', hash_rationals_type),  # Usar el tipo pre-definido
 ]
 
 @jitclass(cell_spec)
@@ -46,23 +45,19 @@ class Cell:
         self.count = 0
         self.time = 0.0
         self.next_digits = np.zeros(2**self.dim, dtype=np.int32)  # Reemplaza el dict
-        # self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
-        self.rationals = List.empty_list(int32)  # Usar List para almacenar los racionales
+        self.rationals = HashRationals(self.n, hash_size)  # Instancia de HashRationals
 
     def add(self, count, time, m, next_digit):
         self.count += count
         self.time += time
         self.next_digits[next_digit] += count
-        # self.rationals.add(m, time)  # Usa el método de HashRationals (3 parámetros)
-        if m not in self.rationals:
-            self.rationals.append(m)  # Añade el racional directamente a la lista
+        self.rationals.add(m, time)  # Usa el método de HashRationals (2 parámetros)
 
     def clear(self):
         self.count = 0
         self.time = 0.0
         self.next_digits.fill(0)  # Reinicia el array
-        # self.rationals = HashRationals(self.n, 100000)  # Instancia de HashRationals
-        self.rationals = List.empty_list(int32) # Usar List para almacenar los racionales  
+        self.rationals = HashRationals(self.n, hash_size)  # Instancia de HashRationals
 
     def get_pos(self):
         return (self.x, self.y, self.z)
@@ -77,8 +72,8 @@ class Cell:
         return self.next_digits.copy()
     
     def get_rationals(self):
-        # return self.rationals.get_rationals()
-        return self.rationals
+        return self.rationals.get_rationals()
+        # return self.rationals
 
     def set(self, count, time, next_digits_array):
         self.count = count

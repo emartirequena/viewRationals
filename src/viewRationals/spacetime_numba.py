@@ -157,11 +157,7 @@ def create_spacetime(T, n, max_val, dim=1):
 
 # jitclass utility function to add a rational set to spaces
 @njit
-<<<<<<< Updated upstream
 def addRationalSet(n, rationalset, transform: Transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
-=======
-def addRationalSet(n, rationalset, transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
->>>>>>> Stashed changes
     """Add a single rational to spaces."""
     hash = Dict.empty(key_type=int64, value_type=int64)
     base = 2 ** dim
@@ -170,27 +166,16 @@ def addRationalSet(n, rationalset, transform, dim, T, spaces: Spaces, is_special
         paths = transform.transform_path(r.path_uint8(T))
         for path in paths:
             m, _ = _digits2rational(path, base)
-<<<<<<< Updated upstream
             # m = int(m * n / num)
-=======
-            m = int(m * n / num)
->>>>>>> Stashed changes
             if m in hash:
                 hash[m] += 1
             else:
                 hash[m] = 1
     
-<<<<<<< Updated upstream
     # print(f"Rational set size: {len(rationalset)}, Hash size: {len(hash)}")
     for m in hash:
         count = hash[m]
         rat = Rational(m, num, dim)
-=======
-    print(f"Rational set size: {len(rationalset)}, Hash size: {len(hash)}")
-    for m in hash:
-        count = hash[m]
-        rat = Rational(m, n, dim)
->>>>>>> Stashed changes
         digits = rat.path_uint8(T)
         for rt in range(max_val + 1):
             px, py, pz = rat.position(t+rt)
