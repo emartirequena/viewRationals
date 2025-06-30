@@ -69,7 +69,7 @@ def make_video(
     subprocess.run(options)
     return True
 
-
+@njit
 def get_alpha(count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min):
     div = number
     if normalize_alpha:

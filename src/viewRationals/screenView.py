@@ -17,7 +17,7 @@ def getRationalsSeqs(rationals, number, dim):
     result = List()
     r = List.empty_list(int32)
     for x in rationals: # Copy rationals to a new list
-        r.append(x)
+        r.append(int32(x))
     base = 2**dim
     period = getPeriod(number, base)
     while len(r) > 0:
@@ -26,8 +26,8 @@ def getRationalsSeqs(rationals, number, dim):
         for _ in range(period):
             for i in range(len(r)):
                 if r[i] == n:
-                    l.append(n)
-                    r.remove(n)
+                    l.append(int32(n))
+                    r.pop(i)
                     break
             n = n*base % number
         result.append(l)

@@ -62,7 +62,8 @@ def _num_intersect_rationals(rationals, cell_rationals):
             continue
     return count
 
-def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
+def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+                view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
 
