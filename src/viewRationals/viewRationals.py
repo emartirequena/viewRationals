@@ -19,7 +19,7 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime_numba import SpaceTime, addRationalSet
+from spacetime_numba import SpaceTime
 from cell_numba import Cell
 from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
@@ -545,18 +545,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spacetime.setRationalSet(n, self.is_special)
 
         self.setStatus(f'Adding rational set for number: {n}...')
-        # self.spacetime.addRationalSet(0, 0, 0, 0)
-        addRationalSet(
-            self.spacetime.n,
-            self.spacetime.rationalSet,
-            self.spacetime.transform,
-            self.spacetime.dim,
-            self.spacetime.T,
-            self.spacetime.spaces,
-            self.spacetime.is_special,
-            self.spacetime.max_val,
-            0, 0, 0, 0
-        )
+        self.spacetime.addRationalSet(0, 0, 0, 0)
+        # addRationalSet(
+        #     self.spacetime.n,
+        #     self.spacetime.rationalSet,
+        #     self.spacetime.transform,
+        #     self.spacetime.dim,
+        #     self.spacetime.T,
+        #     self.spacetime.spaces,
+        #     self.spacetime.is_special,
+        #     self.spacetime.max_val,
+        #     0, 0, 0, 0
+        # )
         self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
