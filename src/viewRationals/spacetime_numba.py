@@ -6,6 +6,7 @@ import numpy as np
 from time import time
 from gc import collect
 
+from cell_numba import Cell
 from spaces_numba import Spaces
 from space_numba import Space
 from rationals_numba import Rational, _digits2rational
@@ -179,3 +180,48 @@ class SpaceTime:
 def create_spacetime(T, n, max_val, dim=1):
     """Factory function to create a SpaceTime instance."""
     return SpaceTime(T, n, max_val, dim)
+
+# Convert the entire SpaceTime instance to a list of lists of dicts
+def spacetime_to_dicts(spacetime: SpaceTime, accumulate):
+    """Convert a SpaceTime instance to a list of dicts."""
+    spaces = []
+    for t in range(spacetime.max_val + 1):
+        cells = []
+        for cell in spacetime.getCells(t, accumulate):
+            cells.append({
+                'time': cell.time,
+                'pos': (cell.x, cell.y, cell.z),
+                'count': cell.count,
+                'rationals': [int(x) for x in cell.get_rationals()],
+                'next_digits': [int(x) for x in cell.get_next_digits()],
+            })
+        spaces.append(cells)
+    return spaces
+
+# Convert a space to a list of cell dicts
+def space_to_dicts(spacetime: SpaceTime, t: int, accumulate: bool):
+    """Convert a Space instance to a list of cell dicts."""
+    cells = []
+    for cell in spacetime.getCells(t, accumulate):
+        cells.append({
+            'time': cell.time,
+            'pos': (cell.x, cell.y, cell.z),
+            'count': cell.count,
+            'rationals': [int(x) for x in cell.get_rationals()],
+            'next_digits': [int(x) for x in cell.get_next_digits()],
+        })
+    return cells
+
+# Convert a list of cells to a list of dicts
+def cells_to_dicts(cells):
+    """Convert a list of Cell instances to a list of dicts."""
+    return [
+        {
+            'time': cell.time,
+            'pos': (cell.x, cell.y, cell.z),
+            'count': cell.count,
+            'rationals': [int(x) for x in cell.get_rationals()],
+            'next_digits': [int(x) for x in cell.get_next_digits()],
+        }
+        for cell in cells
+    ]

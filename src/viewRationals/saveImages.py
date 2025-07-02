@@ -15,7 +15,7 @@ from utils import make_video
 from timing import timing
 from color import _convert_color
 
-settings_file = r'settings.txt'
+settings_file = 'settings.txt'
 mutex = Lock()
 
 
@@ -63,9 +63,10 @@ def _get_number_img(number, period, ptime, config):
     draw.text((0, 0), string, font=font, fill=foreground)
     return img
 
+
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
-    config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
+    config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
     image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend = args
 
@@ -86,9 +87,12 @@ def _create_image(args):
         p = ptime * np.array(center) / center_time
         view.moveTo(p[0], p[1], p[2])
 
+    view_cells = spacetime[ptime]
+
     mutex.acquire()
     try:
-        objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+        objs, _, _ = get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+                                 view_objects, view_time, view_next_number, max_time, ptime, 1)
     except Exception as e:
         print(f'ERROR creating objs: {str(e)}')
         print(traceback.print_exc())
@@ -185,7 +189,7 @@ def _create_video(args):
         _del_folder(path)
 
     del args
-    collect('save video')
+    collect()
 
 
 def _error_callback(val):
@@ -197,10 +201,10 @@ def _saveImages(args):
 
     shr_projection, shr_navigation, image_path, init_time, end_time, frame_rate, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
-    ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
+    ccolor, view_type, spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
     max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus, \
-    legend, image_resx, image_resy = args \
+    legend, image_resx, image_resy = args
     
     number = int(number)
     period = int(period)
@@ -241,7 +245,7 @@ def _saveImages(args):
             rotate = True
         params.append((
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
-            config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
+            config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
             image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend
         ))
@@ -258,6 +262,6 @@ def _saveImages(args):
     
     pool = Pool(num_cpus)
     # pool.map(func=_create_image, iterable=params, chunksize=chunksize)
-    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, callback=_error_callback)
+    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
 
     return (pool, args_video)

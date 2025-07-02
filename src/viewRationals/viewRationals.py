@@ -19,7 +19,7 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime_numba import SpaceTime
+from spacetime_numba import SpaceTime, spacetime_to_dicts, cells_to_dicts
 from cell_numba import Cell
 from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
@@ -323,6 +323,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.max_video_frames = deepcopy(num_frames)
         self.shr_num_video_frames = manager.Value(int, self.num_video_frames)
 
+        spacetime = spacetime_to_dicts(self.spacetime, self._check_accumulate())
+
         args = (
             shr_projection,
             shr_navigation,
@@ -338,7 +340,7 @@ class MainWindow(QtWidgets.QMainWindow):
             config,
             self.color,
             self.views.views[self.views.mode].type,
-            self.spacetime,
+            spacetime,
             self.selected_rationals,
             self.dim,
             self.number.value(),
@@ -546,18 +548,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.setStatus(f'Adding rational set for number: {n}...')
         self.spacetime.addRationalSet(0, 0, 0, 0)
-        # addRationalSet(
-        #     self.spacetime.n,
-        #     self.spacetime.rationalSet,
-        #     self.spacetime.transform,
-        #     self.spacetime.dim,
-        #     self.spacetime.T,
-        #     self.spacetime.spaces,
-        #     self.spacetime.is_special,
-        #     self.spacetime.max_val,
-        #     0, 0, 0, 0
-        # )
-        self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
         self.timeWidget.setFocus()
@@ -582,8 +572,9 @@ class MainWindow(QtWidgets.QMainWindow):
             view_cells = self.spacetime.getCellsWithRationals(rationals, frame, self._check_accumulate())
         else:
             view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+        cells = cells_to_dicts(view_cells)  
         objs, count_cells, self.cell_ids = get_objects(
-            view_cells,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -608,8 +599,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.view_selected_rationals:
             rationals = self.selected_rationals
         view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+        cells = cells_to_dicts(view_cells)
         objs, _, _ = get_objects(
-            view_cells,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
