@@ -83,7 +83,7 @@ class SpaceTime:
         self.dim = dim
         self.spaces.reset(T, n, max_val, dim)
         self.rationalSet.clear()
-        # self.transform.set_active(False)
+        self.transform.set_active(False)
         self.changed = False
 
     def getCell(self, t, x, y=0, z=0, accumulate=False):
@@ -198,9 +198,9 @@ def spacetime_to_dicts(spacetime: SpaceTime, accumulate):
         spaces.append(cells)
     return spaces
 
-# Convert a space to a list of cell dicts
+# Convert a single Space instance to a list of dicts
 def space_to_dicts(spacetime: SpaceTime, t: int, accumulate: bool):
-    """Convert a Space instance to a list of cell dicts."""
+    """Convert a Space instance to a list of dicts."""
     cells = []
     for cell in spacetime.getCells(t, accumulate):
         cells.append({
@@ -213,7 +213,7 @@ def space_to_dicts(spacetime: SpaceTime, t: int, accumulate: bool):
     return cells
 
 # Convert a list of cells to a list of dicts
-def cells_to_dicts(cells):
+def cells_to_dicts(cells: list[Cell]):
     """Convert a list of Cell instances to a list of dicts."""
     return [
         {

@@ -18,7 +18,7 @@
         {"alpha": 1.00, "color": [255, 157,   0]}
     ],
     "background_color": [255, 255, 255],
-    "normalize_alpha": false,
+    "normalize_alpha": true,
     "alpha_pow": 0.6,
     "rad_factor": 0.75,
     "rad_pow": 0.6,

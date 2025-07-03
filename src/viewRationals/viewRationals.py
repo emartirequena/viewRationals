@@ -308,7 +308,7 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 num_frames = int((end_frame - init_frame + 1) * frame_rate)
         if end_frame == 0:
-            end_frame = self.maxTime.value()
+            end_frame = int(self.maxTime.value())
         if self._check_accumulate() and turn_angle == 0 and num_frames > 1:
             init_frame = 0
             end_frame = 6
@@ -351,7 +351,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.actionViewObjects.isChecked(),
             self.actionViewTime.isChecked(),
             self.actionViewNextNumber.isChecked(),
-            self.maxTime.value(),
+            int(self.maxTime.value()),
             self.shr_num_video_frames,
             clean_images,
             self.selected_center,
@@ -425,6 +425,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def _select_time_changed(self):
         if not self.selected_center:
             return
+        if self.selected_time == 0:
+            self.selected_time = 1
         v = np.array(self.selected_center) / self.selected_time
         p = v * self.timeWidget.value()
         self.views.moveTo(p[0], p[1], p[2])
@@ -566,12 +568,10 @@ class MainWindow(QtWidgets.QMainWindow):
     @timing
     def draw_objects(self, frame=0):
         frame = self.timeWidget.value()
-        rationals = List.empty_list(int32)  # Use typed List for rationals
+        rationals = []
         if self.view_selected_rationals and len(self.selected_rationals) > 0:
-            rationals = self.selected_rationals
-            view_cells = self.spacetime.getCellsWithRationals(rationals, frame, self._check_accumulate())
-        else:
-            view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+            rationals = [int(x) for x in self.selected_rationals]
+        view_cells = self.spacetime.getCells(frame, self._check_accumulate())
         cells = cells_to_dicts(view_cells)  
         objs, count_cells, self.cell_ids = get_objects(
             cells,
@@ -597,7 +597,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def make_objects(self, frame):
         rationals = []
         if self.view_selected_rationals:
-            rationals = self.selected_rationals
+            rationals = [int(x) for x in self.selected_rationals]
         view_cells = self.spacetime.getCells(frame, self._check_accumulate())
         cells = cells_to_dicts(view_cells)
         objs, _, _ = get_objects(

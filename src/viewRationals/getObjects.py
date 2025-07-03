@@ -9,7 +9,6 @@ from utils import get_alpha
 from color import _convert_color
 
 
-@njit
 def _get_next_number_dir(dim, cell):
     next_digits = cell['next_digits']
     if dim == 1:
@@ -32,7 +31,7 @@ def _get_next_number_dir(dim, cell):
         v7 = np.array([ 1, -1, -1]) * next_digits[6]
         v8 = np.array([-1, -1, -1]) * next_digits[7]
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
-    return v * cell.count
+    return v * cell['count']
 
 @njit
 def _num_intersect_rationals(rationals, cell_rationals):
@@ -112,12 +111,11 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
     total = 0
     max = -1
     count = 0
-    for i in range(len(view_cells)):
-        cell: Cell = view_cells[i]
+    for cell in view_cells:
         cell_count = cell['count']
         if cell_count > 0:
-            if len(rationals) > 0:
-                cell_count = _num_intersect_rationals(rationals, cell.get_rationals())
+            if len(rationals) > 0 and len(cell['rationals']) > 0:
+                cell_count = _num_intersect_rationals(rationals, cell['rationals'])
             if cell_count > max:
                 max = cell_count
             count += 1
@@ -128,9 +126,9 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
     if view_objects:
         for cell in view_cells:
             cell_count = cell['count']
-            if len(rationals) > 0:
+            if len(rationals) > 0 and len(cell['rationals']) > 0:
                 cell_count = _num_intersect_rationals(rationals, cell['rationals'])
-            alpha, rad = get_alpha(cell_count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
+            alpha, rad = get_alpha(cell_count, total, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
             pos = cell['pos']
