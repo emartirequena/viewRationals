@@ -6,6 +6,7 @@ import numpy as np
 from time import time
 from gc import collect
 
+from cell_numba import Cell
 from spaces_numba import Spaces
 from space_numba import Space
 from rationals_numba import Rational, _digits2rational
@@ -72,6 +73,7 @@ class SpaceTime:
         self.n = 0
         self.is_special = False
         self.spaces.clear()
+        # self.transform.set_active(False)
 
     def reset(self, T, n, max_val, dim):
         """Reset the SpaceTime instance with new parameters."""
@@ -81,6 +83,7 @@ class SpaceTime:
         self.dim = dim
         self.spaces.reset(T, n, max_val, dim)
         self.rationalSet.clear()
+        self.transform.set_active(False)
         self.changed = False
 
     def getCell(self, t, x, y=0, z=0, accumulate=False):
@@ -118,17 +121,40 @@ class SpaceTime:
 
     def addRationalSet(self, t, x, y, z):
         """Add a set of rationals to the spaces."""
-        addRationalSet(
-            self.n,
-            self.rationalSet, 
-            self.transform, 
-            self.dim, 
-            self.T, 
-            self.spaces, 
-            self.is_special, 
-            self.max_val, 
-            t, x, y, z
-        )
+        T = int32(self.T)
+        hash = Dict.empty(key_type=int64, value_type=int64)
+        base = 2 ** self.dim
+        num_paths = 0
+        for r in self.rationalSet:
+            paths = self.transform.transform_path(r.path_uint8(T))
+            for path in paths:
+                num_paths += 1
+                m, num = _digits2rational(path, base)
+                if self.transform.active == False:
+                    m = int(m * self.n / num)
+                if m in hash:
+                    hash[m] += 1
+                else:
+                    hash[m] = 1
+
+        print(f"Rational set size: {len(self.rationalSet)}, Hash size: {len(hash)}, Number of paths: {num_paths}")
+
+        for m in hash:
+            count = hash[m]
+            if self.transform.active == False:
+                rat = Rational(m, self.n, self.dim)
+            else:
+                rat = Rational(m, num, self.dim)
+            digits = rat.path_uint8(T)
+            for rt in range(self.max_val + 1):
+                px, py, pz = rat.position(t+rt)
+                px += x
+                py += y
+                pz += z
+                next_digit = digits[(t+rt+1) % T]
+                rtime = rat.time(t+rt)
+                self.spaces.add(count, self.is_special, t+rt, m, next_digit, rtime, T, px, py, pz)
+
         self.changed = True
 
     def get_rational_count(self):
@@ -155,49 +181,47 @@ def create_spacetime(T, n, max_val, dim=1):
     """Factory function to create a SpaceTime instance."""
     return SpaceTime(T, n, max_val, dim)
 
-# jitclass utility function to add a rational set to spaces
-@njit
-<<<<<<< Updated upstream
-def addRationalSet(n, rationalset, transform: Transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
-=======
-def addRationalSet(n, rationalset, transform, dim, T, spaces: Spaces, is_special, max_val, t, x, y, z):
->>>>>>> Stashed changes
-    """Add a single rational to spaces."""
-    hash = Dict.empty(key_type=int64, value_type=int64)
-    base = 2 ** dim
-    num = base ** T - 1
-    for r in rationalset:
-        paths = transform.transform_path(r.path_uint8(T))
-        for path in paths:
-            m, _ = _digits2rational(path, base)
-<<<<<<< Updated upstream
-            # m = int(m * n / num)
-=======
-            m = int(m * n / num)
->>>>>>> Stashed changes
-            if m in hash:
-                hash[m] += 1
-            else:
-                hash[m] = 1
-    
-<<<<<<< Updated upstream
-    # print(f"Rational set size: {len(rationalset)}, Hash size: {len(hash)}")
-    for m in hash:
-        count = hash[m]
-        rat = Rational(m, num, dim)
-=======
-    print(f"Rational set size: {len(rationalset)}, Hash size: {len(hash)}")
-    for m in hash:
-        count = hash[m]
-        rat = Rational(m, n, dim)
->>>>>>> Stashed changes
-        digits = rat.path_uint8(T)
-        for rt in range(max_val + 1):
-            px, py, pz = rat.position(t+rt)
-            px += x
-            py += y
-            pz += z
-            next_digit = digits[(t+rt+1) % T]
-            rtime = rat.time(t+rt)
-            spaces.add(count, is_special, t+rt, m, next_digit, rtime, T, px, py, pz)
+# Convert the entire SpaceTime instance to a list of lists of dicts
+def spacetime_to_dicts(spacetime: SpaceTime, accumulate):
+    """Convert a SpaceTime instance to a list of dicts."""
+    spaces = []
+    for t in range(spacetime.max_val + 1):
+        cells = []
+        for cell in spacetime.getCells(t, accumulate):
+            cells.append({
+                'time': cell.time,
+                'pos': (cell.x, cell.y, cell.z),
+                'count': cell.count,
+                'rationals': [int(x) for x in cell.get_rationals()],
+                'next_digits': [int(x) for x in cell.get_next_digits()],
+            })
+        spaces.append(cells)
+    return spaces
 
+# Convert a single Space instance to a list of dicts
+def space_to_dicts(spacetime: SpaceTime, t: int, accumulate: bool):
+    """Convert a Space instance to a list of dicts."""
+    cells = []
+    for cell in spacetime.getCells(t, accumulate):
+        cells.append({
+            'time': cell.time,
+            'pos': (cell.x, cell.y, cell.z),
+            'count': cell.count,
+            'rationals': [int(x) for x in cell.get_rationals()],
+            'next_digits': [int(x) for x in cell.get_next_digits()],
+        })
+    return cells
+
+# Convert a list of cells to a list of dicts
+def cells_to_dicts(cells: list[Cell]):
+    """Convert a list of Cell instances to a list of dicts."""
+    return [
+        {
+            'time': cell.time,
+            'pos': (cell.x, cell.y, cell.z),
+            'count': cell.count,
+            'rationals': [int(x) for x in cell.get_rationals()],
+            'next_digits': [int(x) for x in cell.get_next_digits()],
+        }
+        for cell in cells
+    ]

@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from ui.transformWidgetUI import Ui_TransformWidget
-from transform_numba import Transform, get_input_plugin_as_string, get_output_plugin_as_string
+from transform_numba import Transform, get_input_plugin_as_string, get_output_plugin_as_string, set_transform_velocity_from_params
 from timing import timing
 
 class TransformWidget(QtWidgets.QDialog):
@@ -27,6 +27,7 @@ class TransformWidget(QtWidgets.QDialog):
         self.ui.vx.setEnabled(False)
         self.ui.vy.setEnabled(False)
         self.ui.vz.setEnabled(False)
+        self.plugins_loaded = False
         if  self.transform.active:
             self.ui.activate.setChecked(True)
             if dim > 0:
@@ -55,16 +56,19 @@ class TransformWidget(QtWidgets.QDialog):
         vy = self.ui.vy.value()
         vz = self.ui.vz.value()
         try:
-            self.transform.set_velocity(self.dim, num, vx, vy, vz)
+            set_transform_velocity_from_params(self.transform, self.dim, num, vx, vy, vz)
         except ValueError as e:
             QtWidgets.QApplication.restoreOverrideCursor()
             QtWidgets.QMessageBox.critical(self, "Error", str(e))
             return
         
+        self.plugins_loaded = False
         self._load_plugins()
         QtWidgets.QApplication.restoreOverrideCursor()
 
     def _load_plugins(self):
+        if self.plugins_loaded:
+            return
         self.ui.InputList.clear()
         self.ui.OutputList.clear() 
 
@@ -74,14 +78,14 @@ class TransformWidget(QtWidgets.QDialog):
             self.ui.vy.setValue(int(self.transform.my))
             self.ui.vz.setValue(int(self.transform.mz))
 
-        for i in range(self.transform.get_num_inputs()):
+        for i in range(min(1000, self.transform.get_num_inputs())):
             input = get_input_plugin_as_string(self.transform, i)
             self.ui.InputList.addItem(input)
             self.ui.InputList.item(i).setData(QtCore.Qt.UserRole, i)
         if self.transform.get_input_plugin_idx() >= 0:
             self.ui.InputList.setCurrentRow(self.transform.get_input_plugin_idx())
             
-        for i in range(self.transform.get_num_outputs()):
+        for i in range(min(1000, self.transform.get_num_outputs())):
             output = get_output_plugin_as_string(self.transform, i)
             self.ui.OutputList.addItem(output)
             self.ui.OutputList.item(i).setData(QtCore.Qt.UserRole, i)
@@ -90,6 +94,7 @@ class TransformWidget(QtWidgets.QDialog):
 
         self.ui.inputLabel.setText(f"Input: ({self.transform.get_num_inputs()})")
         self.ui.outputLabel.setText(f"Output: ({self.transform.get_num_outputs()})")
+        self.pulings_loaded = True
 
     def cancel(self):
         self.close()
@@ -127,6 +132,8 @@ class TransformWidget(QtWidgets.QDialog):
             self.ui.InputList.setEnabled(True)
             self.ui.OutputList.setEnabled(True) 
             self.transform.set_active(True)
+            if self.dim == self.transform.get_dim():
+                self._load_plugins()
         else:
             self.ui.num.setEnabled(False)
             self.ui.vx.setEnabled(False)

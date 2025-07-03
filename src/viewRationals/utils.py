@@ -69,7 +69,7 @@ def make_video(
     subprocess.run(options)
     return True
 
-
+@njit
 def get_alpha(count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min):
     div = number
     if normalize_alpha:
@@ -164,6 +164,7 @@ def getDivisorsAndFactors(n: int, base: int) -> dict:
     divisors = {k: v for k, v in sorted(divisors.items(), key=lambda item: item[1]['number'])}
     return divisors
 
+@njit
 def getPeriod(n: int, base: int) -> int:
     if n == 1:
         return 1
@@ -198,6 +199,21 @@ def printDivisors():
         print(div)
     print(f'num divisors: {len(divs)}')
     print(f'period: {getPeriod(n, base)}')
+
+def gcd(a: int, b: int) -> int:
+    """Compute the greatest common divisor of a and b."""
+    while b:
+        a, b = b, a % b
+    return a
+
+def reduce_rational(m:int, n:int) -> tuple[int, int]:
+    """Reduce a rational number m/n to its simplest form."""
+    if n == 0:
+        raise ValueError("Denominator cannot be zero.")
+    if m == 0:
+        return (0, 1)  # Return 0 as a rational number
+    divisor = gcd(abs(m), abs(n))
+    return (m // divisor, n // divisor) if n > 0 else (-m // divisor, -n // divisor)
 
 
 if __name__ == '__main__':

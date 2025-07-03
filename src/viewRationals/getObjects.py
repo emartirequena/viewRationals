@@ -9,8 +9,8 @@ from utils import get_alpha
 from color import _convert_color
 
 
-def _get_next_number_dir(dim, cell: Cell):
-    next_digits = cell.get_next_digits()
+def _get_next_number_dir(dim, cell):
+    next_digits = cell['next_digits']
     if dim == 1:
         v1 = np.array([ 1,  0,  0]) * next_digits[0]
         v2 = np.array([-1,  0,  0]) * next_digits[1]
@@ -31,8 +31,9 @@ def _get_next_number_dir(dim, cell: Cell):
         v7 = np.array([ 1, -1, -1]) * next_digits[6]
         v8 = np.array([-1, -1, -1]) * next_digits[7]
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
-    return v * cell.count
+    return v * cell['count']
 
+@njit
 def _num_intersect_rationals(rationals, cell_rationals):
     """
     Count the number of rationals that intersect with the cell's rationals.
@@ -50,18 +51,23 @@ def _num_intersect_rationals(rationals, cell_rationals):
         return 0
     count = 0
     for i in range(len(rationals)):
+        has_intersection = False
         for j in range(len(cell_rationals)):
             if rationals[i] == cell_rationals[j]:
+                has_intersection = True
                 count += 1
                 break
+        if has_intersection:
+            continue
     return count
 
-def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
+def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+                view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
 
     Parameters:
-    - view_cells: The cells to visualize.
+    - view_cells: The list of cells to visualize.
     - number: The number of objects to create.
     - dim: The dimension of the spacetime.
     - accumulate: Whether to accumulate the objects.
@@ -73,13 +79,10 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
     - view_next_number: Whether to view the next number.
     - max_time: The maximum time value.
     - ptime: The current time value.
-<<<<<<< Updated upstream
-=======
-    - max_spaces_time: The maximum time across all spaces.
->>>>>>> Stashed changes
     Returns:
     - A dictionary of objects, the count of cells, and a dictionary of cell IDs.
     """
+    
     objs = {}
     cell_ids = {}
     if not view_cells:
@@ -108,12 +111,11 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
     total = 0
     max = -1
     count = 0
-    for i in range(len(view_cells)):
-        cell: Cell = view_cells[i]
-        cell_count = cell.count
+    for cell in view_cells:
+        cell_count = cell['count']
         if cell_count > 0:
-            if len(rationals) > 0:
-                cell_count = _num_intersect_rationals(rationals, cell.get_rationals())
+            if len(rationals) > 0 and len(cell['rationals']) > 0:
+                cell_count = _num_intersect_rationals(rationals, cell['rationals'])
             if cell_count > max:
                 max = cell_count
             count += 1
@@ -123,13 +125,13 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
 
     if view_objects:
         for cell in view_cells:
-            cell_count = cell.count
-            if len(rationals) > 0:
-                cell_count = _num_intersect_rationals(rationals, cell.get_rationals())
-            alpha, rad = get_alpha(cell_count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
+            cell_count = cell['count']
+            if len(rationals) > 0 and len(cell['rationals']) > 0:
+                cell_count = _num_intersect_rationals(rationals, cell['rationals'])
+            alpha, rad = get_alpha(cell_count, total, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
-            pos = (cell.x, cell.y, cell.z)
+            pos = cell['pos']
             if dim == 3:
                 obj = icosphere(vec3(pos[0], pos[1], pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
             elif dim == 2:
@@ -141,22 +143,23 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            if cell.count not in cell_ids:
-                cell_ids[cell.count] = []
-            cell_ids[cell.count].append(num_id)
+            cell_count = cell['count']
+            if cell_count not in cell_ids:
+                cell_ids[cell_count] = []
+            cell_ids[cell_count].append(num_id)
             num_id += 1
 
     elif view_time:
         for cell in view_cells:
             if max_time == 0.0:
                 continue
-            alpha = float(cell.time) / float(max_spaces_time)
+            alpha = float(cell['time']) / float(max_spaces_time)
             rad = math.pow(alpha / rad_factor, rad_pow)
             if rad == 0:
                 continue
             color = ccolor.getColor(alpha)
 
-            pos = (cell.x, cell.y, cell.z)
+            pos = cell['pos']
             if dim == 3:
                 f = 4 * rad
                 obj = icosahedron(vec3(pos[0], pos[1], pos[2]), f)
@@ -198,7 +201,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
             dir = dir * k / mod_dir
             mod_dir = k
 
-            pos = (cell.x, cell.y, cell.z)
+            pos = cell['pos']
             base = vec3(pos[0], pos[1], pos[2])
             dir_len = 5.0 * length_factor
             if dim == 1:

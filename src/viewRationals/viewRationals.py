@@ -9,6 +9,7 @@ import numpy as np
 from numba.typed import List
 from numba import int32
 from gc import collect
+import traceback as trace
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
@@ -18,7 +19,8 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime_numba import SpaceTime, addRationalSet
+from spacetime_numba import SpaceTime, spacetime_to_dicts, cells_to_dicts
+from cell_numba import Cell
 from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
 from config import config
@@ -86,6 +88,21 @@ class VideoThread(Thread):
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # precomile the numba modules
+        # print('------- precompile numba modules...')
+        # time_start = time()
+        # spacetime = SpaceTime(2, 3, 2, 1)
+        # spacetime.setRationalSet(3, True)
+        # spacetime.addRationalSet(0, 0, 0, 0)
+        # spacetime.getCell(0, 0, 0, 0)
+        # spacetime.getCells(0)
+        # spacetime.getCellsWithRationals(List.empty_list(int32), 0)
+        # del spacetime
+        # collect()
+        # time_end = time()
+        # print(f'------- precompile numba modules done in {time_end - time_start:.2f} secs')
+
         self.ui = MainWindowUI()
         self.ui.setUpUi(self)
         self.dim = 3
@@ -111,11 +128,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.view_objects = True
         self.view_time = False
         self.view_next_number = False
-        # self.manager = MyManager()
-        # self.manager.start()
-        # self.spacetime: SpaceTime = self.manager.SpaceTime(2, 2, 2, 1)
         self.spacetime: SpaceTime = SpaceTime(2, 2, 2, 1)
-        self.transform = Transform()
+        self.transform: Transform = Transform()
         self.video_thread = None
         self.factors = ''
         self.num = 0
@@ -294,7 +308,7 @@ class MainWindow(QtWidgets.QMainWindow):
             else:
                 num_frames = int((end_frame - init_frame + 1) * frame_rate)
         if end_frame == 0:
-            end_frame = self.maxTime.value()
+            end_frame = int(self.maxTime.value())
         if self._check_accumulate() and turn_angle == 0 and num_frames > 1:
             init_frame = 0
             end_frame = 6
@@ -308,6 +322,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.num_video_frames = 0
         self.max_video_frames = deepcopy(num_frames)
         self.shr_num_video_frames = manager.Value(int, self.num_video_frames)
+
+        spacetime = spacetime_to_dicts(self.spacetime, self._check_accumulate())
 
         args = (
             shr_projection,
@@ -324,7 +340,7 @@ class MainWindow(QtWidgets.QMainWindow):
             config,
             self.color,
             self.views.views[self.views.mode].type,
-            self.spacetime,
+            spacetime,
             self.selected_rationals,
             self.dim,
             self.number.value(),
@@ -335,7 +351,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.actionViewObjects.isChecked(),
             self.actionViewTime.isChecked(),
             self.actionViewNextNumber.isChecked(),
-            self.maxTime.value(),
+            int(self.maxTime.value()),
             self.shr_num_video_frames,
             clean_images,
             self.selected_center,
@@ -376,7 +392,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def select_rationals(self):
         self.view_selected_rationals = not self.view_selected_rationals
         if not self.view_selected_rationals:
-            self.selected_rationals = []
+            self.selected_rationals = List.empty_list(int32)
         if self.histogram:
             self.histogram.set_rationals(self.selected_rationals)
         if self.views:
@@ -384,8 +400,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.draw_objects()
             self.views.update()
 
-    def select_cell(self, cell):
+    def select_cell(self, cell: Cell):
+        print(f'Selecting cell {cell.x} {cell.y} {cell.z} at time {self.time.value()}')
         self.selected_rationals = cell.get_rationals()
+        print(f'Selected rationals: {len(self.selected_rationals)}')
         self.view_selected_rationals = True
         if self.views:
             self.draw_objects()
@@ -407,6 +425,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def _select_time_changed(self):
         if not self.selected_center:
             return
+        if self.selected_time == 0:
+            self.selected_time = 1
         v = np.array(self.selected_center) / self.selected_time
         p = v * self.timeWidget.value()
         self.views.moveTo(p[0], p[1], p[2])
@@ -515,10 +535,11 @@ class MainWindow(QtWidgets.QMainWindow):
         time1 = time()
 
         n = int(self.number.value())
+        num = 2**(self.dim*self.period.value()) - 1
 
         if self.changed_spacetime:
             self.setStatus('Creating incremental spacetime...')
-            self.spacetime.reset(self.period.value(), n, self.maxTime.value(), self.dim)
+            self.spacetime.reset(self.period.value(), num, self.maxTime.value(), self.dim)
             self.changed_spacetime = False
             self.need_compute = False
 
@@ -528,34 +549,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.spacetime.setRationalSet(n, self.is_special)
 
         self.setStatus(f'Adding rational set for number: {n}...')
-<<<<<<< Updated upstream
-        # self.spacetime.addRationalSet(0, 0, 0, 0)
-        addRationalSet(
-            self.spacetime.n,
-            self.spacetime.rationalSet,
-            self.spacetime.transform,
-            self.spacetime.dim,
-            self.spacetime.T,
-            self.spacetime.spaces,
-            self.spacetime.is_special,
-            self.spacetime.max_val,
-            0, 0, 0, 0
-        )         
-=======
         self.spacetime.addRationalSet(0, 0, 0, 0)
-        # addRationalSet(
-        #     self.spacetime.n,
-        #     self.spacetime.rationalSet,
-        #     self.spacetime.transform,
-        #     self.spacetime.dim,
-        #     self.spacetime.T,
-        #     self.spacetime.spaces,
-        #     self.spacetime.is_special,
-        #     self.spacetime.max_val,
-        #     0, 0, 0, 0
-        # )         
->>>>>>> Stashed changes
-        self.setStatus(f'Rational set added for number {n}')
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
         self.timeWidget.setFocus()
@@ -574,14 +568,13 @@ class MainWindow(QtWidgets.QMainWindow):
     @timing
     def draw_objects(self, frame=0):
         frame = self.timeWidget.value()
-        rationals = List.empty_list(int32)  # Use typed List for rationals
-        if self.view_selected_rationals:
-            rationals = self.selected_rationals
-            view_cells = self.spacetime.getCellsWithRationals(rationals, frame, self._check_accumulate())
-        else:
-            view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+        rationals = []
+        if self.view_selected_rationals and len(self.selected_rationals) > 0:
+            rationals = [int(x) for x in self.selected_rationals]
+        view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+        cells = cells_to_dicts(view_cells)  
         objs, count_cells, self.cell_ids = get_objects(
-            view_cells,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -604,10 +597,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def make_objects(self, frame):
         rationals = []
         if self.view_selected_rationals:
-            rationals = self.selected_rationals
+            rationals = [int(x) for x in self.selected_rationals]
         view_cells = self.spacetime.getCells(frame, self._check_accumulate())
+        cells = cells_to_dicts(view_cells)
         objs, _, _ = get_objects(
-            view_cells,
+            cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),

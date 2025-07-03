@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 import math
 from multiprocessing import Pool, cpu_count
@@ -15,7 +16,7 @@ from utils import make_video
 from timing import timing
 from color import _convert_color
 
-settings_file = r'settings.txt'
+settings_file = 'settings.txt'
 mutex = Lock()
 
 
@@ -51,6 +52,33 @@ def _makePath(accumulate, factors, image_path, dim_str, period, number, single_i
     return path
 
 
+def _get_last_frame(filename):
+    """
+    Dado un nombre de fichero con frame, busca todos los ficheros en el mismo directorio
+    que coincidan y devuelve el número de frame más alto.
+    """
+    basedir, fname = os.path.split(filename)
+    # Extrae el patrón base y extensión
+    match = re.match(r'^(.*?)(\d+)\.(\w+)$', fname)
+    if not match:
+        return 0
+    base_pattern = match.group(1)
+    ext = match.group(3)
+    # Regex para buscar el frame
+    frame_regex = re.compile(rf'^{re.escape(base_pattern)}(\d+)\.{re.escape(ext)}$')
+    max_frame = 0
+    for file in os.listdir(basedir):
+        m = frame_regex.match(file)
+        if m:
+            try:
+                frame = int(m.group(1))
+                if frame > max_frame:
+                    max_frame = frame
+            except ValueError:
+                continue
+    return max_frame
+
+
 def _get_number_img(number, period, ptime, config):
     background = (*[int(x) for x in config.get('background_color')], 255)
     img = Image.new('RGBA', (500, 40), background)
@@ -63,11 +91,12 @@ def _get_number_img(number, period, ptime, config):
     draw.text((0, 0), string, font=font, fill=foreground)
     return img
 
+
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
-    config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
+    config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
-    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend = args
+    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend, single_imgae = args
 
     print(f'------- create image')
 
@@ -86,9 +115,12 @@ def _create_image(args):
         p = ptime * np.array(center) / center_time
         view.moveTo(p[0], p[1], p[2])
 
+    view_cells = spacetime[ptime]
+
     mutex.acquire()
     try:
-        objs, _, _ = get_objects(shr_spacetime, number, dim, accumulate, rationals, config, ccolor, view_objects, view_time, view_next_number, max_time, ptime)
+        objs, _, _ = get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+                                 view_objects, view_time, view_next_number, max_time, ptime, 1)
     except Exception as e:
         print(f'ERROR creating objs: {str(e)}')
         print(traceback.print_exc())
@@ -122,6 +154,11 @@ def _create_image(args):
         del number_img
 
     file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
+    if single_imgae:
+        frame = _get_last_frame(os.path.join(path, file_name))
+        frame += 1
+        file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
+
     print(f'------- save: {file_name}, time: {ptime}')
     shr_num_video_frames.value += 1
 
@@ -185,7 +222,7 @@ def _create_video(args):
         _del_folder(path)
 
     del args
-    collect('save video')
+    collect()
 
 
 def _error_callback(val):
@@ -197,10 +234,10 @@ def _saveImages(args):
 
     shr_projection, shr_navigation, image_path, init_time, end_time, frame_rate, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
-    ccolor, view_type, shr_spacetime, rationals, dim, number, period, factors, \
+    ccolor, view_type, spacetime, rationals, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
     max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus, \
-    legend, image_resx, image_resy = args \
+    legend, image_resx, image_resy = args
     
     number = int(number)
     period = int(period)
@@ -241,9 +278,10 @@ def _saveImages(args):
             rotate = True
         params.append((
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
-            config, ccolor, shr_spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
+            config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
-            image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend
+            image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend,
+            single_image
         ))
 
     args_video = (
@@ -257,7 +295,6 @@ def _saveImages(args):
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
-    # pool.map(func=_create_image, iterable=params, chunksize=chunksize)
-    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, callback=_error_callback)
+    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
 
     return (pool, args_video)
