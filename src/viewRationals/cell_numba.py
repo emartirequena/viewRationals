@@ -3,7 +3,7 @@ from numba.experimental import jitclass
 from numba.typed import List
 import numpy as np
 
-from hashrationals_numba import HashRationals, hash_rationals_item_type, hash_size
+from hashrationals_numba import HashRationals, hash_size
 
 # obtiene el diccionario de la celda
 def get_cell_dict(cell):
@@ -51,12 +51,13 @@ class Cell:
         self.count += count
         self.time += time
         self.next_digits[next_digit] += count
-        self.rationals.add(m, time)  # Usa el método de HashRationals (2 parámetros)
+        self.rationals.add(m)  # Usa el método de HashRationals (2 parámetros)
 
     def clear(self):
         self.count = 0
         self.time = 0.0
         self.next_digits.fill(0)  # Reinicia el array
+        del self.rationals
         self.rationals = HashRationals(self.n, hash_size)  # Instancia de HashRationals
 
     def get_pos(self):
@@ -72,8 +73,9 @@ class Cell:
         return self.next_digits.copy()
     
     def get_rationals(self):
-        return self.rationals.get_rationals()
-        # return self.rationals
+        rationals = self.rationals.get_rationals()
+        rationals.sort()
+        return rationals
 
     def set(self, count, time, next_digits_array):
         self.count = count

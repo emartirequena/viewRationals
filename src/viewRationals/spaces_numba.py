@@ -153,9 +153,6 @@ class Spaces:
         cells = self.getCells(t, accumulate=accumulate)
         selected = List.empty_list(cell_type)
         
-        # Crear array para comparación más eficiente
-        # target_rationals = np.array(rationals_array, dtype=np.int32)
-        
         for i in range(len(cells)):
             cell = cells[i]
             cell_rationals = cell.get_rationals()

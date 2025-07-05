@@ -49,21 +49,20 @@ def intersectRationals(rationals: list[int], cell_rationals: list[int]) -> list[
     result = List.empty_list(int32)
     if len(rationals) == 0 or len(cell_rationals) == 0:
         return result
-    for i in range(len(rationals)):
-        has_intersection = False
-        for j in range(len(cell_rationals)):
-            if rationals[i] == cell_rationals[j]:
-                has_intersection = True
-                break
-        if has_intersection:
-            result.append(rationals[i])
-    return result
 
+    for sel in rationals:
+        for cell in cell_rationals:
+            if sel == cell:
+                result.append(sel)
+                break
+
+    return result
 
 class Label(QtWidgets.QWidget):
     def __init__(self, parent: rendering.QWidget | None = ..., 
                  rationals: list[int] = None,
                  number: int = 0,
+                 count: int = 0,
                  dim: int = 0,
                  posx: int = 0,
                  posy: int = 0
@@ -73,7 +72,7 @@ class Label(QtWidgets.QWidget):
         self.setAutoFillBackground(True)
         self.move(posx, posy)
         layout = QtWidgets.QVBoxLayout()
-        label = QtWidgets.QLabel(f'({len(rationals)})')
+        label = QtWidgets.QLabel(f'({count})')
         layout.addWidget(label)
         result = getRationalsSeqs(rationals, number, dim)
         for i in range(min(len(result), 20)):
@@ -140,7 +139,8 @@ class ScreenView(rendering.View):
                     if not intersect:
                         intersect = cell_rationals
                     self.label = Label(self, 
-                        rationals=intersect, 
+                        rationals=intersect,
+                        count=cell.count, 
                         number=self.mainWindow.number.value(), 
                         dim=self.mainWindow.dim, 
                         posx=evt.x(), posy=evt.y()

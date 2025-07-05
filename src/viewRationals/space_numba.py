@@ -3,6 +3,7 @@ from numba.experimental import jitclass
 from numba.typed import List
 from numba.types import ListType
 import numpy as np
+from gc import collect
 
 from cell_numba import Cell
 from rationals_numba import c

@@ -19,7 +19,7 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime_numba import SpaceTime, spacetime_to_dicts, cells_to_dicts
+from spacetime_numba import SpaceTime, space_to_dicts, spacetime_to_dicts
 from cell_numba import Cell
 from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
@@ -33,11 +33,6 @@ from transformWidget import TransformWidget
 
 settings_file = r'settings.txt'
 opengl_version = (3,3)
-
-# class MyManager(managers.BaseManager):
-# 	...
-
-# MyManager.register('SpaceTime', SpaceTime)
 
 
 class VideoThread(Thread):
@@ -56,9 +51,7 @@ class VideoThread(Thread):
         self.parent.setStatus(f'Creating single image or video sequence, please wait...')
         self.processes = self.func_process(self.args_process)
         self.processes[0].close()
-        # print(f'>>>>>>> Close create images...')
         self.processes[0].join()
-        # print(f'>>>>>>> Join create images')
         if not self.killed and not self.single_image and self.processes[1]:
             self.func_video(self.processes[1])
             self.parent.setStatus(f'Video saved for number {int(self.parent.number.value()):d} in {get_duration():.2f} secs')
@@ -88,21 +81,6 @@ class VideoThread(Thread):
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-
-        # precomile the numba modules
-        # print('------- precompile numba modules...')
-        # time_start = time()
-        # spacetime = SpaceTime(2, 3, 2, 1)
-        # spacetime.setRationalSet(3, True)
-        # spacetime.addRationalSet(0, 0, 0, 0)
-        # spacetime.getCell(0, 0, 0, 0)
-        # spacetime.getCells(0)
-        # spacetime.getCellsWithRationals(List.empty_list(int32), 0)
-        # del spacetime
-        # collect()
-        # time_end = time()
-        # print(f'------- precompile numba modules done in {time_end - time_start:.2f} secs')
-
         self.ui = MainWindowUI()
         self.ui.setUpUi(self)
         self.dim = 3
@@ -128,7 +106,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.view_objects = True
         self.view_time = False
         self.view_next_number = False
-        self.spacetime: SpaceTime = SpaceTime(2, 2, 2, 1)
+        self.spacetime: SpaceTime = SpaceTime(2, 3, 2, 1)
         self.transform: Transform = Transform()
         self.video_thread = None
         self.factors = ''
@@ -217,11 +195,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self._clear_parameters()
 
     def setTimeInit(self):
-        # print('------- set init time')
         self.timeWidget.setValue(0)
 
     def setTimeEnd(self):
-        # print('------- set max time')
         self.timeWidget.setValue(self.maxTime.value())
 
     def moveNextCycle(self):
@@ -248,13 +224,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.timeWidget.setValue(0)
 
     def decrementTime(self):
-        # print('------- decrement time...')
         t = self.timeWidget.value()
         if t > 0:
             self.timeWidget.setValue(t - 1)
 
     def incrementTime(self):
-        # print('------- increment time...')
         t = self.timeWidget.value()
         if t < self.maxTime.value():
             self.timeWidget.setValue(t + 1)
@@ -416,7 +390,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.selected_center = (x, y, z)
         self.selected_time = self.timeWidget.value()
         self._select_time_changed()
-        # print(f'******* Setting center to ({x}, {y}, {z})')
 
     def deselect_center(self):
         self.selected_center = None
@@ -432,7 +405,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.views.moveTo(p[0], p[1], p[2])
         self.views.update()
         self.update()
-        # print(f'******* Move center to ({p[0]}, {p[1]}, {p[2]})')
 
     def select_cells(self, count):
         if not count:
@@ -496,6 +468,7 @@ class MainWindow(QtWidgets.QMainWindow):
         percent = 100.0 * float(selected_paths) / float(max)
         text = f'Selected cells: {selected_cells}, num paths: {selected_paths} / {max}, percent: {percent:.2f}%'
         self.setStatus(text)
+        
     
     def is_selected(self, count):
         if count in self.selected:
@@ -512,6 +485,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @timing
     def compute(self, nada=False):
+        result = 1
+        while result:
+            result = collect()
+
         if not int(self.number.value()):
             return
         
@@ -558,7 +535,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.time.setValue(self.maxTime.value())
         self.draw_objects()
 
-        collect()
+        result = 1
+        while result:
+            result = collect()
         
         time2 = time()
         self.setStatus(f'Rationals set for number {n:,.0f} computed in {time2-time1:,.2f} secs')
@@ -571,10 +550,9 @@ class MainWindow(QtWidgets.QMainWindow):
         rationals = []
         if self.view_selected_rationals and len(self.selected_rationals) > 0:
             rationals = [int(x) for x in self.selected_rationals]
-        view_cells = self.spacetime.getCells(frame, self._check_accumulate())
-        cells = cells_to_dicts(view_cells)  
+        view_cells = space_to_dicts(self.spacetime, frame, self._check_accumulate())
         objs, count_cells, self.cell_ids = get_objects(
-            cells,
+            view_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
@@ -591,17 +569,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.make_view(objs, count_cells)
         del objs
-        collect()
+        result = 1
+        while result:
+            result = collect()
 
     @timing
     def make_objects(self, frame):
         rationals = []
         if self.view_selected_rationals:
             rationals = [int(x) for x in self.selected_rationals]
-        view_cells = self.spacetime.getCells(frame, self._check_accumulate())
-        cells = cells_to_dicts(view_cells)
+        view_cells = space_to_dicts(self.spacetime, frame, self._check_accumulate())
         objs, _, _ = get_objects(
-            cells,
+            view_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),

@@ -111,23 +111,31 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
     total = 0
     max = -1
     count = 0
+    cells_counts = []
     for cell in view_cells:
         cell_count = cell['count']
         if cell_count > 0:
             if len(rationals) > 0 and len(cell['rationals']) > 0:
-                cell_count = _num_intersect_rationals(rationals, cell['rationals'])
+                set_rationals = set(rationals)
+                set_cell_rationals = set(cell['rationals'])
+                cell_count = len(set_rationals.intersection(set_cell_rationals))
+                del set_rationals
+                del set_cell_rationals
             if cell_count > max:
                 max = cell_count
             count += 1
             total += cell_count
+        cells_counts.append(cell_count)
 
     num_id = 0
 
     if view_objects:
+        index = 0
         for cell in view_cells:
-            cell_count = cell['count']
-            if len(rationals) > 0 and len(cell['rationals']) > 0:
-                cell_count = _num_intersect_rationals(rationals, cell['rationals'])
+            cell_count = cells_counts[index]
+            index += 1
+            if cell_count == 0:
+                continue
             alpha, rad = get_alpha(cell_count, total, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 

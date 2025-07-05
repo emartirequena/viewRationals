@@ -17,8 +17,8 @@ a = Analysis(
 		('C:\\Python310\\Lib\\site-packages\\madcad\\textures\\*.*', '.\\madcad\\textures'),
 		('C:\\Python310\\Lib\\site-packages\\freetype\*.*', '.\\freetype'),
 	],
-    hiddenimports=['madcad', 'glcontext', 'PyQt5', 'sip'],
-    hookspath=[],
+    hiddenimports=['madcad', 'glcontext', 'PyQt5', 'sip', 'numba'],
+    hookspath=['.'],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
@@ -50,4 +50,15 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
 	icon='icons/ojo-naturalista.ico'
+)
+
+coll = COLLECT(
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='View Rationals',
 )
