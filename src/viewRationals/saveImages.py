@@ -295,6 +295,7 @@ def _saveImages(args):
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
-    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
+    # pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
+    pool.map(func=_create_image, iterable=params, chunksize=chunksize)
 
     return (pool, args_video)

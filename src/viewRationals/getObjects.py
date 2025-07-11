@@ -114,6 +114,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
     cells_counts = []
     for cell in view_cells:
         cell_count = cell['count']
+        total += cell_count
         if cell_count > 0:
             if len(rationals) > 0 and len(cell['rationals']) > 0:
                 set_rationals = set(rationals)
@@ -124,7 +125,6 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
             if cell_count > max:
                 max = cell_count
             count += 1
-            total += cell_count
         cells_counts.append(cell_count)
 
     num_id = 0
@@ -147,7 +147,8 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
                 top = vec3(pos[0], alpha*10, pos[1])
                 obj = cylinder(base, top, rad)
             else:
-                height = 14 * float(cell_count) / float(total)
+                div = float(total if not normalize_alpha else max)
+                height = 14 * float(cell_count) / div
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
