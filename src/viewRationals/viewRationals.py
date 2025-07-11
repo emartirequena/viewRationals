@@ -299,6 +299,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         spacetime = spacetime_to_dicts(self.spacetime, self._check_accumulate())
 
+        selected_rationals = [int(x) for x in self.selected_rationals]
+
         args = (
             shr_projection,
             shr_navigation,
@@ -315,7 +317,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.color,
             self.views.views[self.views.mode].type,
             spacetime,
-            self.selected_rationals,
+            selected_rationals,
             self.dim,
             self.number.value(),
             self.period.value(),
