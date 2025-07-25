@@ -9,8 +9,8 @@ from config import config
 from color import ColorLine, _convert_color
 from utils import pil2pixmap
 from timing import timing
-from spacetime_numba import SpaceTime
 from utils import get_alpha
+import viewUtils as vu
 
 epsilon = 5.
 colors = [(100, 100, 100), (200, 100, 0), (150, 80, 0), (255, 255, 0)]
@@ -206,7 +206,7 @@ class SelectArea:
 class Histogram(QtWidgets.QWidget):
     def __init__(self, parent, spacetime):
         super().__init__(parent=parent)
-        self.spacetime: SpaceTime = spacetime
+        self.spacetime = spacetime
         self.time = 0
         self.number = 0
         self.number_str = ''
@@ -288,10 +288,13 @@ class Histogram(QtWidgets.QWidget):
             return
         
         dict_objs = {}
-        if not self.rationals:
-            view_cells = self.spacetime.getCells(self.time, self.accumulate)
+        view_cells = []
+        if len(self.rationals) == 0:
+            view_cells = vu.spacetime_cuda_getCells(self.spacetime, self.time, self.accumulate)
         else:
-            view_cells = self.spacetime.getCellsWithRationals(self.rationals, self.time, self.accumulate)
+            view_cells = vu.spacetime_cuda_getCellsWithRationals(
+                self.spacetime, self.rationals, len(self.rationals), self.time, self.accumulate
+            )
 
         normalize_alpha = self.config.get('normalize_alpha')
         alpha_pow = self.config.get('alpha_pow')
@@ -316,7 +319,7 @@ class Histogram(QtWidgets.QWidget):
             height = float(dict_objs[count])
             self.scene.add(pos, height, color, count)
 
-        del view_cells
+        # del view_cells
         del dict_objs
 
     def prepare_save_image(self):

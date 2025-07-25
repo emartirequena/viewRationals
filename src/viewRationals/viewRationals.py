@@ -1,13 +1,10 @@
 import os
 import sys
-from time import time, sleep
+from time import time
 from multiprocessing import freeze_support, Manager
 from threading import Thread
 from copy import deepcopy
-from multiprocessing import managers
 import numpy as np
-from numba.typed import List
-from numba import int32
 from gc import collect
 import traceback as trace
 
@@ -19,16 +16,14 @@ from views import Views
 from saveSpecials import SaveSpecialsWidget
 from saveVideo import SaveVideoWidget
 from getObjects import get_objects
-from spacetime_numba import SpaceTime, space_to_dicts, spacetime_to_dicts
-from cell_numba import Cell
 from utils import getDivisorsAndFactors, divisors
 from timing import timing, get_duration
 from config import config
 from color import ColorLine, _convert_color
 from histogram import Histogram
 from saveImages import _saveImages, _create_video
-from transform_numba import Transform
 from transformWidget import TransformWidget
+import viewUtils as vu
 
 
 settings_file = r'settings.txt'
@@ -106,8 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.view_objects = True
         self.view_time = False
         self.view_next_number = False
-        self.spacetime: SpaceTime = SpaceTime(2, 3, 2, 1)
-        self.transform: Transform = Transform()
+        self.spacetime = vu.spacetime_cuda_create(2, 2**(self.dim * 2) - 1,  3, 1)
         self.video_thread = None
         self.factors = ''
         self.num = 0
@@ -138,7 +132,6 @@ class MainWindow(QtWidgets.QMainWindow):
             if self.histogram:
                 self.histogram.clear()
         else:
-            # print('------- making view in _clear_view()')
             self.make_view(0)
         if self.cell_ids:
             del self.cell_ids
@@ -297,7 +290,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.max_video_frames = deepcopy(num_frames)
         self.shr_num_video_frames = manager.Value(int, self.num_video_frames)
 
-        spacetime = spacetime_to_dicts(self.spacetime, self._check_accumulate())
+        spacetime = self.spacetime
 
         selected_rationals = [int(x) for x in self.selected_rationals]
 
@@ -368,7 +361,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def select_rationals(self):
         self.view_selected_rationals = not self.view_selected_rationals
         if not self.view_selected_rationals:
-            self.selected_rationals = List.empty_list(int32)
+            self.selected_rationals = []
         if self.histogram:
             self.histogram.set_rationals(self.selected_rationals)
         if self.views:
@@ -376,9 +369,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.draw_objects()
             self.views.update()
 
-    def select_cell(self, cell: Cell):
+    def select_cell(self, cell):
         print(f'Selecting cell {cell.x} {cell.y} {cell.z} at time {self.time.value()}')
-        self.selected_rationals = cell.get_rationals()
+        self.selected_rationals = vu.cell_cuda_get_rationals(cell)
         print(f'Selected rationals: {len(self.selected_rationals)}')
         self.view_selected_rationals = True
         if self.views:
@@ -514,21 +507,14 @@ class MainWindow(QtWidgets.QMainWindow):
         time1 = time()
 
         n = int(self.number.value())
-        num = 2**(self.dim*self.period.value()) - 1
+        num = 2**(self.dim*int(self.period.value())) - 1
 
-        if self.changed_spacetime:
-            self.setStatus('Creating incremental spacetime...')
-            self.spacetime.reset(self.period.value(), num, self.maxTime.value(), self.dim)
-            self.changed_spacetime = False
-            self.need_compute = False
+        print('resetting spacetime...')
+        vu.spacetime_cuda_reset(self.spacetime, self.period.value(), num, self.maxTime.value(), self.dim)
 
-        self.spacetime.clear()
-
-        self.setStatus(f'Setting rational set for number: {n} ...')
-        self.spacetime.setRationalSet(n, self.is_special)
-
-        self.setStatus(f'Adding rational set for number: {n}...')
-        self.spacetime.addRationalSet(0, 0, 0, 0)
+        print('setting and adding rational set...')
+        vu.spacetime_cuda_setRationalSet(self.spacetime, n, self.is_special)
+        vu.spacetime_cuda_addRationalSet(self.spacetime, 0, 0, 0, 0)
     
         self.timeWidget.setValue(self.maxTime.value() if self.period_changed else self.time.value())
         self.timeWidget.setFocus()
@@ -549,16 +535,17 @@ class MainWindow(QtWidgets.QMainWindow):
     @timing
     def draw_objects(self, frame=0):
         frame = self.timeWidget.value()
-        rationals = []
-        if self.view_selected_rationals and len(self.selected_rationals) > 0:
-            rationals = [int(x) for x in self.selected_rationals]
-        view_cells = space_to_dicts(self.spacetime, frame, self._check_accumulate())
+        if self.view_selected_rationals:
+            view_cells = vu.spacetime_cuda_getCellsWithRationals(
+                self.spacetime, self.selected_rationals, len(self.selected_rationals), frame, self._check_accumulate())
+        else:
+            view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
         objs, count_cells, self.cell_ids = get_objects(
             view_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
-            rationals,
+            self.selected_rationals,
             self.config,
             self.color,
             self.view_objects,
@@ -566,9 +553,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_next_number, 
             self.maxTime.value(),
             frame,
-            self.spacetime.getMaxTime(self._check_accumulate())
+            self.maxTime.value()
         )
-
         self.make_view(objs, count_cells)
         del objs
         result = 1
@@ -580,7 +566,7 @@ class MainWindow(QtWidgets.QMainWindow):
         rationals = []
         if self.view_selected_rationals:
             rationals = [int(x) for x in self.selected_rationals]
-        view_cells = space_to_dicts(self.spacetime, frame, self._check_accumulate())
+        view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
         objs, _, _ = get_objects(
             view_cells,
             self.number.value(),
@@ -594,7 +580,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_next_number, 
             self.maxTime.value(),
             frame,
-            self.spacetime.getMaxTime(self._check_accumulate())
+            vu.spacetime_cuda_getMaxTime(self.spacetime, self._check_accumulate())
         )
         return objs
 
@@ -612,7 +598,8 @@ class MainWindow(QtWidgets.QMainWindow):
             if not self.histogram: 
                 self.histogram = Histogram(self, self.spacetime)
             self.histogram.set_number(int(self.number.value()))
-            self.histogram.set_rationals(self.selected_rationals)
+            if self.selected_rationals:
+                self.histogram.set_rationals(self.selected_rationals)
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
@@ -904,7 +891,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.setStatus(f'File {os.path.basename(in_file_name)} loaded in {time2 - time1:0.2f} segs')
 
     def applyTransform(self):
-        transformWidget = TransformWidget(self.spacetime.transform, self.dim, self)
+        transformWidget = TransformWidget(self.spacetime, self.dim, self)
         transformWidget.show()
 
 

@@ -3,14 +3,14 @@ from numba.typed import List, Dict
 import numpy as np
 import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
-from cell_numba import Cell
-from rationals_numba import c   
 from utils import get_alpha
 from color import _convert_color
+import viewUtils as vu
 
+c = 0.5 
 
 def _get_next_number_dir(dim, cell):
-    next_digits = cell['next_digits']
+    next_digits, _ = vu.cell_cuda_get_next_digits(cell)
     if dim == 1:
         v1 = np.array([ 1,  0,  0]) * next_digits[0]
         v2 = np.array([-1,  0,  0]) * next_digits[1]
@@ -31,9 +31,8 @@ def _get_next_number_dir(dim, cell):
         v7 = np.array([ 1, -1, -1]) * next_digits[6]
         v8 = np.array([-1, -1, -1]) * next_digits[7]
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
-    return v * cell['count']
+    return v * cell.count
 
-@njit
 def _num_intersect_rationals(rationals, cell_rationals):
     """
     Count the number of rationals that intersect with the cell's rationals.
@@ -61,7 +60,7 @@ def _num_intersect_rationals(rationals, cell_rationals):
             continue
     return count
 
-def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationals, config, ccolor, 
                 view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
@@ -113,12 +112,13 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
     count = 0
     cells_counts = []
     for cell in view_cells:
-        cell_count = cell['count']
+        cell_count = cell.count
         total += cell_count
         if cell_count > 0:
-            if len(rationals) > 0 and len(cell['rationals']) > 0:
+            cell_rationals = vu.cell_cuda_get_rationals(cell)
+            if len(rationals) > 0 and len(cell_rationals) > 0:
                 set_rationals = set(rationals)
-                set_cell_rationals = set(cell['rationals'])
+                set_cell_rationals = set(cell_rationals)
                 cell_count = len(set_rationals.intersection(set_cell_rationals))
                 del set_rationals
                 del set_cell_rationals
@@ -139,7 +139,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
             alpha, rad = get_alpha(cell_count, total, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
-            pos = cell['pos']
+            pos = [cell.x, cell.y, cell.z]
             if dim == 3:
                 obj = icosphere(vec3(pos[0], pos[1], pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
             elif dim == 2:
@@ -152,7 +152,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            cell_count = cell['count']
+            cell_count = cell.count
             if cell_count not in cell_ids:
                 cell_ids[cell_count] = []
             cell_ids[cell_count].append(num_id)
@@ -162,13 +162,13 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
         for cell in view_cells:
             if max_time == 0.0:
                 continue
-            alpha = float(cell['time']) / float(max_spaces_time)
+            alpha = float(cell.time) / float(max_spaces_time)
             rad = math.pow(alpha / rad_factor, rad_pow)
             if rad == 0:
                 continue
             color = ccolor.getColor(alpha)
 
-            pos = cell['pos']
+            pos = [cell.x, cell.y, cell.z]
             if dim == 3:
                 f = 4 * rad
                 obj = icosahedron(vec3(pos[0], pos[1], pos[2]), f)
@@ -179,7 +179,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            num = cell['count']
+            num = cell.count
             if num not in cell_ids:
                 cell_ids[num] = []
             cell_ids[num].append(num_id)
@@ -210,7 +210,7 @@ def get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor,
             dir = dir * k / mod_dir
             mod_dir = k
 
-            pos = cell['pos']
+            pos = [cell.x, cell.y, cell.z]
             base = vec3(pos[0], pos[1], pos[2])
             dir_len = 5.0 * length_factor
             if dim == 1:

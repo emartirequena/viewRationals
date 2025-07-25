@@ -8,11 +8,9 @@ from PyQt5 import QtCore, QtWidgets
 from gc import collect
 
 from utils import getPeriod
-from spacetime_numba import SpaceTime
-from cell_numba import Cell
+import viewUtils as vu
 
 
-@njit
 def getRationalsSeqs(rationals, number, dim):
     result = List()
     r = List.empty_list(int32)
@@ -34,7 +32,6 @@ def getRationalsSeqs(rationals, number, dim):
     return result
 
 
-@njit
 def intersectRationals(rationals: list[int], cell_rationals: list[int]) -> list[int]:
     """
     Count the number of rationals that intersect with the cell's rationals.
@@ -104,7 +101,7 @@ class ScreenView(rendering.View):
         if obj:
             center = self.scene.item(obj).box.center
             t = self.mainWindow.timeWidget.value()
-            spacetime: SpaceTime = self.mainWindow.spacetime
+            spacetime = self.mainWindow.spacetime
             if spacetime:
                 if self.mainWindow.dim == 2:
                     x = center.x
@@ -114,7 +111,7 @@ class ScreenView(rendering.View):
                     x = center.x
                     y = center.y
                     z = center.z
-                cell: Cell = spacetime.getCell(t, x, y, z, self.mainWindow._check_accumulate())
+                cell = vu.spacetime_cuda_getCell(spacetime, t, x, y, z, self.mainWindow._check_accumulate())
                 if not cell:
                     return False
                 if evt.button() == QtCore.Qt.LeftButton:
@@ -130,7 +127,7 @@ class ScreenView(rendering.View):
                 elif evt.button() == QtCore.Qt.RightButton:
                     if self.label:
                         self.label.close()
-                    cell_rationals = cell.get_rationals()
+                    cell_rationals = vu.spacetime_cuda_getCellRationals(spacetime, t, cell.x, cell.y, cell.z, self.mainWindow._check_accumulate())
                     selected_rationals = self.mainWindow.selected_rationals
                     if selected_rationals:
                         intersect = intersectRationals(selected_rationals, cell_rationals)
