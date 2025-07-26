@@ -10,7 +10,8 @@ import viewUtils as vu
 c = 0.5 
 
 def _get_next_number_dir(dim, cell):
-    next_digits, _ = vu.cell_cuda_get_next_digits(cell)
+    next_digits = cell['next_digits']
+    print(f'next_digits: {next_digits}')
     if dim == 1:
         v1 = np.array([ 1,  0,  0]) * next_digits[0]
         v2 = np.array([-1,  0,  0]) * next_digits[1]
@@ -31,7 +32,7 @@ def _get_next_number_dir(dim, cell):
         v7 = np.array([ 1, -1, -1]) * next_digits[6]
         v8 = np.array([-1, -1, -1]) * next_digits[7]
         v = (v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8) / 8.0
-    return v * cell.count
+    return v * cell['count']
 
 def _num_intersect_rationals(rationals, cell_rationals):
     """
@@ -60,7 +61,7 @@ def _num_intersect_rationals(rationals, cell_rationals):
             continue
     return count
 
-def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationals, config, ccolor, 
+def get_objects(view_cells: list[dict], number, dim, accumulate, rationals, config, ccolor, 
                 view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
@@ -94,6 +95,8 @@ def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationa
         return objs, 0, cell_ids
 
     normalize_alpha = config.get('normalize_alpha')
+    if dim == 1:
+        normalize_alpha = False
     alpha_pow = config.get('alpha_pow')
 
     if not accumulate:
@@ -107,39 +110,24 @@ def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationa
     max_faces = config.get('max_faces')
     faces_pow = config.get('faces_pow')
 
-    total = 0
+    total = number
     max = -1
-    count = 0
-    cells_counts = []
+    count = len(view_cells)
     for cell in view_cells:
-        cell_count = cell.count
+        cell_count = cell['count']
         total += cell_count
-        if cell_count > 0:
-            cell_rationals = vu.cell_cuda_get_rationals(cell)
-            if len(rationals) > 0 and len(cell_rationals) > 0:
-                set_rationals = set(rationals)
-                set_cell_rationals = set(cell_rationals)
-                cell_count = len(set_rationals.intersection(set_cell_rationals))
-                del set_rationals
-                del set_cell_rationals
-            if cell_count > max:
-                max = cell_count
-            count += 1
-        cells_counts.append(cell_count)
+        if cell_count > max:
+            max = cell_count
 
     num_id = 0
 
     if view_objects:
-        index = 0
         for cell in view_cells:
-            cell_count = cells_counts[index]
-            index += 1
-            if cell_count == 0:
-                continue
+            cell_count = cell['count']
             alpha, rad = get_alpha(cell_count, total, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min)
             color = ccolor.getColor(alpha)
 
-            pos = [cell.x, cell.y, cell.z]
+            pos = cell['pos']
             if dim == 3:
                 obj = icosphere(vec3(pos[0], pos[1], pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
             elif dim == 2:
@@ -152,7 +140,7 @@ def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationa
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            cell_count = cell.count
+            cell_count = cell['count']
             if cell_count not in cell_ids:
                 cell_ids[cell_count] = []
             cell_ids[cell_count].append(num_id)
@@ -168,7 +156,7 @@ def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationa
                 continue
             color = ccolor.getColor(alpha)
 
-            pos = [cell.x, cell.y, cell.z]
+            pos = cell['pos']
             if dim == 3:
                 f = 4 * rad
                 obj = icosahedron(vec3(pos[0], pos[1], pos[2]), f)
@@ -210,7 +198,7 @@ def get_objects(view_cells: list[vu.Cell_CUDA], number, dim, accumulate, rationa
             dir = dir * k / mod_dir
             mod_dir = k
 
-            pos = [cell.x, cell.y, cell.z]
+            pos = cell['pos']
             base = vec3(pos[0], pos[1], pos[2])
             dir_len = 5.0 * length_factor
             if dim == 1:

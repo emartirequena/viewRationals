@@ -82,14 +82,14 @@ class TransformWidget(QtWidgets.QDialog):
 
         for i in range(min(1000, vu.spacetime_cuda_get_tr_num_inputs(self.spacetime))):
             input, _ = vu.spacetime_cuda_get_tr_input_plugin(self.spacetime, i)
-            self.ui.InputList.addItem(str(input.decode('utf-8')))
+            self.ui.InputList.addItem(input.decode('utf-8'))
             self.ui.InputList.item(i).setData(QtCore.Qt.UserRole, i)
         if vu.spacetime_cuda_get_tr_input_plugin_idx(self.spacetime) >= 0:
             self.ui.InputList.setCurrentRow(vu.spacetime_cuda_get_tr_input_plugin_idx(self.spacetime))
             
         for i in range(min(1000, vu.spacetime_cuda_get_tr_num_outputs(self.spacetime))):
             output, _ = vu.spacetime_cuda_get_tr_output_plugin(self.spacetime, i)
-            self.ui.OutputList.addItem(str(output.decode('utf-8')))
+            self.ui.OutputList.addItem(output.decode('utf-8'))
             self.ui.OutputList.item(i).setData(QtCore.Qt.UserRole, i)
         if vu.spacetime_cuda_get_tr_output_plugin_idx(self.spacetime) >= 0:
             self.ui.OutputList.setCurrentRow(vu.spacetime_cuda_get_tr_output_plugin_idx(self.spacetime))

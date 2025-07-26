@@ -115,7 +115,8 @@ def _create_image(args):
         p = ptime * np.array(center) / center_time
         view.moveTo(p[0], p[1], p[2])
 
-    view_cells = spacetime[ptime]
+    print(f'------- ptime: {ptime}, frame: {frame}, init_time: {init_time}')
+    view_cells = spacetime['spaces'][ptime]['cells']
 
     mutex.acquire()
     try:

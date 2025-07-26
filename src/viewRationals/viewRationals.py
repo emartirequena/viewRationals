@@ -30,6 +30,42 @@ settings_file = r'settings.txt'
 opengl_version = (3,3)
 
 
+def cells_to_list(cells):
+    """
+    Convert a list of cells to a list of dicts.
+    """
+    out_cells = []
+    for cell in cells:
+        out_cell = {
+            'pos': (cell.x, cell.y, cell.z),
+            'count': cell.count,
+            'next_digits': vu.cell_cuda_get_next_digits(cell)[0],
+        }
+        out_cells.append(out_cell)
+    return out_cells
+
+
+def spacetime_to_list(spacetime, selected_rationals, view_selected_rationals=False, accumulate=False):
+    """
+    Convert a spacetime object to a list of dicts.
+    """
+    out_spacetime = {
+        'max_val': spacetime.max_val,
+        'spaces': [],
+    }
+    for frame in range(spacetime.max_val+1):
+        if view_selected_rationals:
+            cells = vu.spacetime_cuda_getCellsWithRationals(
+                spacetime, selected_rationals, len(selected_rationals), frame, accumulate
+            )
+        else:
+            cells = vu.spacetime_cuda_getCells(spacetime, frame, accumulate)
+        out_spacetime['spaces'].append({
+            'cells': cells_to_list(cells),
+        })
+    return out_spacetime
+
+
 class VideoThread(Thread):
     def __init__(self, parent, func_process, args_process, func_video, single_image):
         super().__init__()
@@ -290,9 +326,17 @@ class MainWindow(QtWidgets.QMainWindow):
         self.max_video_frames = deepcopy(num_frames)
         self.shr_num_video_frames = manager.Value(int, self.num_video_frames)
 
-        spacetime = self.spacetime
+        if self.view_selected_rationals:
+            view_cells = vu.spacetime_cuda_getCellsWithRationals(
+                self.spacetime, self.selected_rationals, len(self.selected_rationals),
+                self.timeWidget.value(), self._check_accumulate()
+            )
 
         selected_rationals = [int(x) for x in self.selected_rationals]
+
+        view_spacetime = spacetime_to_list(
+            self.spacetime, selected_rationals, self.view_selected_rationals, self._check_accumulate()
+        )
 
         args = (
             shr_projection,
@@ -309,7 +353,7 @@ class MainWindow(QtWidgets.QMainWindow):
             config,
             self.color,
             self.views.views[self.views.mode].type,
-            spacetime,
+            view_spacetime,
             selected_rationals,
             self.dim,
             self.number.value(),
@@ -359,6 +403,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.views.switch_display_id(id, state=state)
 
     def select_rationals(self):
+        if not self.selected_rationals:
+            return
         self.view_selected_rationals = not self.view_selected_rationals
         if not self.view_selected_rationals:
             self.selected_rationals = []
@@ -540,12 +586,15 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.spacetime, self.selected_rationals, len(self.selected_rationals), frame, self._check_accumulate())
         else:
             view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
+
+        out_cells = cells_to_list(view_cells)
+
         objs, count_cells, self.cell_ids = get_objects(
-            view_cells,
+            out_cells,
             self.number.value(),
             self.dim,
             self._check_accumulate(),
-            self.selected_rationals,
+            self.selected_rationals or [],
             self.config,
             self.color,
             self.view_objects,
@@ -607,7 +656,7 @@ class MainWindow(QtWidgets.QMainWindow):
             # print('continue setting number...')
             self.views.reset(objs)
             self.histogram.set_number(int(self.number.value()))
-            self.histogram.set_rationals(self.selected_rationals)
+            self.histogram.set_rationals(self.selected_rationals or [])
             if self.view_histogram:
                 self.histogram.set_time(self._check_accumulate())
                 self.histogram.show()
