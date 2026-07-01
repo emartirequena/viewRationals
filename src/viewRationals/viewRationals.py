@@ -22,7 +22,7 @@ from config import config
 from color import ColorLine, _convert_color
 from histogram import Histogram
 from saveImages import _saveImages, _create_video
-from transformWidget import TransformWidget
+from transformWidget3 import TransformWidget
 import viewUtils as vu
 
 
@@ -61,10 +61,10 @@ def spacetime_to_list(spacetime, selected_rationals, view_selected_rationals=Fal
         else:
             cells = vu.spacetime_cuda_getCells(spacetime, frame, accumulate)
         out_spacetime['spaces'].append({
+            'total_paths': vu.spacetime_cuda_countPaths(spacetime, frame, accumulate),
             'cells': cells_to_list(cells),
         })
     return out_spacetime
-
 
 class VideoThread(Thread):
     def __init__(self, parent, func_process, args_process, func_video, single_image):
@@ -331,7 +331,7 @@ class MainWindow(QtWidgets.QMainWindow):
                 self.spacetime, self.selected_rationals, len(self.selected_rationals),
                 self.timeWidget.value(), self._check_accumulate()
             )
-
+        
         selected_rationals = [int(x) for x in self.selected_rationals]
 
         view_spacetime = spacetime_to_list(
@@ -354,7 +354,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.color,
             self.views.views[self.views.mode].type,
             view_spacetime,
-            selected_rationals,
             self.dim,
             self.number.value(),
             self.period.value(),
@@ -555,10 +554,8 @@ class MainWindow(QtWidgets.QMainWindow):
         n = int(self.number.value())
         num = 2**(self.dim*int(self.period.value())) - 1
 
-        print('resetting spacetime...')
+        self.setStatus(f'Computing rationals for number {n:,.0f}...')
         vu.spacetime_cuda_reset(self.spacetime, self.period.value(), num, self.maxTime.value(), self.dim)
-
-        print('setting and adding rational set...')
         vu.spacetime_cuda_setRationalSet(self.spacetime, n, self.is_special)
         vu.spacetime_cuda_addRationalSet(self.spacetime, 0, 0, 0, 0)
     
@@ -581,20 +578,24 @@ class MainWindow(QtWidgets.QMainWindow):
     @timing
     def draw_objects(self, frame=0):
         frame = self.timeWidget.value()
+
         if self.view_selected_rationals:
             view_cells = vu.spacetime_cuda_getCellsWithRationals(
-                self.spacetime, self.selected_rationals, len(self.selected_rationals), frame, self._check_accumulate())
+                self.spacetime, self.selected_rationals, len(self.selected_rationals), frame, self._check_accumulate()
+            )
         else:
             view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
-
         out_cells = cells_to_list(view_cells)
+
+        total_paths = vu.spacetime_cuda_countPaths(self.spacetime, frame, self._check_accumulate())
+        number_paths = vu.spacetime_cuda_countPaths(self.spacetime, 0, self._check_accumulate())
 
         objs, count_cells, self.cell_ids = get_objects(
             out_cells,
-            self.number.value(),
+            total_paths,
+            number_paths,
             self.dim,
             self._check_accumulate(),
-            self.selected_rationals or [],
             self.config,
             self.color,
             self.view_objects,
@@ -612,16 +613,23 @@ class MainWindow(QtWidgets.QMainWindow):
 
     @timing
     def make_objects(self, frame):
-        rationals = []
         if self.view_selected_rationals:
-            rationals = [int(x) for x in self.selected_rationals]
-        view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
+            view_cells = vu.spacetime_cuda_getCellsWithRationals(
+                self.spacetime, self.selected_rationals, len(self.selected_rationals), frame, self._check_accumulate()
+            )
+        else:
+            view_cells = vu.spacetime_cuda_getCells(self.spacetime, frame, self._check_accumulate())
+        out_cells = cells_to_list(view_cells)
+
+        total_paths = vu.spacetime_cuda_countPaths(self.spacetime, frame, self._check_accumulate())
+        number_paths = vu.spacetime_cuda_countPaths(self.spacetime, 0, self._check_accumulate())
+
         objs, _, _ = get_objects(
-            view_cells,
-            self.number.value(),
+            out_cells,
+            total_paths,
+            number_paths,
             self.dim,
             self._check_accumulate(),
-            rationals,
             self.config,
             self.color,
             self.view_objects,
@@ -629,7 +637,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.view_next_number, 
             self.maxTime.value(),
             frame,
-            vu.spacetime_cuda_getMaxTime(self.spacetime, self._check_accumulate())
+            self.maxTime.value()
         )
         return objs
 
@@ -941,6 +949,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def applyTransform(self):
         transformWidget = TransformWidget(self.spacetime, self.dim, self)
+        transformWidget.setMinimumHeight(800)
         transformWidget.show()
 
 

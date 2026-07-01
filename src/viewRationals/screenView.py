@@ -127,7 +127,7 @@ class ScreenView(rendering.View):
                 elif evt.button() == QtCore.Qt.RightButton:
                     if self.label:
                         self.label.close()
-                    cell_rationals = vu.spacetime_cuda_getCellRationals(spacetime, t, cell.x, cell.y, cell.z, self.mainWindow._check_accumulate())
+                    cell_rationals = vu.spacetime_cuda_getRationals(spacetime, t, cell.x, cell.y, cell.z, self.mainWindow._check_accumulate())
                     selected_rationals = self.mainWindow.selected_rationals
                     if selected_rationals:
                         intersect = intersectRationals(selected_rationals, cell_rationals)

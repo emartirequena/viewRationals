@@ -1,0 +1,35 @@
+Dimension: 1
+T: 6
+Max Value: 6
+Number: 64
+Velocity: [1, 5, 2, 0, 0]
+Number of Inputs: 30
+Number of Outputs: 10
+Number of Forms: 300
+Number of Types: 5
+
+  Type 1:
+  Count: 40
+    Final: 00001 00011 - 00001 00011 - 1 2
+    Final: 11101 00011 - 00001 11111 - 1 5
+
+  Type 2:
+  Count: 20
+    Final: 00011 00011 - 00011 00011 - 2 2
+    Final: 11100 00011 - 00000 11111 - 0 5
+
+  Type 3:
+  Count: 60
+    Final: 00100 00011 - 00000 00111 - 0 3
+    Final: 01111 00011 - 00011 01111 - 2 4
+
+  Type 4:
+  Count: 120
+    Final: 00101 00011 - 00001 00111 - 1 3
+    Final: 01101 00011 - 00001 01111 - 1 4
+
+  Type 5:
+  Count: 60
+    Final: 00111 00011 - 00011 00111 - 2 3
+    Final: 01100 00011 - 00000 01111 - 0 4
+

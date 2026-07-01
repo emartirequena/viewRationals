@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TransformWidget</class>
+ <widget class="QDialog" name="TransformWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>379</width>
+    <height>498</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>9</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Transform</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,10,0,0,0,0">
+   <item>
+    <widget class="QCheckBox" name="activate">
+     <property name="text">
+      <string>Transform active</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,10">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="1,3">
+       <item>
+        <widget class="QLabel" name="label_9">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>100000</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>num</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="num">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_10" stretch="1,3">
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>100000</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>vx</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="vx">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_11" stretch="1,3">
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>100000</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>vy</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="vy">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="1,3">
+       <item>
+        <widget class="QLabel" name="label_12">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>100000</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>vz</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="vz">
+         <property name="minimumSize">
+          <size>
+           <width>60</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>40</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="Compute">
+     <property name="text">
+      <string>Compute</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_13">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="inputLabel">
+         <property name="text">
+          <string>Input</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="InputList"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QLabel" name="outputLabel">
+         <property name="text">
+          <string>Output</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="OutputList"/>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,10,10">
+         <item>
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>AND</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>OR</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,10,10">
+         <item>
+          <widget class="QLabel" name="label_comp_x">
+           <property name="text">
+            <string>x</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_x_and"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_x_or"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,10,10">
+         <item>
+          <widget class="QLabel" name="label_comp_y">
+           <property name="text">
+            <string>y</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_y_and"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_y_or"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,10,10">
+         <item>
+          <widget class="QLabel" name="label_comp_z">
+           <property name="text">
+            <string>z</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_z_and"/>
+         </item>
+         <item>
+          <widget class="QSpinBox" name="plugin_z_or"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QPushButton" name="find_plugin">
+     <property name="text">
+      <string>Find plugin</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="input_output_x_2" stretch="0,5,5">
+       <item>
+        <widget class="QLabel" name="label_and_7">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_x_input_2">
+         <property name="text">
+          <string>INPUT</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_x_output_2">
+         <property name="text">
+          <string>OUTPUT</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="input_output_x" stretch="0,5,5">
+       <item>
+        <widget class="QLabel" name="label_x">
+         <property name="text">
+          <string>X</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_x_input">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_x_output">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="input_output_y" stretch="0,5,5">
+       <item>
+        <widget class="QLabel" name="label_y">
+         <property name="text">
+          <string>Y</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_y_input">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_y_output">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="input_output_z" stretch="0,5,5">
+       <item>
+        <widget class="QLabel" name="label_z">
+         <property name="text">
+          <string>Z</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_z_input">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_z_output">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_14" stretch="10,0,0">
+     <item>
+      <spacer name="horizontalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Cancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Apply">
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>num</tabstop>
+  <tabstop>vx</tabstop>
+  <tabstop>vy</tabstop>
+  <tabstop>vz</tabstop>
+  <tabstop>Compute</tabstop>
+  <tabstop>InputList</tabstop>
+  <tabstop>OutputList</tabstop>
+  <tabstop>Cancel</tabstop>
+  <tabstop>Apply</tabstop>
+  <tabstop>activate</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>Compute</sender>
+   <signal>clicked()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>compute()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>372</x>
+     <y>74</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>378</x>
+     <y>142</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>287</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>317</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Apply</sender>
+   <signal>clicked()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>490</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>365</x>
+     <y>319</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>activate</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>activate(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>10</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>InputList</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>change_row_column()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>77</x>
+     <y>181</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>77</x>
+     <y>311</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>OutputList</sender>
+   <signal>currentRowChanged(int)</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>change_row_column()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>321</x>
+     <y>152</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>321</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>find_plugin</sender>
+   <signal>clicked()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>check_and_find()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>193</x>
+     <y>385</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>559</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_x_and</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>52</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>231</x>
+     <y>275</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_x_or</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>119</x>
+     <y>305</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>265</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_y_and</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>325</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>214</x>
+     <y>297</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_y_or</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>142</x>
+     <y>334</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_z_and</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>34</x>
+     <y>354</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>238</x>
+     <y>351</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>plugin_z_or</sender>
+   <signal>editingFinished()</signal>
+   <receiver>TransformWidget</receiver>
+   <slot>generate_input_and_output()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>163</x>
+     <y>356</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>262</x>
+     <y>358</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>compute()</slot>
+  <slot>activate(bool)</slot>
+  <slot>change_row_column()</slot>
+  <slot>check_and_find()</slot>
+  <slot>generate_input_and_output()</slot>
+ </slots>
+</ui>

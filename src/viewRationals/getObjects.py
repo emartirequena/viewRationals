@@ -1,11 +1,8 @@
-from numba import njit, types
-from numba.typed import List, Dict
 import numpy as np
 import math
 from madcad import icosphere, icosahedron, brick, vec3, cylinder, cone, Box, Axis, X, Y, Z
 from utils import get_alpha
 from color import _convert_color
-import viewUtils as vu
 
 c = 0.5 
 
@@ -61,7 +58,7 @@ def _num_intersect_rationals(rationals, cell_rationals):
             continue
     return count
 
-def get_objects(view_cells: list[dict], number, dim, accumulate, rationals, config, ccolor, 
+def get_objects(view_cells: list[dict], total_paths, number, dim, accumulate, config, ccolor, 
                 view_objects, view_time, view_next_number, max_time, ptime, max_spaces_time):
     """
     Get objects for the spacetime visualization.
@@ -110,15 +107,14 @@ def get_objects(view_cells: list[dict], number, dim, accumulate, rationals, conf
     max_faces = config.get('max_faces')
     faces_pow = config.get('faces_pow')
 
-    total = number
     max = -1
     count = len(view_cells)
     for cell in view_cells:
         cell_count = cell['count']
-        total += cell_count
         if cell_count > max:
             max = cell_count
 
+    total = total_paths 
     num_id = 0
 
     if view_objects:
@@ -129,10 +125,10 @@ def get_objects(view_cells: list[dict], number, dim, accumulate, rationals, conf
 
             pos = cell['pos']
             if dim == 3:
-                obj = icosphere(vec3(pos[0], pos[1], pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
+                obj = icosphere(vec3(-pos[0], pos[1], -pos[2]), rad, resolution=('div', int(max_faces * math.pow(rad, faces_pow))))
             elif dim == 2:
-                base = vec3(pos[0], 0, pos[1])
-                top = vec3(pos[0], alpha*10, pos[1])
+                base = vec3(-pos[0], 0, -pos[1])
+                top = vec3(-pos[0], alpha*10, -pos[1])
                 obj = cylinder(base, top, rad)
             else:
                 div = float(total if not normalize_alpha else max)
@@ -140,7 +136,6 @@ def get_objects(view_cells: list[dict], number, dim, accumulate, rationals, conf
                 obj = brick(vec3(pos[0] - c, 0, 0), vec3(pos[0] + c, 1, height))
             obj.option(color=color)
             objs[num_id] = obj
-            cell_count = cell['count']
             if cell_count not in cell_ids:
                 cell_ids[cell_count] = []
             cell_ids[cell_count].append(num_id)
