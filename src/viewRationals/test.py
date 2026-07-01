@@ -1,188 +1,203 @@
 import json
 import os
-from config import Config
-from openpyxl import Workbook
-from multiprocessing import Pool, freeze_support
-from multiprocessing.managers import BaseManager
-from utils import getPeriod, divisors
-from timing import timing
+import sys
+import viewUtils as vu
+from gc import collect
 
-def main():
-    config = Config()
-    path = config.get('files_path')
-    file_paths = [
-        os.path.join(path, '1D', 'P06', '1D_N63_P06_F3^2_7.json'),
-        os.path.join(path, '1D', 'P08', '1D_N255_P08_F3_5_17.json'),
-        os.path.join(path, '1D', 'P10', '1D_N1023_P10_F3_11_31.json'),
-        os.path.join(path, '1D', 'P12', '1D_N4095_P12_F3^2_5_7_13.json'),
-        os.path.join(path, '1D', 'P14', '1D_N16383_P14_F3_43_127.json'),
-        os.path.join(path, '1D', 'P16', '1D_N65535_P16_F3_5_17_257.json'),
-        os.path.join(path, '1D', 'P18', '1D_N262143_P18_F3^3_7_19_73.json')
-    ]
 
-    period = 6
+def plugin_and(a, b):
+    """
+    Returns the logical AND of two plugin strings.
+    """
+    return ''.join('1' if a[i] == '1' and b[i] == '1' else '0' for i in range(len(a)))
 
-    wb = Workbook()
-    wb.remove(wb.active)
-    for file_path in file_paths:
-        print(f'Period: {period:02d}')
+def plugin_or(a, b):
+    """
+    Returns the logical OR of two plugin strings.
+    """
+    return ''.join('1' if a[i] == '1' or b[i] == '1' else '0' for i in range(len(a)))
 
-        with open(file_path, 'rt') as fp:
-            content = json.load(fp)
+def plugin_xor(a, b):
+    """
+    Returns the logical XOR of two plugin strings.
+    """
+    return ''.join('1' if a[i] != b[i] else '0' for i in range(len(a)))
 
-        ws = wb.create_sheet(f'P{period:02d}')
+def num_ones(s):
+    """
+    Returns the number of '1's in a string.
+    """
+    return sum(1 for char in s if char == '1')
 
-        ws.cell(row=1, column=1, value='pos')
-        ws.cell(row=1, column=2, value='time')
-        ws.cell(row=1, column=3, value='count')
+def main1(_dim: 1, _nr=4, _mx=2, _my=0, _mz=0):
+    dim = _dim
+    T = 6
+    max_val = 6
+    num = 2**(dim * T)
+    n = 9
+    is_central_subset = True
+    nr = _nr
+    mx = _mx
+    my = _my
+    mz = _mz
 
-        last = content['spaces'][str(period)]
-        row = 2
-        for item in last:
-            pos = item['pos'][0]
-            time = item['time']
-            count = item['count']
-            ws.cell(row=row, column=1, value=pos)
-            ws.cell(row=row, column=2, value=time)
-            ws.cell(row=row, column=3, value=count)
-            row += 1
-        
-        period += 2
+    print(f"dim: {dim}, T: {T}, max_val: {max_val}, num: {num}, n: {n}, is_central_subset: {is_central_subset}")
+    print('Creating spacetime...')
+    spacetime = vu.spacetime_cuda_create(T, num, max_val, dim)
 
-    wb.save(os.path.join(path, '1D', 'times_new.xlsx'))
+    print(f'Setting velocity to {nr}, {mx}, {my}, {mz}')
+    vu.spacetime_cuda_set_tr_velocity(spacetime, dim, nr, mx, my, mz)
+
+    num_inputs = vu.spacetime_cuda_get_tr_num_inputs(spacetime)
+    print(f'Number of inputs: {num_inputs}')
+
+    num_outputs = vu.spacetime_cuda_get_tr_num_outputs(spacetime)
+    print(f'Number of outputs: {num_outputs}')
+
+    num_forms = num_inputs * num_outputs
+    print(f'Total forms: {num_forms}')
+
+    result = {
+        'dim': dim,
+        'T': T,
+        'max_val': max_val,
+        'num': num,
+        'n': n,
+        'is_central_subset': is_central_subset,
+        'num_inputs': num_inputs,
+        'num_outputs': num_outputs,
+        'num_forms': num_forms,
+        'velocity': [dim, nr, mx, my, mz],
+        'num_types': 0,
+        'types': []
+    }
+    types = result['types']
+    spaces = []
+
+    count_forms = 0
+    max_forms = 2000
+    
+    num_paths = vu.spacetime_cuda_countPaths(spacetime, max_val, False)
+    
+    for i in range(num_outputs):
+        if count_forms >= max_forms:
+            break
+        vu.spacetime_cuda_set_tr_output_plugin(spacetime, i)
+        output = str(vu.spacetime_cuda_get_tr_output_plugin(spacetime, i)[0].decode('utf-8'))
+
+        for j in range(num_inputs):
+            if count_forms >= max_forms:
+                break
+
+            vu.spacetime_cuda_set_tr_input_plugin(spacetime, j)
+            input = str(vu.spacetime_cuda_get_tr_input_plugin(spacetime, j)[0].decode('utf-8'))
+            
+            sand = plugin_and(input, output)
+            sor = plugin_or(input, output)
+            num_ones_and = num_ones(sand)
+            num_ones_or = num_ones(sor)
+            final = f'{input} {output} - {sand} {sor} - {num_ones_and} {num_ones_or}'
+            print(f'{count_forms:5d}/{num_forms} : {final}')
+            ones = f'{num_ones_and} {num_ones_or}'
+
+            vu.spacetime_cuda_reset(spacetime, T, num, max_val, dim)
+            vu.spacetime_cuda_setRationalSet(spacetime, n, is_central_subset)
+            vu.spacetime_cuda_addRationalSet(spacetime, 0, 0, 0, 0)
+
+            space = vu.spacetime_cuda_get_space_as_double_list(spacetime, max_val)
+            found = False
+            index = 0
+            for mspace in spaces:
+                if mspace == space:
+                    types[index]['count'] += 1
+                    if ones not in types[index]['ones']:
+                        types[index]['ones'].append(ones)
+                        types[index]['final'].append(final)
+                    found = True
+                    del space
+                    res = 1
+                    while res:
+                        res = collect()
+                    break
+                index += 1
+            if not found:
+                spaces.append(space)
+                if dim == 1:
+                    type_dict = {
+                        'space': space,
+                        'num_paths': num_paths,
+                        'count': 1,
+                        'final': [final],
+                        'ones': [ones]
+                    }
+                else:
+                    type_dict = {
+                        'num_paths': num_paths,
+                        'count': 1,
+                        'final': [final],
+                        'ones': [ones],
+                    }
+                types.append(type_dict)
+            count_forms += 1
+
+        res = 1
+        while res:
+            res = collect()
+    
+    result['num_types'] = len(types)
+    if count_forms >= max_forms:
+        for type_info in types:
+            type_info['count'] = int(0.5 + type_info['count'] * num_forms / count_forms)
+
+    print('Writing found types to types.json')
+    fname = f'types_{dim}_{nr}_{mx}_{my}_{mz}.json'
+    path = os.path.join(os.path.dirname(__file__), 'types')
+    if not os.path.exists(path):
+        os.makedirs(path)
+    with open(os.path.join(path, fname), 'w') as f:
+        json.dump(result, f, indent=4)
+
+    return result
+
+def make_report(result):
+    """
+    Generates a report from the result dictionary.
+    """
+    report = f"Dimension: {result['dim']}\n"
+    report += f"T: {result['T']}\n"
+    report += f"Max Value: {result['max_val']}\n"
+    report += f"Number: {result['num']}\n"
+    report += f"Velocity: {result['velocity']}\n"
+    report += f"Number of Inputs: {result['num_inputs']}\n"
+    report += f"Number of Outputs: {result['num_outputs']}\n"
+    report += f"Number of Forms: {result['num_forms']}\n"
+    report += f"Number of Types: {result['num_types']}\n\n"
+    
+    for i, type_info in enumerate(result['types']):
+        report += f"  Type {i+1}:\n"
+        report += f"  Count: {type_info['count']}\n"
+        for final in type_info['final']:
+            report += f"    Final: {final}\n"
+        report += "\n"
+
+    fname = f'report_{result["dim"]}_{result["velocity"][1]}_{result["velocity"][2]}_{result["velocity"][3]}_{result["velocity"][4]}.txt'
+    path = os.path.join(os.path.dirname(__file__), 'reports')
+    if not os.path.exists(path):
+        os.makedirs(path)
+    fname = os.path.join(path, fname)
+
+    with open(fname, 'w') as f:
+        f.write(report)
+
+    print(f"Report written to {fname}")
+
 
 def main2():
-    upper = 10000
-    divupper = upper / 2.0
-
-    print('   n  p1d  p2d  p3d')
-    print('---- ---- ---- ----')
-    num_p1d = 0
-    num_p2d = 0
-    num_p3d = 0
-    for n in range(1, upper+1, 2):
-        p1d = getPeriod(n, 2)
-        p2d = getPeriod(n, 4)
-        p3d = getPeriod(n, 8)
-        # print(f'{n:4d} {p1d:4d} {p2d:4d} {p3d:4d}')
-
-        if p1d % 2 == 1:
-            num_p1d += 1
-        if p2d % 2 == 1:
-            num_p2d += 1
-        if p3d % 2 == 1:
-            num_p3d += 1
-        
-    print('')
-    print(f'Odd period 1d: {100.0 * num_p1d / divupper:5.2f}%')
-    print(f'Odd period 2d: {100.0 * num_p2d / divupper:5.2f}%')
-    print(f'Odd period 3d: {100.0 * num_p3d / divupper:5.2f}%')
-
-
-def main3():
-    divisors_count = 0
-    centrals_count = 0
-
-    print('  T    div  count central  count   ratio')
-    print('--- ------ ------ ------- ------ -------')
-
-    total_set = set()
-
-    for T in range(2, 46, 2):
-        divisors_set = set(divisors(8**T-1))
-        divisors_set.difference_update(total_set)
-        divisors_len = len(divisors_set)
-        divisors_count += divisors_len
-
-        centrals_set = set(divisors(8**(T//2)+1))
-        centrals_set.difference_update(total_set)
-        centrals_len = len(centrals_set)
-        centrals_count += centrals_len
-
-        total_set.update(divisors_set)
-
-        ratio = 100.0 * float(centrals_count) / float(divisors_count)
-
-        print(f'{T:3d} {divisors_len:6d} {divisors_count:6d} {centrals_len:7d} {centrals_count:6d}  {ratio:5,.2f}%')
-
-
-@timing
-def main4():
-    def cmp_key(a, b):
-        if a < b:
-            return -1
-        elif a > b:
-            return 1
-        return 0
-
-    def find_insert(plist, init, end, key, cmp):
-        print(key, init, end)
-        if len(plist) == 0:
-            plist.append(key)
-            return 0
-        # elif end == init:
-        #     plist.insert(init, key)
-        #     return 
-        elif end == init + 1:
-            res = cmp(plist[init], key)
-            if res < 0:
-                plist.insert(end, key)
-                return end
-            elif res > 0:
-                plist.insert(init, key)
-                return init
-        else:
-            position = (init + end) // 2
-            res = cmp(plist[position], key)
-            if res == 0:
-                # plist.insert(position, key)
-                return position
-            elif res > 0:
-                return find_insert(plist, init, position, key, cmp)
-            else:
-                return find_insert(plist, position, end, key, cmp)
-
-    plist = [0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3]
-    n = 2
-    position = find_insert(plist, 0, len(plist), n, cmp_key)
-    print(n, position, plist)
-
-
-class MyClass:
-    def __init__(self, val):
-        self.val = val
-
-    def set(self, val):
-        print(f'set({val})')
-        self.val = val
-
-    def get(self):
-        return self.val
-    
-class MyManager(BaseManager):
-    pass
-
-MyManager.register("MyClass", MyClass)
-
-def modify(args):
-    myclass, v = args
-    print('----------')
-    print(myclass)
-    print(f'prev get() = {myclass.get()}')
-    myclass.set(v)
-    print(f'last get() = {myclass.get()}')
-    print('----------')
-
-def main5():
-    with MyManager() as manager:
-        myclass = manager.MyClass(-1)
-        pool = Pool(1)
-        pool.imap(func=modify, iterable=[(myclass, v) for v in range(3)])
-        pool.close()
-        pool.join()
-
-        print("Last value stored:", myclass.get())
+    """
+    Second main function.
+    """
+    ...
 
 if __name__ == '__main__':
-    freeze_support()
-    main5()
+    result = main1(int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), int(sys.argv[5]))
+    make_report(result)

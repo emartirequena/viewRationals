@@ -1,4 +1,3 @@
-from numba import njit
 import sys
 import os
 # from gc import collect
@@ -8,6 +7,131 @@ import subprocess
 from PIL import Image
 from PyQt5 import QtGui
 from math import sqrt, pow
+
+
+def plugin_check_complete(plugin_string: str, dim: int) -> bool:
+    """
+    Checks if a plugin string is complete for the given dimension.
+    :param plugin_string: The plugin string to check.
+    :param dim: The dimension of the plugin string (1, 2, or 3).
+    :return: True if the plugin string is complete, False otherwise.
+    """
+    base = 2**dim
+    set_of_valid_chars = set(str(i) for i in range(base))
+    set_of_plguin_chars = set(plugin_string)
+    if set_of_plguin_chars != set_of_valid_chars:
+        return False
+    return True
+
+def plugin_extract(plugin_string: str, dim: int) -> str:
+    """
+    Extracts the plugin at the specified dimension from a plugin string.
+    :param plugin_string: The plugin string to extract from.
+    :param dim: The dimension of the plugin to extract.
+    :return: The extracted plugin string.
+    """
+    if dim == 1:
+        return ''.join([str(int(s) % 2) for s in plugin_string])
+    elif dim == 2:
+        return ''.join([str((int(s)//2) % 2) for s in plugin_string])
+    elif dim == 3:
+        return ''.join([str((int(s)//4) % 2) for s in plugin_string])
+    
+def plugin_join(plugin_strings: list[str], dim: int) -> str:
+    """
+    Joins a list of plugin strings into a single string.
+    :param plugin_strings: The list of plugin strings to join, in order x, y, z.
+    :param dim: The dimension of the plugin strings (1, 2, or 3).
+    :return: The joined plugin string.
+    """
+    if not plugin_strings:
+        return ''
+    if dim == 1:
+        return plugin_strings[0]
+    elif dim == 2:
+        return ''.join(
+            str(int(s2) * 2 + int(s1)) for s2, s1 in zip(
+                plugin_strings[1], plugin_strings[0]
+            )
+        )
+    else:
+        return ''.join(
+            str(int(s3) * 4 + int(s2) * 2 + int(s1)) for s3, s2, s1 in zip(
+                plugin_strings[2], plugin_strings[1], plugin_strings[0]
+            )
+        )
+
+def plugin_shift(plugin_string: str, steps: int) -> str:
+    """
+    Shifts a plugin string to remove any '0's at the end.
+    :param plugin_string: The plugin string to sift.
+    :param steps: The number of steps to shift.
+    :return: The sifted plugin string.
+    """
+    if not plugin_string:
+        return ''
+    if abs(steps) > len(plugin_string):
+        raise ValueError("Steps cannot be greater than the length of the plugin string.")
+    out = plugin_string + plugin_string
+    l = len(plugin_string)
+    return out[steps:steps + l] if steps >= 0 else out[steps + l:steps + 2 * l]
+
+def plugin_and(a, b):
+    """
+    Returns the logical AND of two plugin strings.
+    """
+    return ''.join('1' if a[i] == '1' and b[i] == '1' else '0' for i in range(len(a)))
+
+def plugin_or(a, b):
+    """
+    Returns the logical OR of two plugin strings.
+    """
+    return ''.join('1' if a[i] == '1' or b[i] == '1' else '0' for i in range(len(a)))
+
+def plugin_xor(a, b):
+    """
+    Returns the logical XOR of two plugin strings.
+    """
+    return ''.join('1' if a[i] != b[i] else '0' for i in range(len(a)))
+
+def num_ones(s):
+    """
+    Returns the number of '1's in a string.
+    """
+    return sum(1 for char in s if char == '1')
+
+def plugin_create(n: int, m: int, plugin_and: int, plugin_or: int) -> tuple[str, str]:
+    """
+    Creates a plugin string from the number of '1's in the logical AND and OR of two plugin strings.
+    :param n: The length of the plugin strings.
+    :param m: The number of '1's in the output plugin string.
+    :param plugin_and: The number of '1's in the logical AND of the plugin strings.
+    :param plugin_or: The number of '1's in the logical OR of the plugin strings.
+    :return: The combined plugin input and output strings.
+    """
+    output = [1 for _ in range(m)] + [0 for _ in range(n-m)]
+    input = []
+    for i in range(n):
+        if output[i] == 1:
+            plugin_or -= 1
+            if plugin_and > 0:
+                input.append(1)
+                plugin_and -= 1
+            else:
+                input.append(0)
+        else:
+            if plugin_or > 0:
+                input.append(1)
+                plugin_or -= 1
+            else:
+                input.append(0)
+
+    input.reverse()
+    output.reverse()
+    input = ''.join(str(i) for i in input)
+    output = ''.join(str(i) for i in output)
+    return input, output
+
 
 def lerp(t, ta, a, tb, b):
     return a + (b-a)*(t-ta)/(tb-ta)
@@ -69,7 +193,6 @@ def make_video(
     subprocess.run(options)
     return True
 
-@njit
 def get_alpha(count, number, max, normalize_alpha, alpha_pow, rad_factor, rad_pow, rad_min):
     div = number
     if normalize_alpha:
@@ -164,7 +287,6 @@ def getDivisorsAndFactors(n: int, base: int) -> dict:
     divisors = {k: v for k, v in sorted(divisors.items(), key=lambda item: item[1]['number'])}
     return divisors
 
-@njit
 def getPeriod(n: int, base: int) -> int:
     if n == 1:
         return 1

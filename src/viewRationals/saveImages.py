@@ -2,13 +2,15 @@ import os
 import re
 import shutil
 import math
+import psutil
+import time
+from time import sleep
 from multiprocessing import Pool, cpu_count
 from threading import Lock
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 from madcad import vec3, settings
 import traceback
-from gc import collect
 
 from views import ViewRender
 from getObjects import get_objects
@@ -19,6 +21,27 @@ from color import _convert_color
 settings_file = 'settings.txt'
 mutex = Lock()
 
+
+def get_active_pool_processes(pool):
+    # Obtiene los PIDs de los procesos del pool
+    pids = [p.pid for p in pool._pool if p.is_alive()]
+    return len(pids), pids
+
+def monitor_and_terminate(pool, timeout=60):
+    start = time.time()
+    while True:
+        num_active, _ = get_active_pool_processes(pool)
+        print(f"Procesos activos: {num_active}")
+        if num_active == 0:
+            print("Todos los procesos han terminado.")
+            break
+        if time.time() - start > timeout:
+            print("Timeout alcanzado. Terminando pool...")
+            pool.close()
+            pool.join()
+            print("Pool terminado forzosamente.")
+            break
+        time.sleep(1)
 
 def _del_folder(folder):
     if not os.path.exists(folder):
@@ -94,11 +117,16 @@ def _get_number_img(number, period, ptime, config):
 
 def _create_image(args):
     view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix, \
-    config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str, \
+    config, ccolor, spacetime, dim, number, period, factors, accumulate, dim_str, \
     view_objects, view_time, view_next_number, max_time, \
-    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend, single_imgae = args
+    image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend, single_image = args
+
+    from gc import collect
 
     print(f'------- create image')
+    proc = psutil.Process(os.getpid())
+    mem = proc.memory_info().rss  # Memoria residente en bytes  
+    print(f"------- BEFORE: Memoria usada: {mem / (1024**3):.2f} GB")
 
     settings.load(settings_file)
     settings.display['background_color'] = vec3(*_convert_color(config.get('background_color')))
@@ -115,31 +143,31 @@ def _create_image(args):
         p = ptime * np.array(center) / center_time
         view.moveTo(p[0], p[1], p[2])
 
-    view_cells = spacetime[ptime]
+    print(f'------- ptime: {ptime}, frame: {frame}, init_time: {init_time}')
+    view_cells = spacetime['spaces'][ptime]['cells']
+    total_paths = spacetime['spaces'][ptime]['total_paths']
 
-    mutex.acquire()
     try:
-        objs, _, _ = get_objects(view_cells, number, dim, accumulate, rationals, config, ccolor, 
+        objs, _, _ = get_objects(view_cells, total_paths, number, dim, accumulate, config, ccolor, 
                                  view_objects, view_time, view_next_number, max_time, ptime, 1)
     except Exception as e:
         print(f'ERROR creating objs: {str(e)}')
         print(traceback.print_exc())
         raise e
     
-    mutex.release()
     if not objs:
         print('------ NOT OBJS')
         return
 
-    mutex.acquire()
     try:
         img = view.render(image_resx, image_resy, objs)
+        del view
+        collect()
     except Exception as e:
         print(f'ERROR rendering image: {str(e)}')
         print(traceback.print_exc())
         raise e
 
-    mutex.release()
     if not img:
         print('------- NOT IMG')
         return
@@ -152,9 +180,10 @@ def _create_image(args):
         number_img = _get_number_img(number, period, ptime, config)
         img.alpha_composite(number_img, (10, image_resy - 40))
         del number_img
+        collect()
 
     file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
-    if single_imgae:
+    if single_image:
         frame = _get_last_frame(os.path.join(path, file_name))
         frame += 1
         file_name = f'{accum_str}{prefix}{dim_str}_N{int(number)}_P{int(period):02d}_F{factors}{suffix}.{frame:04d}.png'
@@ -165,21 +194,25 @@ def _create_image(args):
     fname = os.path.join(path, file_name)
     try:
         img.save(fname)
+        del img
+        collect()
     except Exception as e:
         print(f'ERROR saving image {fname}: {str(e)}')
         raise e
 
     del args
     del objs
-    del view
-    del img
-    collect()
+    del spacetime
+    result = 1
+    while result:
+        result = collect()
 
-    return
+    mem = proc.memory_info().rss  # Memoria residente en bytes  
+    print(f"------- AFTER: Memoria usada: {mem / (1024**3):.2f} GB")
 
 
 def _create_video(args):
-    print('------- CREATING VIDEO')
+    print(f'------- CREATING VIDEO')
 
     path, image_resx, image_resy, frame_rate, \
     prefix, suffix, config, \
@@ -222,6 +255,7 @@ def _create_video(args):
         _del_folder(path)
 
     del args
+    from gc import collect
     collect()
 
 
@@ -234,7 +268,7 @@ def _saveImages(args):
 
     shr_projection, shr_navigation, image_path, init_time, end_time, frame_rate, \
     subfolder, prefix, suffix, num_frames, turn_angle, config, \
-    ccolor, view_type, spacetime, rationals, dim, number, period, factors, \
+    ccolor, view_type, spacetime, dim, number, period, factors, \
     accumulate, dim_str, view_objects, view_time, view_next_number, \
     max_time, shr_num_video_frames, clean_images, center, center_time, num_cpus, \
     legend, image_resx, image_resy = args
@@ -249,6 +283,7 @@ def _saveImages(args):
         suffix = '_' + suffix
 
     single_image = True if num_frames == 1 else False
+    path = ''
     try:
         path = _makePath(accumulate, factors, image_path, dim_str, period, number, single_image, subfolder)
     except Exception as e:
@@ -278,7 +313,7 @@ def _saveImages(args):
             rotate = True
         params.append((
             view_type, shr_projection, shr_navigation, frame, factor, init_time, prefix, suffix,
-            config, ccolor, spacetime, rationals, dim, number, period, factors, accumulate, dim_str,
+            config, ccolor, spacetime, dim, number, period, factors, accumulate, dim_str,
             view_objects, view_time, view_next_number, max_time,
             image_resx, image_resy, path, rotate, dx, center, center_time, shr_num_video_frames, legend,
             single_image
@@ -295,7 +330,8 @@ def _saveImages(args):
     print(f'>>>>>>> range_frames: {range_frames}, num_cpus: {num_cpus}, chunksize: {chunksize}')
     
     pool = Pool(num_cpus)
-    # pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
-    pool.map(func=_create_image, iterable=params, chunksize=chunksize)
+    pool.map_async(func=_create_image, iterable=params, chunksize=chunksize, error_callback=_error_callback)
+    # pool.map(func=_create_image, iterable=params, chunksize=chunksize)
+    monitor_and_terminate(pool, timeout=range_frames // 4)
 
     return (pool, args_video)
