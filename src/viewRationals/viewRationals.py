@@ -22,7 +22,7 @@ from config import config
 from color import ColorLine, _convert_color
 from histogram import Histogram
 from saveImages import _saveImages, _create_video
-from transformWidget3 import TransformWidget
+from transformWidget4 import TransformWidget
 import viewUtils as vu
 
 
