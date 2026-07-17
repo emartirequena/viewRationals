@@ -1,0 +1,4694 @@
+Types for 2D, n=6, mx=2, my=3, mz=0
+Number of inputs: 4096, outputs: 180
+Total number of forms: 737280
+Total number of types: 297
+
+Type Count: 360
+Form: Input 000000, Output 001223
+Form: Input 333333, Output 001223
+
+Type Count: 720
+Form: Input 000001, Output 001223
+Form: Input 000002, Output 001223
+Form: Input 333331, Output 001223
+Form: Input 333332, Output 001223
+
+Type Count: 360
+Form: Input 000003, Output 001223
+Form: Input 333330, Output 001223
+
+Type Count: 1440
+Form: Input 000010, Output 001223
+Form: Input 000020, Output 001223
+Form: Input 000100, Output 001223
+Form: Input 000200, Output 001223
+Form: Input 333133, Output 001223
+Form: Input 333233, Output 001223
+Form: Input 333313, Output 001223
+Form: Input 333323, Output 001223
+
+Type Count: 2880
+Form: Input 000011, Output 001223
+Form: Input 000012, Output 001223
+Form: Input 000021, Output 001223
+Form: Input 000022, Output 001223
+Form: Input 000101, Output 001223
+Form: Input 000102, Output 001223
+Form: Input 000201, Output 001223
+Form: Input 000202, Output 001223
+Form: Input 333131, Output 001223
+Form: Input 333132, Output 001223
+Form: Input 333231, Output 001223
+Form: Input 333232, Output 001223
+Form: Input 333311, Output 001223
+Form: Input 333312, Output 001223
+Form: Input 333321, Output 001223
+Form: Input 333322, Output 001223
+
+Type Count: 1440
+Form: Input 000013, Output 001223
+Form: Input 000023, Output 001223
+Form: Input 000103, Output 001223
+Form: Input 000203, Output 001223
+Form: Input 333130, Output 001223
+Form: Input 333230, Output 001223
+Form: Input 333310, Output 001223
+Form: Input 333320, Output 001223
+
+Type Count: 720
+Form: Input 000030, Output 001223
+Form: Input 000300, Output 001223
+Form: Input 333033, Output 001223
+Form: Input 333303, Output 001223
+
+Type Count: 1440
+Form: Input 000031, Output 001223
+Form: Input 000032, Output 001223
+Form: Input 000301, Output 001223
+Form: Input 000302, Output 001223
+Form: Input 333031, Output 001223
+Form: Input 333032, Output 001223
+Form: Input 333301, Output 001223
+Form: Input 333302, Output 001223
+
+Type Count: 720
+Form: Input 000033, Output 001223
+Form: Input 000303, Output 001223
+Form: Input 333030, Output 001223
+Form: Input 333300, Output 001223
+
+Type Count: 1440
+Form: Input 000110, Output 001223
+Form: Input 000120, Output 001223
+Form: Input 000210, Output 001223
+Form: Input 000220, Output 001223
+Form: Input 333113, Output 001223
+Form: Input 333123, Output 001223
+Form: Input 333213, Output 001223
+Form: Input 333223, Output 001223
+
+Type Count: 2880
+Form: Input 000111, Output 001223
+Form: Input 000112, Output 001223
+Form: Input 000121, Output 001223
+Form: Input 000122, Output 001223
+Form: Input 000211, Output 001223
+Form: Input 000212, Output 001223
+Form: Input 000221, Output 001223
+Form: Input 000222, Output 001223
+Form: Input 333111, Output 001223
+Form: Input 333112, Output 001223
+Form: Input 333121, Output 001223
+Form: Input 333122, Output 001223
+Form: Input 333211, Output 001223
+Form: Input 333212, Output 001223
+Form: Input 333221, Output 001223
+Form: Input 333222, Output 001223
+
+Type Count: 720
+Form: Input 000113, Output 001223
+Form: Input 000223, Output 001223
+Form: Input 333110, Output 001223
+Form: Input 333220, Output 001223
+
+Type Count: 720
+Form: Input 000123, Output 001223
+Form: Input 000213, Output 001223
+Form: Input 333120, Output 001223
+Form: Input 333210, Output 001223
+
+Type Count: 1440
+Form: Input 000130, Output 001223
+Form: Input 000230, Output 001223
+Form: Input 000310, Output 001223
+Form: Input 000320, Output 001223
+Form: Input 333013, Output 001223
+Form: Input 333023, Output 001223
+Form: Input 333103, Output 001223
+Form: Input 333203, Output 001223
+
+Type Count: 1440
+Form: Input 000131, Output 001223
+Form: Input 000232, Output 001223
+Form: Input 000311, Output 001223
+Form: Input 000322, Output 001223
+Form: Input 333011, Output 001223
+Form: Input 333022, Output 001223
+Form: Input 333101, Output 001223
+Form: Input 333202, Output 001223
+
+Type Count: 1440
+Form: Input 000132, Output 001223
+Form: Input 000231, Output 001223
+Form: Input 000312, Output 001223
+Form: Input 000321, Output 001223
+Form: Input 333012, Output 001223
+Form: Input 333021, Output 001223
+Form: Input 333102, Output 001223
+Form: Input 333201, Output 001223
+
+Type Count: 1440
+Form: Input 000133, Output 001223
+Form: Input 000233, Output 001223
+Form: Input 000313, Output 001223
+Form: Input 000323, Output 001223
+Form: Input 333010, Output 001223
+Form: Input 333020, Output 001223
+Form: Input 333100, Output 001223
+Form: Input 333200, Output 001223
+
+Type Count: 360
+Form: Input 000330, Output 001223
+Form: Input 333003, Output 001223
+
+Type Count: 720
+Form: Input 000331, Output 001223
+Form: Input 000332, Output 001223
+Form: Input 333001, Output 001223
+Form: Input 333002, Output 001223
+
+Type Count: 360
+Form: Input 000333, Output 001223
+Form: Input 333000, Output 001223
+
+Type Count: 720
+Form: Input 001000, Output 001223
+Form: Input 002000, Output 001223
+Form: Input 331333, Output 001223
+Form: Input 332333, Output 001223
+
+Type Count: 25920
+Form: Input 001001, Output 001223
+Form: Input 001002, Output 001223
+Form: Input 002001, Output 001223
+Form: Input 002002, Output 001223
+Form: Input 011011, Output 001223
+Form: Input 011012, Output 001223
+Form: Input 011021, Output 001223
+Form: Input 011022, Output 001223
+Form: Input 011101, Output 001223
+Form: Input 011102, Output 001223
+Form: Input 011201, Output 001223
+Form: Input 011202, Output 001223
+Form: Input 012011, Output 001223
+Form: Input 012012, Output 001223
+Form: Input 012021, Output 001223
+Form: Input 012022, Output 001223
+Form: Input 012101, Output 001223
+Form: Input 012102, Output 001223
+Form: Input 012201, Output 001223
+Form: Input 012202, Output 001223
+Form: Input 021011, Output 001223
+Form: Input 021012, Output 001223
+Form: Input 021021, Output 001223
+Form: Input 021022, Output 001223
+Form: Input 021101, Output 001223
+Form: Input 021102, Output 001223
+Form: Input 021201, Output 001223
+Form: Input 021202, Output 001223
+Form: Input 022011, Output 001223
+Form: Input 022012, Output 001223
+Form: Input 022021, Output 001223
+Form: Input 022022, Output 001223
+Form: Input 022101, Output 001223
+Form: Input 022102, Output 001223
+Form: Input 022201, Output 001223
+Form: Input 022202, Output 001223
+Form: Input 031031, Output 001223
+Form: Input 031301, Output 001223
+Form: Input 032032, Output 001223
+Form: Input 032302, Output 001223
+Form: Input 101011, Output 001223
+Form: Input 101012, Output 001223
+Form: Input 101021, Output 001223
+Form: Input 101022, Output 001223
+Form: Input 101101, Output 001223
+Form: Input 101102, Output 001223
+Form: Input 101201, Output 001223
+Form: Input 101202, Output 001223
+Form: Input 102011, Output 001223
+Form: Input 102012, Output 001223
+Form: Input 102021, Output 001223
+Form: Input 102022, Output 001223
+Form: Input 102101, Output 001223
+Form: Input 102102, Output 001223
+Form: Input 102201, Output 001223
+Form: Input 102202, Output 001223
+Form: Input 131131, Output 001223
+Form: Input 131132, Output 001223
+Form: Input 131231, Output 001223
+Form: Input 131232, Output 001223
+Form: Input 131311, Output 001223
+Form: Input 131312, Output 001223
+Form: Input 131321, Output 001223
+Form: Input 131322, Output 001223
+Form: Input 132131, Output 001223
+Form: Input 132132, Output 001223
+Form: Input 132231, Output 001223
+Form: Input 132232, Output 001223
+Form: Input 132311, Output 001223
+Form: Input 132312, Output 001223
+Form: Input 132321, Output 001223
+Form: Input 132322, Output 001223
+Form: Input 201011, Output 001223
+Form: Input 201012, Output 001223
+Form: Input 201021, Output 001223
+Form: Input 201022, Output 001223
+Form: Input 201101, Output 001223
+Form: Input 201102, Output 001223
+Form: Input 201201, Output 001223
+Form: Input 201202, Output 001223
+Form: Input 202011, Output 001223
+Form: Input 202012, Output 001223
+Form: Input 202021, Output 001223
+Form: Input 202022, Output 001223
+Form: Input 202101, Output 001223
+Form: Input 202102, Output 001223
+Form: Input 202201, Output 001223
+Form: Input 202202, Output 001223
+Form: Input 231131, Output 001223
+Form: Input 231132, Output 001223
+Form: Input 231231, Output 001223
+Form: Input 231232, Output 001223
+Form: Input 231311, Output 001223
+Form: Input 231312, Output 001223
+Form: Input 231321, Output 001223
+Form: Input 231322, Output 001223
+Form: Input 232131, Output 001223
+Form: Input 232132, Output 001223
+Form: Input 232231, Output 001223
+Form: Input 232232, Output 001223
+Form: Input 232311, Output 001223
+Form: Input 232312, Output 001223
+Form: Input 232321, Output 001223
+Form: Input 232322, Output 001223
+Form: Input 301031, Output 001223
+Form: Input 301301, Output 001223
+Form: Input 302032, Output 001223
+Form: Input 302302, Output 001223
+Form: Input 311131, Output 001223
+Form: Input 311132, Output 001223
+Form: Input 311231, Output 001223
+Form: Input 311232, Output 001223
+Form: Input 311311, Output 001223
+Form: Input 311312, Output 001223
+Form: Input 311321, Output 001223
+Form: Input 311322, Output 001223
+Form: Input 312131, Output 001223
+Form: Input 312132, Output 001223
+Form: Input 312231, Output 001223
+Form: Input 312232, Output 001223
+Form: Input 312311, Output 001223
+Form: Input 312312, Output 001223
+Form: Input 312321, Output 001223
+Form: Input 312322, Output 001223
+Form: Input 321131, Output 001223
+Form: Input 321132, Output 001223
+Form: Input 321231, Output 001223
+Form: Input 321232, Output 001223
+Form: Input 321311, Output 001223
+Form: Input 321312, Output 001223
+Form: Input 321321, Output 001223
+Form: Input 321322, Output 001223
+Form: Input 322131, Output 001223
+Form: Input 322132, Output 001223
+Form: Input 322231, Output 001223
+Form: Input 322232, Output 001223
+Form: Input 322311, Output 001223
+Form: Input 322312, Output 001223
+Form: Input 322321, Output 001223
+Form: Input 322322, Output 001223
+Form: Input 331331, Output 001223
+Form: Input 331332, Output 001223
+Form: Input 332331, Output 001223
+Form: Input 332332, Output 001223
+
+Type Count: 720
+Form: Input 001003, Output 001223
+Form: Input 002003, Output 001223
+Form: Input 331330, Output 001223
+Form: Input 332330, Output 001223
+
+Type Count: 2880
+Form: Input 001010, Output 001223
+Form: Input 001020, Output 001223
+Form: Input 001100, Output 001223
+Form: Input 001200, Output 001223
+Form: Input 002010, Output 001223
+Form: Input 002020, Output 001223
+Form: Input 002100, Output 001223
+Form: Input 002200, Output 001223
+Form: Input 331133, Output 001223
+Form: Input 331233, Output 001223
+Form: Input 331313, Output 001223
+Form: Input 331323, Output 001223
+Form: Input 332133, Output 001223
+Form: Input 332233, Output 001223
+Form: Input 332313, Output 001223
+Form: Input 332323, Output 001223
+
+Type Count: 5760
+Form: Input 001011, Output 001223
+Form: Input 001012, Output 001223
+Form: Input 001021, Output 001223
+Form: Input 001022, Output 001223
+Form: Input 001101, Output 001223
+Form: Input 001102, Output 001223
+Form: Input 001201, Output 001223
+Form: Input 001202, Output 001223
+Form: Input 002011, Output 001223
+Form: Input 002012, Output 001223
+Form: Input 002021, Output 001223
+Form: Input 002022, Output 001223
+Form: Input 002101, Output 001223
+Form: Input 002102, Output 001223
+Form: Input 002201, Output 001223
+Form: Input 002202, Output 001223
+Form: Input 331131, Output 001223
+Form: Input 331132, Output 001223
+Form: Input 331231, Output 001223
+Form: Input 331232, Output 001223
+Form: Input 331311, Output 001223
+Form: Input 331312, Output 001223
+Form: Input 331321, Output 001223
+Form: Input 331322, Output 001223
+Form: Input 332131, Output 001223
+Form: Input 332132, Output 001223
+Form: Input 332231, Output 001223
+Form: Input 332232, Output 001223
+Form: Input 332311, Output 001223
+Form: Input 332312, Output 001223
+Form: Input 332321, Output 001223
+Form: Input 332322, Output 001223
+
+Type Count: 1440
+Form: Input 001013, Output 001223
+Form: Input 001103, Output 001223
+Form: Input 002023, Output 001223
+Form: Input 002203, Output 001223
+Form: Input 331130, Output 001223
+Form: Input 331310, Output 001223
+Form: Input 332230, Output 001223
+Form: Input 332320, Output 001223
+
+Type Count: 1440
+Form: Input 001023, Output 001223
+Form: Input 001203, Output 001223
+Form: Input 002013, Output 001223
+Form: Input 002103, Output 001223
+Form: Input 331230, Output 001223
+Form: Input 331320, Output 001223
+Form: Input 332130, Output 001223
+Form: Input 332310, Output 001223
+
+Type Count: 1440
+Form: Input 001030, Output 001223
+Form: Input 001300, Output 001223
+Form: Input 002030, Output 001223
+Form: Input 002300, Output 001223
+Form: Input 331033, Output 001223
+Form: Input 331303, Output 001223
+Form: Input 332033, Output 001223
+Form: Input 332303, Output 001223
+
+Type Count: 1440
+Form: Input 001031, Output 001223
+Form: Input 001301, Output 001223
+Form: Input 002032, Output 001223
+Form: Input 002302, Output 001223
+Form: Input 331031, Output 001223
+Form: Input 331301, Output 001223
+Form: Input 332032, Output 001223
+Form: Input 332302, Output 001223
+
+Type Count: 1440
+Form: Input 001032, Output 001223
+Form: Input 001302, Output 001223
+Form: Input 002031, Output 001223
+Form: Input 002301, Output 001223
+Form: Input 331032, Output 001223
+Form: Input 331302, Output 001223
+Form: Input 332031, Output 001223
+Form: Input 332301, Output 001223
+
+Type Count: 1440
+Form: Input 001033, Output 001223
+Form: Input 001303, Output 001223
+Form: Input 002033, Output 001223
+Form: Input 002303, Output 001223
+Form: Input 331030, Output 001223
+Form: Input 331300, Output 001223
+Form: Input 332030, Output 001223
+Form: Input 332300, Output 001223
+
+Type Count: 2880
+Form: Input 001110, Output 001223
+Form: Input 001120, Output 001223
+Form: Input 001210, Output 001223
+Form: Input 001220, Output 001223
+Form: Input 002110, Output 001223
+Form: Input 002120, Output 001223
+Form: Input 002210, Output 001223
+Form: Input 002220, Output 001223
+Form: Input 331113, Output 001223
+Form: Input 331123, Output 001223
+Form: Input 331213, Output 001223
+Form: Input 331223, Output 001223
+Form: Input 332113, Output 001223
+Form: Input 332123, Output 001223
+Form: Input 332213, Output 001223
+Form: Input 332223, Output 001223
+
+Type Count: 29520
+Form: Input 001111, Output 001223
+Form: Input 001112, Output 001223
+Form: Input 001121, Output 001223
+Form: Input 001122, Output 001223
+Form: Input 001211, Output 001223
+Form: Input 001212, Output 001223
+Form: Input 001221, Output 001223
+Form: Input 001222, Output 001223
+Form: Input 002111, Output 001223
+Form: Input 002112, Output 001223
+Form: Input 002121, Output 001223
+Form: Input 002122, Output 001223
+Form: Input 002211, Output 001223
+Form: Input 002212, Output 001223
+Form: Input 002221, Output 001223
+Form: Input 002222, Output 001223
+Form: Input 011111, Output 001223
+Form: Input 011112, Output 001223
+Form: Input 011121, Output 001223
+Form: Input 011122, Output 001223
+Form: Input 011211, Output 001223
+Form: Input 011212, Output 001223
+Form: Input 011221, Output 001223
+Form: Input 011222, Output 001223
+Form: Input 012111, Output 001223
+Form: Input 012112, Output 001223
+Form: Input 012121, Output 001223
+Form: Input 012122, Output 001223
+Form: Input 012211, Output 001223
+Form: Input 012212, Output 001223
+Form: Input 012221, Output 001223
+Form: Input 012222, Output 001223
+Form: Input 021111, Output 001223
+Form: Input 021112, Output 001223
+Form: Input 021121, Output 001223
+Form: Input 021122, Output 001223
+Form: Input 021211, Output 001223
+Form: Input 021212, Output 001223
+Form: Input 021221, Output 001223
+Form: Input 021222, Output 001223
+Form: Input 022111, Output 001223
+Form: Input 022112, Output 001223
+Form: Input 022121, Output 001223
+Form: Input 022122, Output 001223
+Form: Input 022211, Output 001223
+Form: Input 022212, Output 001223
+Form: Input 022221, Output 001223
+Form: Input 022222, Output 001223
+Form: Input 031111, Output 001223
+Form: Input 032222, Output 001223
+Form: Input 101111, Output 001223
+Form: Input 101112, Output 001223
+Form: Input 101121, Output 001223
+Form: Input 101122, Output 001223
+Form: Input 101211, Output 001223
+Form: Input 101212, Output 001223
+Form: Input 101221, Output 001223
+Form: Input 101222, Output 001223
+Form: Input 102111, Output 001223
+Form: Input 102112, Output 001223
+Form: Input 102121, Output 001223
+Form: Input 102122, Output 001223
+Form: Input 102211, Output 001223
+Form: Input 102212, Output 001223
+Form: Input 102221, Output 001223
+Form: Input 102222, Output 001223
+Form: Input 131111, Output 001223
+Form: Input 131112, Output 001223
+Form: Input 131121, Output 001223
+Form: Input 131122, Output 001223
+Form: Input 131211, Output 001223
+Form: Input 131212, Output 001223
+Form: Input 131221, Output 001223
+Form: Input 131222, Output 001223
+Form: Input 132111, Output 001223
+Form: Input 132112, Output 001223
+Form: Input 132121, Output 001223
+Form: Input 132122, Output 001223
+Form: Input 132211, Output 001223
+Form: Input 132212, Output 001223
+Form: Input 132221, Output 001223
+Form: Input 132222, Output 001223
+Form: Input 201111, Output 001223
+Form: Input 201112, Output 001223
+Form: Input 201121, Output 001223
+Form: Input 201122, Output 001223
+Form: Input 201211, Output 001223
+Form: Input 201212, Output 001223
+Form: Input 201221, Output 001223
+Form: Input 201222, Output 001223
+Form: Input 202111, Output 001223
+Form: Input 202112, Output 001223
+Form: Input 202121, Output 001223
+Form: Input 202122, Output 001223
+Form: Input 202211, Output 001223
+Form: Input 202212, Output 001223
+Form: Input 202221, Output 001223
+Form: Input 202222, Output 001223
+Form: Input 231111, Output 001223
+Form: Input 231112, Output 001223
+Form: Input 231121, Output 001223
+Form: Input 231122, Output 001223
+Form: Input 231211, Output 001223
+Form: Input 231212, Output 001223
+Form: Input 231221, Output 001223
+Form: Input 231222, Output 001223
+Form: Input 232111, Output 001223
+Form: Input 232112, Output 001223
+Form: Input 232121, Output 001223
+Form: Input 232122, Output 001223
+Form: Input 232211, Output 001223
+Form: Input 232212, Output 001223
+Form: Input 232221, Output 001223
+Form: Input 232222, Output 001223
+Form: Input 301111, Output 001223
+Form: Input 302222, Output 001223
+Form: Input 311111, Output 001223
+Form: Input 311112, Output 001223
+Form: Input 311121, Output 001223
+Form: Input 311122, Output 001223
+Form: Input 311211, Output 001223
+Form: Input 311212, Output 001223
+Form: Input 311221, Output 001223
+Form: Input 311222, Output 001223
+Form: Input 312111, Output 001223
+Form: Input 312112, Output 001223
+Form: Input 312121, Output 001223
+Form: Input 312122, Output 001223
+Form: Input 312211, Output 001223
+Form: Input 312212, Output 001223
+Form: Input 312221, Output 001223
+Form: Input 312222, Output 001223
+Form: Input 321111, Output 001223
+Form: Input 321112, Output 001223
+Form: Input 321121, Output 001223
+Form: Input 321122, Output 001223
+Form: Input 321211, Output 001223
+Form: Input 321212, Output 001223
+Form: Input 321221, Output 001223
+Form: Input 321222, Output 001223
+Form: Input 322111, Output 001223
+Form: Input 322112, Output 001223
+Form: Input 322121, Output 001223
+Form: Input 322122, Output 001223
+Form: Input 322211, Output 001223
+Form: Input 322212, Output 001223
+Form: Input 322221, Output 001223
+Form: Input 322222, Output 001223
+Form: Input 331111, Output 001223
+Form: Input 331112, Output 001223
+Form: Input 331121, Output 001223
+Form: Input 331122, Output 001223
+Form: Input 331211, Output 001223
+Form: Input 331212, Output 001223
+Form: Input 331221, Output 001223
+Form: Input 331222, Output 001223
+Form: Input 332111, Output 001223
+Form: Input 332112, Output 001223
+Form: Input 332121, Output 001223
+Form: Input 332122, Output 001223
+Form: Input 332211, Output 001223
+Form: Input 332212, Output 001223
+Form: Input 332221, Output 001223
+Form: Input 332222, Output 001223
+
+Type Count: 720
+Form: Input 001113, Output 001223
+Form: Input 002223, Output 001223
+Form: Input 331110, Output 001223
+Form: Input 332220, Output 001223
+
+Type Count: 1440
+Form: Input 001123, Output 001223
+Form: Input 001213, Output 001223
+Form: Input 002123, Output 001223
+Form: Input 002213, Output 001223
+Form: Input 331120, Output 001223
+Form: Input 331210, Output 001223
+Form: Input 332120, Output 001223
+Form: Input 332210, Output 001223
+
+Type Count: 1440
+Form: Input 001130, Output 001223
+Form: Input 001310, Output 001223
+Form: Input 002230, Output 001223
+Form: Input 002320, Output 001223
+Form: Input 331013, Output 001223
+Form: Input 331103, Output 001223
+Form: Input 332023, Output 001223
+Form: Input 332203, Output 001223
+
+Type Count: 1440
+Form: Input 001131, Output 001223
+Form: Input 001311, Output 001223
+Form: Input 002232, Output 001223
+Form: Input 002322, Output 001223
+Form: Input 331011, Output 001223
+Form: Input 331101, Output 001223
+Form: Input 332022, Output 001223
+Form: Input 332202, Output 001223
+
+Type Count: 1440
+Form: Input 001132, Output 001223
+Form: Input 001312, Output 001223
+Form: Input 002231, Output 001223
+Form: Input 002321, Output 001223
+Form: Input 331012, Output 001223
+Form: Input 331102, Output 001223
+Form: Input 332021, Output 001223
+Form: Input 332201, Output 001223
+
+Type Count: 1440
+Form: Input 001133, Output 001223
+Form: Input 001313, Output 001223
+Form: Input 002233, Output 001223
+Form: Input 002323, Output 001223
+Form: Input 331010, Output 001223
+Form: Input 331100, Output 001223
+Form: Input 332020, Output 001223
+Form: Input 332200, Output 001223
+
+Type Count: 720
+Form: Input 001223, Output 001223
+Form: Input 002113, Output 001223
+Form: Input 331220, Output 001223
+Form: Input 332110, Output 001223
+
+Type Count: 1440
+Form: Input 001230, Output 001223
+Form: Input 001320, Output 001223
+Form: Input 002130, Output 001223
+Form: Input 002310, Output 001223
+Form: Input 331023, Output 001223
+Form: Input 331203, Output 001223
+Form: Input 332013, Output 001223
+Form: Input 332103, Output 001223
+
+Type Count: 1440
+Form: Input 001231, Output 001223
+Form: Input 001321, Output 001223
+Form: Input 002132, Output 001223
+Form: Input 002312, Output 001223
+Form: Input 331021, Output 001223
+Form: Input 331201, Output 001223
+Form: Input 332012, Output 001223
+Form: Input 332102, Output 001223
+
+Type Count: 1440
+Form: Input 001232, Output 001223
+Form: Input 001322, Output 001223
+Form: Input 002131, Output 001223
+Form: Input 002311, Output 001223
+Form: Input 331022, Output 001223
+Form: Input 331202, Output 001223
+Form: Input 332011, Output 001223
+Form: Input 332101, Output 001223
+
+Type Count: 1440
+Form: Input 001233, Output 001223
+Form: Input 001323, Output 001223
+Form: Input 002133, Output 001223
+Form: Input 002313, Output 001223
+Form: Input 331020, Output 001223
+Form: Input 331200, Output 001223
+Form: Input 332010, Output 001223
+Form: Input 332100, Output 001223
+
+Type Count: 720
+Form: Input 001330, Output 001223
+Form: Input 002330, Output 001223
+Form: Input 331003, Output 001223
+Form: Input 332003, Output 001223
+
+Type Count: 3600
+Form: Input 001331, Output 001223
+Form: Input 002332, Output 001223
+Form: Input 011131, Output 001223
+Form: Input 011311, Output 001223
+Form: Input 022232, Output 001223
+Form: Input 022322, Output 001223
+Form: Input 101131, Output 001223
+Form: Input 101311, Output 001223
+Form: Input 131011, Output 001223
+Form: Input 131101, Output 001223
+Form: Input 202232, Output 001223
+Form: Input 202322, Output 001223
+Form: Input 232022, Output 001223
+Form: Input 232202, Output 001223
+Form: Input 311011, Output 001223
+Form: Input 311101, Output 001223
+Form: Input 322022, Output 001223
+Form: Input 322202, Output 001223
+Form: Input 331001, Output 001223
+Form: Input 332002, Output 001223
+
+Type Count: 720
+Form: Input 001332, Output 001223
+Form: Input 002331, Output 001223
+Form: Input 331002, Output 001223
+Form: Input 332001, Output 001223
+
+Type Count: 720
+Form: Input 001333, Output 001223
+Form: Input 002333, Output 001223
+Form: Input 331000, Output 001223
+Form: Input 332000, Output 001223
+
+Type Count: 360
+Form: Input 003000, Output 001223
+Form: Input 330333, Output 001223
+
+Type Count: 720
+Form: Input 003001, Output 001223
+Form: Input 003002, Output 001223
+Form: Input 330331, Output 001223
+Form: Input 330332, Output 001223
+
+Type Count: 360
+Form: Input 003003, Output 001223
+Form: Input 330330, Output 001223
+
+Type Count: 1440
+Form: Input 003010, Output 001223
+Form: Input 003020, Output 001223
+Form: Input 003100, Output 001223
+Form: Input 003200, Output 001223
+Form: Input 330133, Output 001223
+Form: Input 330233, Output 001223
+Form: Input 330313, Output 001223
+Form: Input 330323, Output 001223
+
+Type Count: 1440
+Form: Input 003011, Output 001223
+Form: Input 003022, Output 001223
+Form: Input 003101, Output 001223
+Form: Input 003202, Output 001223
+Form: Input 330131, Output 001223
+Form: Input 330232, Output 001223
+Form: Input 330311, Output 001223
+Form: Input 330322, Output 001223
+
+Type Count: 1440
+Form: Input 003012, Output 001223
+Form: Input 003021, Output 001223
+Form: Input 003102, Output 001223
+Form: Input 003201, Output 001223
+Form: Input 330132, Output 001223
+Form: Input 330231, Output 001223
+Form: Input 330312, Output 001223
+Form: Input 330321, Output 001223
+
+Type Count: 1440
+Form: Input 003013, Output 001223
+Form: Input 003023, Output 001223
+Form: Input 003103, Output 001223
+Form: Input 003203, Output 001223
+Form: Input 330130, Output 001223
+Form: Input 330230, Output 001223
+Form: Input 330310, Output 001223
+Form: Input 330320, Output 001223
+
+Type Count: 720
+Form: Input 003030, Output 001223
+Form: Input 003300, Output 001223
+Form: Input 330033, Output 001223
+Form: Input 330303, Output 001223
+
+Type Count: 1440
+Form: Input 003031, Output 001223
+Form: Input 003032, Output 001223
+Form: Input 003301, Output 001223
+Form: Input 003302, Output 001223
+Form: Input 330031, Output 001223
+Form: Input 330032, Output 001223
+Form: Input 330301, Output 001223
+Form: Input 330302, Output 001223
+
+Type Count: 720
+Form: Input 003033, Output 001223
+Form: Input 003303, Output 001223
+Form: Input 330030, Output 001223
+Form: Input 330300, Output 001223
+
+Type Count: 720
+Form: Input 003110, Output 001223
+Form: Input 003220, Output 001223
+Form: Input 330113, Output 001223
+Form: Input 330223, Output 001223
+
+Type Count: 720
+Form: Input 003111, Output 001223
+Form: Input 003222, Output 001223
+Form: Input 330111, Output 001223
+Form: Input 330222, Output 001223
+
+Type Count: 720
+Form: Input 003112, Output 001223
+Form: Input 003221, Output 001223
+Form: Input 330112, Output 001223
+Form: Input 330221, Output 001223
+
+Type Count: 720
+Form: Input 003113, Output 001223
+Form: Input 003223, Output 001223
+Form: Input 330110, Output 001223
+Form: Input 330220, Output 001223
+
+Type Count: 720
+Form: Input 003120, Output 001223
+Form: Input 003210, Output 001223
+Form: Input 330123, Output 001223
+Form: Input 330213, Output 001223
+
+Type Count: 1440
+Form: Input 003121, Output 001223
+Form: Input 003122, Output 001223
+Form: Input 003211, Output 001223
+Form: Input 003212, Output 001223
+Form: Input 330121, Output 001223
+Form: Input 330122, Output 001223
+Form: Input 330211, Output 001223
+Form: Input 330212, Output 001223
+
+Type Count: 720
+Form: Input 003123, Output 001223
+Form: Input 003213, Output 001223
+Form: Input 330120, Output 001223
+Form: Input 330210, Output 001223
+
+Type Count: 1440
+Form: Input 003130, Output 001223
+Form: Input 003230, Output 001223
+Form: Input 003310, Output 001223
+Form: Input 003320, Output 001223
+Form: Input 330013, Output 001223
+Form: Input 330023, Output 001223
+Form: Input 330103, Output 001223
+Form: Input 330203, Output 001223
+
+Type Count: 1440
+Form: Input 003131, Output 001223
+Form: Input 003232, Output 001223
+Form: Input 003311, Output 001223
+Form: Input 003322, Output 001223
+Form: Input 330011, Output 001223
+Form: Input 330022, Output 001223
+Form: Input 330101, Output 001223
+Form: Input 330202, Output 001223
+
+Type Count: 1440
+Form: Input 003132, Output 001223
+Form: Input 003231, Output 001223
+Form: Input 003312, Output 001223
+Form: Input 003321, Output 001223
+Form: Input 330012, Output 001223
+Form: Input 330021, Output 001223
+Form: Input 330102, Output 001223
+Form: Input 330201, Output 001223
+
+Type Count: 1440
+Form: Input 003133, Output 001223
+Form: Input 003233, Output 001223
+Form: Input 003313, Output 001223
+Form: Input 003323, Output 001223
+Form: Input 330010, Output 001223
+Form: Input 330020, Output 001223
+Form: Input 330100, Output 001223
+Form: Input 330200, Output 001223
+
+Type Count: 360
+Form: Input 003330, Output 001223
+Form: Input 330003, Output 001223
+
+Type Count: 720
+Form: Input 003331, Output 001223
+Form: Input 003332, Output 001223
+Form: Input 330001, Output 001223
+Form: Input 330002, Output 001223
+
+Type Count: 360
+Form: Input 003333, Output 001223
+Form: Input 330000, Output 001223
+
+Type Count: 1440
+Form: Input 010000, Output 001223
+Form: Input 020000, Output 001223
+Form: Input 100000, Output 001223
+Form: Input 133333, Output 001223
+Form: Input 200000, Output 001223
+Form: Input 233333, Output 001223
+Form: Input 313333, Output 001223
+Form: Input 323333, Output 001223
+
+Type Count: 2880
+Form: Input 010001, Output 001223
+Form: Input 010002, Output 001223
+Form: Input 020001, Output 001223
+Form: Input 020002, Output 001223
+Form: Input 100001, Output 001223
+Form: Input 100002, Output 001223
+Form: Input 133331, Output 001223
+Form: Input 133332, Output 001223
+Form: Input 200001, Output 001223
+Form: Input 200002, Output 001223
+Form: Input 233331, Output 001223
+Form: Input 233332, Output 001223
+Form: Input 313331, Output 001223
+Form: Input 313332, Output 001223
+Form: Input 323331, Output 001223
+Form: Input 323332, Output 001223
+
+Type Count: 1440
+Form: Input 010003, Output 001223
+Form: Input 020003, Output 001223
+Form: Input 100003, Output 001223
+Form: Input 133330, Output 001223
+Form: Input 200003, Output 001223
+Form: Input 233330, Output 001223
+Form: Input 313330, Output 001223
+Form: Input 323330, Output 001223
+
+Type Count: 5760
+Form: Input 010010, Output 001223
+Form: Input 010020, Output 001223
+Form: Input 010100, Output 001223
+Form: Input 010200, Output 001223
+Form: Input 020010, Output 001223
+Form: Input 020020, Output 001223
+Form: Input 020100, Output 001223
+Form: Input 020200, Output 001223
+Form: Input 100010, Output 001223
+Form: Input 100020, Output 001223
+Form: Input 100100, Output 001223
+Form: Input 100200, Output 001223
+Form: Input 133133, Output 001223
+Form: Input 133233, Output 001223
+Form: Input 133313, Output 001223
+Form: Input 133323, Output 001223
+Form: Input 200010, Output 001223
+Form: Input 200020, Output 001223
+Form: Input 200100, Output 001223
+Form: Input 200200, Output 001223
+Form: Input 233133, Output 001223
+Form: Input 233233, Output 001223
+Form: Input 233313, Output 001223
+Form: Input 233323, Output 001223
+Form: Input 313133, Output 001223
+Form: Input 313233, Output 001223
+Form: Input 313313, Output 001223
+Form: Input 313323, Output 001223
+Form: Input 323133, Output 001223
+Form: Input 323233, Output 001223
+Form: Input 323313, Output 001223
+Form: Input 323323, Output 001223
+
+Type Count: 11520
+Form: Input 010011, Output 001223
+Form: Input 010012, Output 001223
+Form: Input 010021, Output 001223
+Form: Input 010022, Output 001223
+Form: Input 010101, Output 001223
+Form: Input 010102, Output 001223
+Form: Input 010201, Output 001223
+Form: Input 010202, Output 001223
+Form: Input 020011, Output 001223
+Form: Input 020012, Output 001223
+Form: Input 020021, Output 001223
+Form: Input 020022, Output 001223
+Form: Input 020101, Output 001223
+Form: Input 020102, Output 001223
+Form: Input 020201, Output 001223
+Form: Input 020202, Output 001223
+Form: Input 100011, Output 001223
+Form: Input 100012, Output 001223
+Form: Input 100021, Output 001223
+Form: Input 100022, Output 001223
+Form: Input 100101, Output 001223
+Form: Input 100102, Output 001223
+Form: Input 100201, Output 001223
+Form: Input 100202, Output 001223
+Form: Input 133131, Output 001223
+Form: Input 133132, Output 001223
+Form: Input 133231, Output 001223
+Form: Input 133232, Output 001223
+Form: Input 133311, Output 001223
+Form: Input 133312, Output 001223
+Form: Input 133321, Output 001223
+Form: Input 133322, Output 001223
+Form: Input 200011, Output 001223
+Form: Input 200012, Output 001223
+Form: Input 200021, Output 001223
+Form: Input 200022, Output 001223
+Form: Input 200101, Output 001223
+Form: Input 200102, Output 001223
+Form: Input 200201, Output 001223
+Form: Input 200202, Output 001223
+Form: Input 233131, Output 001223
+Form: Input 233132, Output 001223
+Form: Input 233231, Output 001223
+Form: Input 233232, Output 001223
+Form: Input 233311, Output 001223
+Form: Input 233312, Output 001223
+Form: Input 233321, Output 001223
+Form: Input 233322, Output 001223
+Form: Input 313131, Output 001223
+Form: Input 313132, Output 001223
+Form: Input 313231, Output 001223
+Form: Input 313232, Output 001223
+Form: Input 313311, Output 001223
+Form: Input 313312, Output 001223
+Form: Input 313321, Output 001223
+Form: Input 313322, Output 001223
+Form: Input 323131, Output 001223
+Form: Input 323132, Output 001223
+Form: Input 323231, Output 001223
+Form: Input 323232, Output 001223
+Form: Input 323311, Output 001223
+Form: Input 323312, Output 001223
+Form: Input 323321, Output 001223
+Form: Input 323322, Output 001223
+
+Type Count: 2880
+Form: Input 010013, Output 001223
+Form: Input 010103, Output 001223
+Form: Input 020023, Output 001223
+Form: Input 020203, Output 001223
+Form: Input 100013, Output 001223
+Form: Input 100103, Output 001223
+Form: Input 133130, Output 001223
+Form: Input 133310, Output 001223
+Form: Input 200023, Output 001223
+Form: Input 200203, Output 001223
+Form: Input 233230, Output 001223
+Form: Input 233320, Output 001223
+Form: Input 313130, Output 001223
+Form: Input 313310, Output 001223
+Form: Input 323230, Output 001223
+Form: Input 323320, Output 001223
+
+Type Count: 2880
+Form: Input 010023, Output 001223
+Form: Input 010203, Output 001223
+Form: Input 020013, Output 001223
+Form: Input 020103, Output 001223
+Form: Input 100023, Output 001223
+Form: Input 100203, Output 001223
+Form: Input 133230, Output 001223
+Form: Input 133320, Output 001223
+Form: Input 200013, Output 001223
+Form: Input 200103, Output 001223
+Form: Input 233130, Output 001223
+Form: Input 233310, Output 001223
+Form: Input 313230, Output 001223
+Form: Input 313320, Output 001223
+Form: Input 323130, Output 001223
+Form: Input 323310, Output 001223
+
+Type Count: 2880
+Form: Input 010030, Output 001223
+Form: Input 010300, Output 001223
+Form: Input 020030, Output 001223
+Form: Input 020300, Output 001223
+Form: Input 100030, Output 001223
+Form: Input 100300, Output 001223
+Form: Input 133033, Output 001223
+Form: Input 133303, Output 001223
+Form: Input 200030, Output 001223
+Form: Input 200300, Output 001223
+Form: Input 233033, Output 001223
+Form: Input 233303, Output 001223
+Form: Input 313033, Output 001223
+Form: Input 313303, Output 001223
+Form: Input 323033, Output 001223
+Form: Input 323303, Output 001223
+
+Type Count: 2880
+Form: Input 010031, Output 001223
+Form: Input 010301, Output 001223
+Form: Input 020032, Output 001223
+Form: Input 020302, Output 001223
+Form: Input 100031, Output 001223
+Form: Input 100301, Output 001223
+Form: Input 133031, Output 001223
+Form: Input 133301, Output 001223
+Form: Input 200032, Output 001223
+Form: Input 200302, Output 001223
+Form: Input 233032, Output 001223
+Form: Input 233302, Output 001223
+Form: Input 313031, Output 001223
+Form: Input 313301, Output 001223
+Form: Input 323032, Output 001223
+Form: Input 323302, Output 001223
+
+Type Count: 2880
+Form: Input 010032, Output 001223
+Form: Input 010302, Output 001223
+Form: Input 020031, Output 001223
+Form: Input 020301, Output 001223
+Form: Input 100032, Output 001223
+Form: Input 100302, Output 001223
+Form: Input 133032, Output 001223
+Form: Input 133302, Output 001223
+Form: Input 200031, Output 001223
+Form: Input 200301, Output 001223
+Form: Input 233031, Output 001223
+Form: Input 233301, Output 001223
+Form: Input 313032, Output 001223
+Form: Input 313302, Output 001223
+Form: Input 323031, Output 001223
+Form: Input 323301, Output 001223
+
+Type Count: 2880
+Form: Input 010033, Output 001223
+Form: Input 010303, Output 001223
+Form: Input 020033, Output 001223
+Form: Input 020303, Output 001223
+Form: Input 100033, Output 001223
+Form: Input 100303, Output 001223
+Form: Input 133030, Output 001223
+Form: Input 133300, Output 001223
+Form: Input 200033, Output 001223
+Form: Input 200303, Output 001223
+Form: Input 233030, Output 001223
+Form: Input 233300, Output 001223
+Form: Input 313030, Output 001223
+Form: Input 313300, Output 001223
+Form: Input 323030, Output 001223
+Form: Input 323300, Output 001223
+
+Type Count: 5760
+Form: Input 010110, Output 001223
+Form: Input 010120, Output 001223
+Form: Input 010210, Output 001223
+Form: Input 010220, Output 001223
+Form: Input 020110, Output 001223
+Form: Input 020120, Output 001223
+Form: Input 020210, Output 001223
+Form: Input 020220, Output 001223
+Form: Input 100110, Output 001223
+Form: Input 100120, Output 001223
+Form: Input 100210, Output 001223
+Form: Input 100220, Output 001223
+Form: Input 133113, Output 001223
+Form: Input 133123, Output 001223
+Form: Input 133213, Output 001223
+Form: Input 133223, Output 001223
+Form: Input 200110, Output 001223
+Form: Input 200120, Output 001223
+Form: Input 200210, Output 001223
+Form: Input 200220, Output 001223
+Form: Input 233113, Output 001223
+Form: Input 233123, Output 001223
+Form: Input 233213, Output 001223
+Form: Input 233223, Output 001223
+Form: Input 313113, Output 001223
+Form: Input 313123, Output 001223
+Form: Input 313213, Output 001223
+Form: Input 313223, Output 001223
+Form: Input 323113, Output 001223
+Form: Input 323123, Output 001223
+Form: Input 323213, Output 001223
+Form: Input 323223, Output 001223
+
+Type Count: 11520
+Form: Input 010111, Output 001223
+Form: Input 010112, Output 001223
+Form: Input 010121, Output 001223
+Form: Input 010122, Output 001223
+Form: Input 010211, Output 001223
+Form: Input 010212, Output 001223
+Form: Input 010221, Output 001223
+Form: Input 010222, Output 001223
+Form: Input 020111, Output 001223
+Form: Input 020112, Output 001223
+Form: Input 020121, Output 001223
+Form: Input 020122, Output 001223
+Form: Input 020211, Output 001223
+Form: Input 020212, Output 001223
+Form: Input 020221, Output 001223
+Form: Input 020222, Output 001223
+Form: Input 100111, Output 001223
+Form: Input 100112, Output 001223
+Form: Input 100121, Output 001223
+Form: Input 100122, Output 001223
+Form: Input 100211, Output 001223
+Form: Input 100212, Output 001223
+Form: Input 100221, Output 001223
+Form: Input 100222, Output 001223
+Form: Input 133111, Output 001223
+Form: Input 133112, Output 001223
+Form: Input 133121, Output 001223
+Form: Input 133122, Output 001223
+Form: Input 133211, Output 001223
+Form: Input 133212, Output 001223
+Form: Input 133221, Output 001223
+Form: Input 133222, Output 001223
+Form: Input 200111, Output 001223
+Form: Input 200112, Output 001223
+Form: Input 200121, Output 001223
+Form: Input 200122, Output 001223
+Form: Input 200211, Output 001223
+Form: Input 200212, Output 001223
+Form: Input 200221, Output 001223
+Form: Input 200222, Output 001223
+Form: Input 233111, Output 001223
+Form: Input 233112, Output 001223
+Form: Input 233121, Output 001223
+Form: Input 233122, Output 001223
+Form: Input 233211, Output 001223
+Form: Input 233212, Output 001223
+Form: Input 233221, Output 001223
+Form: Input 233222, Output 001223
+Form: Input 313111, Output 001223
+Form: Input 313112, Output 001223
+Form: Input 313121, Output 001223
+Form: Input 313122, Output 001223
+Form: Input 313211, Output 001223
+Form: Input 313212, Output 001223
+Form: Input 313221, Output 001223
+Form: Input 313222, Output 001223
+Form: Input 323111, Output 001223
+Form: Input 323112, Output 001223
+Form: Input 323121, Output 001223
+Form: Input 323122, Output 001223
+Form: Input 323211, Output 001223
+Form: Input 323212, Output 001223
+Form: Input 323221, Output 001223
+Form: Input 323222, Output 001223
+
+Type Count: 1440
+Form: Input 010113, Output 001223
+Form: Input 020223, Output 001223
+Form: Input 100113, Output 001223
+Form: Input 133110, Output 001223
+Form: Input 200223, Output 001223
+Form: Input 233220, Output 001223
+Form: Input 313110, Output 001223
+Form: Input 323220, Output 001223
+
+Type Count: 2880
+Form: Input 010123, Output 001223
+Form: Input 010213, Output 001223
+Form: Input 020123, Output 001223
+Form: Input 020213, Output 001223
+Form: Input 100123, Output 001223
+Form: Input 100213, Output 001223
+Form: Input 133120, Output 001223
+Form: Input 133210, Output 001223
+Form: Input 200123, Output 001223
+Form: Input 200213, Output 001223
+Form: Input 233120, Output 001223
+Form: Input 233210, Output 001223
+Form: Input 313120, Output 001223
+Form: Input 313210, Output 001223
+Form: Input 323120, Output 001223
+Form: Input 323210, Output 001223
+
+Type Count: 2880
+Form: Input 010130, Output 001223
+Form: Input 010310, Output 001223
+Form: Input 020230, Output 001223
+Form: Input 020320, Output 001223
+Form: Input 100130, Output 001223
+Form: Input 100310, Output 001223
+Form: Input 133013, Output 001223
+Form: Input 133103, Output 001223
+Form: Input 200230, Output 001223
+Form: Input 200320, Output 001223
+Form: Input 233023, Output 001223
+Form: Input 233203, Output 001223
+Form: Input 313013, Output 001223
+Form: Input 313103, Output 001223
+Form: Input 323023, Output 001223
+Form: Input 323203, Output 001223
+
+Type Count: 2880
+Form: Input 010131, Output 001223
+Form: Input 010311, Output 001223
+Form: Input 020232, Output 001223
+Form: Input 020322, Output 001223
+Form: Input 100131, Output 001223
+Form: Input 100311, Output 001223
+Form: Input 133011, Output 001223
+Form: Input 133101, Output 001223
+Form: Input 200232, Output 001223
+Form: Input 200322, Output 001223
+Form: Input 233022, Output 001223
+Form: Input 233202, Output 001223
+Form: Input 313011, Output 001223
+Form: Input 313101, Output 001223
+Form: Input 323022, Output 001223
+Form: Input 323202, Output 001223
+
+Type Count: 2880
+Form: Input 010132, Output 001223
+Form: Input 010312, Output 001223
+Form: Input 020231, Output 001223
+Form: Input 020321, Output 001223
+Form: Input 100132, Output 001223
+Form: Input 100312, Output 001223
+Form: Input 133012, Output 001223
+Form: Input 133102, Output 001223
+Form: Input 200231, Output 001223
+Form: Input 200321, Output 001223
+Form: Input 233021, Output 001223
+Form: Input 233201, Output 001223
+Form: Input 313012, Output 001223
+Form: Input 313102, Output 001223
+Form: Input 323021, Output 001223
+Form: Input 323201, Output 001223
+
+Type Count: 2880
+Form: Input 010133, Output 001223
+Form: Input 010313, Output 001223
+Form: Input 020233, Output 001223
+Form: Input 020323, Output 001223
+Form: Input 100133, Output 001223
+Form: Input 100313, Output 001223
+Form: Input 133010, Output 001223
+Form: Input 133100, Output 001223
+Form: Input 200233, Output 001223
+Form: Input 200323, Output 001223
+Form: Input 233020, Output 001223
+Form: Input 233200, Output 001223
+Form: Input 313010, Output 001223
+Form: Input 313100, Output 001223
+Form: Input 323020, Output 001223
+Form: Input 323200, Output 001223
+
+Type Count: 1440
+Form: Input 010223, Output 001223
+Form: Input 020113, Output 001223
+Form: Input 100223, Output 001223
+Form: Input 133220, Output 001223
+Form: Input 200113, Output 001223
+Form: Input 233110, Output 001223
+Form: Input 313220, Output 001223
+Form: Input 323110, Output 001223
+
+Type Count: 2880
+Form: Input 010230, Output 001223
+Form: Input 010320, Output 001223
+Form: Input 020130, Output 001223
+Form: Input 020310, Output 001223
+Form: Input 100230, Output 001223
+Form: Input 100320, Output 001223
+Form: Input 133023, Output 001223
+Form: Input 133203, Output 001223
+Form: Input 200130, Output 001223
+Form: Input 200310, Output 001223
+Form: Input 233013, Output 001223
+Form: Input 233103, Output 001223
+Form: Input 313023, Output 001223
+Form: Input 313203, Output 001223
+Form: Input 323013, Output 001223
+Form: Input 323103, Output 001223
+
+Type Count: 2880
+Form: Input 010231, Output 001223
+Form: Input 010321, Output 001223
+Form: Input 020132, Output 001223
+Form: Input 020312, Output 001223
+Form: Input 100231, Output 001223
+Form: Input 100321, Output 001223
+Form: Input 133021, Output 001223
+Form: Input 133201, Output 001223
+Form: Input 200132, Output 001223
+Form: Input 200312, Output 001223
+Form: Input 233012, Output 001223
+Form: Input 233102, Output 001223
+Form: Input 313021, Output 001223
+Form: Input 313201, Output 001223
+Form: Input 323012, Output 001223
+Form: Input 323102, Output 001223
+
+Type Count: 2880
+Form: Input 010232, Output 001223
+Form: Input 010322, Output 001223
+Form: Input 020131, Output 001223
+Form: Input 020311, Output 001223
+Form: Input 100232, Output 001223
+Form: Input 100322, Output 001223
+Form: Input 133022, Output 001223
+Form: Input 133202, Output 001223
+Form: Input 200131, Output 001223
+Form: Input 200311, Output 001223
+Form: Input 233011, Output 001223
+Form: Input 233101, Output 001223
+Form: Input 313022, Output 001223
+Form: Input 313202, Output 001223
+Form: Input 323011, Output 001223
+Form: Input 323101, Output 001223
+
+Type Count: 2880
+Form: Input 010233, Output 001223
+Form: Input 010323, Output 001223
+Form: Input 020133, Output 001223
+Form: Input 020313, Output 001223
+Form: Input 100233, Output 001223
+Form: Input 100323, Output 001223
+Form: Input 133020, Output 001223
+Form: Input 133200, Output 001223
+Form: Input 200133, Output 001223
+Form: Input 200313, Output 001223
+Form: Input 233010, Output 001223
+Form: Input 233100, Output 001223
+Form: Input 313020, Output 001223
+Form: Input 313200, Output 001223
+Form: Input 323010, Output 001223
+Form: Input 323100, Output 001223
+
+Type Count: 1440
+Form: Input 010330, Output 001223
+Form: Input 020330, Output 001223
+Form: Input 100330, Output 001223
+Form: Input 133003, Output 001223
+Form: Input 200330, Output 001223
+Form: Input 233003, Output 001223
+Form: Input 313003, Output 001223
+Form: Input 323003, Output 001223
+
+Type Count: 1440
+Form: Input 010331, Output 001223
+Form: Input 020332, Output 001223
+Form: Input 100331, Output 001223
+Form: Input 133001, Output 001223
+Form: Input 200332, Output 001223
+Form: Input 233002, Output 001223
+Form: Input 313001, Output 001223
+Form: Input 323002, Output 001223
+
+Type Count: 1440
+Form: Input 010332, Output 001223
+Form: Input 020331, Output 001223
+Form: Input 100332, Output 001223
+Form: Input 133002, Output 001223
+Form: Input 200331, Output 001223
+Form: Input 233001, Output 001223
+Form: Input 313002, Output 001223
+Form: Input 323001, Output 001223
+
+Type Count: 1440
+Form: Input 010333, Output 001223
+Form: Input 020333, Output 001223
+Form: Input 100333, Output 001223
+Form: Input 133000, Output 001223
+Form: Input 200333, Output 001223
+Form: Input 233000, Output 001223
+Form: Input 313000, Output 001223
+Form: Input 323000, Output 001223
+
+Type Count: 2880
+Form: Input 011000, Output 001223
+Form: Input 012000, Output 001223
+Form: Input 021000, Output 001223
+Form: Input 022000, Output 001223
+Form: Input 101000, Output 001223
+Form: Input 102000, Output 001223
+Form: Input 131333, Output 001223
+Form: Input 132333, Output 001223
+Form: Input 201000, Output 001223
+Form: Input 202000, Output 001223
+Form: Input 231333, Output 001223
+Form: Input 232333, Output 001223
+Form: Input 311333, Output 001223
+Form: Input 312333, Output 001223
+Form: Input 321333, Output 001223
+Form: Input 322333, Output 001223
+
+Type Count: 5760
+Form: Input 011001, Output 001223
+Form: Input 011002, Output 001223
+Form: Input 012001, Output 001223
+Form: Input 012002, Output 001223
+Form: Input 021001, Output 001223
+Form: Input 021002, Output 001223
+Form: Input 022001, Output 001223
+Form: Input 022002, Output 001223
+Form: Input 101001, Output 001223
+Form: Input 101002, Output 001223
+Form: Input 102001, Output 001223
+Form: Input 102002, Output 001223
+Form: Input 131331, Output 001223
+Form: Input 131332, Output 001223
+Form: Input 132331, Output 001223
+Form: Input 132332, Output 001223
+Form: Input 201001, Output 001223
+Form: Input 201002, Output 001223
+Form: Input 202001, Output 001223
+Form: Input 202002, Output 001223
+Form: Input 231331, Output 001223
+Form: Input 231332, Output 001223
+Form: Input 232331, Output 001223
+Form: Input 232332, Output 001223
+Form: Input 311331, Output 001223
+Form: Input 311332, Output 001223
+Form: Input 312331, Output 001223
+Form: Input 312332, Output 001223
+Form: Input 321331, Output 001223
+Form: Input 321332, Output 001223
+Form: Input 322331, Output 001223
+Form: Input 322332, Output 001223
+
+Type Count: 1440
+Form: Input 011003, Output 001223
+Form: Input 022003, Output 001223
+Form: Input 101003, Output 001223
+Form: Input 131330, Output 001223
+Form: Input 202003, Output 001223
+Form: Input 232330, Output 001223
+Form: Input 311330, Output 001223
+Form: Input 322330, Output 001223
+
+Type Count: 11520
+Form: Input 011010, Output 001223
+Form: Input 011020, Output 001223
+Form: Input 011100, Output 001223
+Form: Input 011200, Output 001223
+Form: Input 012010, Output 001223
+Form: Input 012020, Output 001223
+Form: Input 012100, Output 001223
+Form: Input 012200, Output 001223
+Form: Input 021010, Output 001223
+Form: Input 021020, Output 001223
+Form: Input 021100, Output 001223
+Form: Input 021200, Output 001223
+Form: Input 022010, Output 001223
+Form: Input 022020, Output 001223
+Form: Input 022100, Output 001223
+Form: Input 022200, Output 001223
+Form: Input 101010, Output 001223
+Form: Input 101020, Output 001223
+Form: Input 101100, Output 001223
+Form: Input 101200, Output 001223
+Form: Input 102010, Output 001223
+Form: Input 102020, Output 001223
+Form: Input 102100, Output 001223
+Form: Input 102200, Output 001223
+Form: Input 131133, Output 001223
+Form: Input 131233, Output 001223
+Form: Input 131313, Output 001223
+Form: Input 131323, Output 001223
+Form: Input 132133, Output 001223
+Form: Input 132233, Output 001223
+Form: Input 132313, Output 001223
+Form: Input 132323, Output 001223
+Form: Input 201010, Output 001223
+Form: Input 201020, Output 001223
+Form: Input 201100, Output 001223
+Form: Input 201200, Output 001223
+Form: Input 202010, Output 001223
+Form: Input 202020, Output 001223
+Form: Input 202100, Output 001223
+Form: Input 202200, Output 001223
+Form: Input 231133, Output 001223
+Form: Input 231233, Output 001223
+Form: Input 231313, Output 001223
+Form: Input 231323, Output 001223
+Form: Input 232133, Output 001223
+Form: Input 232233, Output 001223
+Form: Input 232313, Output 001223
+Form: Input 232323, Output 001223
+Form: Input 311133, Output 001223
+Form: Input 311233, Output 001223
+Form: Input 311313, Output 001223
+Form: Input 311323, Output 001223
+Form: Input 312133, Output 001223
+Form: Input 312233, Output 001223
+Form: Input 312313, Output 001223
+Form: Input 312323, Output 001223
+Form: Input 321133, Output 001223
+Form: Input 321233, Output 001223
+Form: Input 321313, Output 001223
+Form: Input 321323, Output 001223
+Form: Input 322133, Output 001223
+Form: Input 322233, Output 001223
+Form: Input 322313, Output 001223
+Form: Input 322323, Output 001223
+
+Type Count: 2880
+Form: Input 011013, Output 001223
+Form: Input 011103, Output 001223
+Form: Input 022023, Output 001223
+Form: Input 022203, Output 001223
+Form: Input 101013, Output 001223
+Form: Input 101103, Output 001223
+Form: Input 131130, Output 001223
+Form: Input 131310, Output 001223
+Form: Input 202023, Output 001223
+Form: Input 202203, Output 001223
+Form: Input 232230, Output 001223
+Form: Input 232320, Output 001223
+Form: Input 311130, Output 001223
+Form: Input 311310, Output 001223
+Form: Input 322230, Output 001223
+Form: Input 322320, Output 001223
+
+Type Count: 2880
+Form: Input 011023, Output 001223
+Form: Input 011203, Output 001223
+Form: Input 022013, Output 001223
+Form: Input 022103, Output 001223
+Form: Input 101023, Output 001223
+Form: Input 101203, Output 001223
+Form: Input 131230, Output 001223
+Form: Input 131320, Output 001223
+Form: Input 202013, Output 001223
+Form: Input 202103, Output 001223
+Form: Input 232130, Output 001223
+Form: Input 232310, Output 001223
+Form: Input 311230, Output 001223
+Form: Input 311320, Output 001223
+Form: Input 322130, Output 001223
+Form: Input 322310, Output 001223
+
+Type Count: 2880
+Form: Input 011030, Output 001223
+Form: Input 011300, Output 001223
+Form: Input 022030, Output 001223
+Form: Input 022300, Output 001223
+Form: Input 101030, Output 001223
+Form: Input 101300, Output 001223
+Form: Input 131033, Output 001223
+Form: Input 131303, Output 001223
+Form: Input 202030, Output 001223
+Form: Input 202300, Output 001223
+Form: Input 232033, Output 001223
+Form: Input 232303, Output 001223
+Form: Input 311033, Output 001223
+Form: Input 311303, Output 001223
+Form: Input 322033, Output 001223
+Form: Input 322303, Output 001223
+
+Type Count: 2880
+Form: Input 011031, Output 001223
+Form: Input 011301, Output 001223
+Form: Input 022032, Output 001223
+Form: Input 022302, Output 001223
+Form: Input 101031, Output 001223
+Form: Input 101301, Output 001223
+Form: Input 131031, Output 001223
+Form: Input 131301, Output 001223
+Form: Input 202032, Output 001223
+Form: Input 202302, Output 001223
+Form: Input 232032, Output 001223
+Form: Input 232302, Output 001223
+Form: Input 311031, Output 001223
+Form: Input 311301, Output 001223
+Form: Input 322032, Output 001223
+Form: Input 322302, Output 001223
+
+Type Count: 2880
+Form: Input 011032, Output 001223
+Form: Input 011302, Output 001223
+Form: Input 022031, Output 001223
+Form: Input 022301, Output 001223
+Form: Input 101032, Output 001223
+Form: Input 101302, Output 001223
+Form: Input 131032, Output 001223
+Form: Input 131302, Output 001223
+Form: Input 202031, Output 001223
+Form: Input 202301, Output 001223
+Form: Input 232031, Output 001223
+Form: Input 232301, Output 001223
+Form: Input 311032, Output 001223
+Form: Input 311302, Output 001223
+Form: Input 322031, Output 001223
+Form: Input 322301, Output 001223
+
+Type Count: 2880
+Form: Input 011033, Output 001223
+Form: Input 011303, Output 001223
+Form: Input 022033, Output 001223
+Form: Input 022303, Output 001223
+Form: Input 101033, Output 001223
+Form: Input 101303, Output 001223
+Form: Input 131030, Output 001223
+Form: Input 131300, Output 001223
+Form: Input 202033, Output 001223
+Form: Input 202303, Output 001223
+Form: Input 232030, Output 001223
+Form: Input 232300, Output 001223
+Form: Input 311030, Output 001223
+Form: Input 311300, Output 001223
+Form: Input 322030, Output 001223
+Form: Input 322300, Output 001223
+
+Type Count: 11520
+Form: Input 011110, Output 001223
+Form: Input 011120, Output 001223
+Form: Input 011210, Output 001223
+Form: Input 011220, Output 001223
+Form: Input 012110, Output 001223
+Form: Input 012120, Output 001223
+Form: Input 012210, Output 001223
+Form: Input 012220, Output 001223
+Form: Input 021110, Output 001223
+Form: Input 021120, Output 001223
+Form: Input 021210, Output 001223
+Form: Input 021220, Output 001223
+Form: Input 022110, Output 001223
+Form: Input 022120, Output 001223
+Form: Input 022210, Output 001223
+Form: Input 022220, Output 001223
+Form: Input 101110, Output 001223
+Form: Input 101120, Output 001223
+Form: Input 101210, Output 001223
+Form: Input 101220, Output 001223
+Form: Input 102110, Output 001223
+Form: Input 102120, Output 001223
+Form: Input 102210, Output 001223
+Form: Input 102220, Output 001223
+Form: Input 131113, Output 001223
+Form: Input 131123, Output 001223
+Form: Input 131213, Output 001223
+Form: Input 131223, Output 001223
+Form: Input 132113, Output 001223
+Form: Input 132123, Output 001223
+Form: Input 132213, Output 001223
+Form: Input 132223, Output 001223
+Form: Input 201110, Output 001223
+Form: Input 201120, Output 001223
+Form: Input 201210, Output 001223
+Form: Input 201220, Output 001223
+Form: Input 202110, Output 001223
+Form: Input 202120, Output 001223
+Form: Input 202210, Output 001223
+Form: Input 202220, Output 001223
+Form: Input 231113, Output 001223
+Form: Input 231123, Output 001223
+Form: Input 231213, Output 001223
+Form: Input 231223, Output 001223
+Form: Input 232113, Output 001223
+Form: Input 232123, Output 001223
+Form: Input 232213, Output 001223
+Form: Input 232223, Output 001223
+Form: Input 311113, Output 001223
+Form: Input 311123, Output 001223
+Form: Input 311213, Output 001223
+Form: Input 311223, Output 001223
+Form: Input 312113, Output 001223
+Form: Input 312123, Output 001223
+Form: Input 312213, Output 001223
+Form: Input 312223, Output 001223
+Form: Input 321113, Output 001223
+Form: Input 321123, Output 001223
+Form: Input 321213, Output 001223
+Form: Input 321223, Output 001223
+Form: Input 322113, Output 001223
+Form: Input 322123, Output 001223
+Form: Input 322213, Output 001223
+Form: Input 322223, Output 001223
+
+Type Count: 1440
+Form: Input 011113, Output 001223
+Form: Input 022223, Output 001223
+Form: Input 101113, Output 001223
+Form: Input 131110, Output 001223
+Form: Input 202223, Output 001223
+Form: Input 232220, Output 001223
+Form: Input 311110, Output 001223
+Form: Input 322220, Output 001223
+
+Type Count: 2880
+Form: Input 011123, Output 001223
+Form: Input 011213, Output 001223
+Form: Input 022123, Output 001223
+Form: Input 022213, Output 001223
+Form: Input 101123, Output 001223
+Form: Input 101213, Output 001223
+Form: Input 131120, Output 001223
+Form: Input 131210, Output 001223
+Form: Input 202123, Output 001223
+Form: Input 202213, Output 001223
+Form: Input 232120, Output 001223
+Form: Input 232210, Output 001223
+Form: Input 311120, Output 001223
+Form: Input 311210, Output 001223
+Form: Input 322120, Output 001223
+Form: Input 322210, Output 001223
+
+Type Count: 2880
+Form: Input 011130, Output 001223
+Form: Input 011310, Output 001223
+Form: Input 022230, Output 001223
+Form: Input 022320, Output 001223
+Form: Input 101130, Output 001223
+Form: Input 101310, Output 001223
+Form: Input 131013, Output 001223
+Form: Input 131103, Output 001223
+Form: Input 202230, Output 001223
+Form: Input 202320, Output 001223
+Form: Input 232023, Output 001223
+Form: Input 232203, Output 001223
+Form: Input 311013, Output 001223
+Form: Input 311103, Output 001223
+Form: Input 322023, Output 001223
+Form: Input 322203, Output 001223
+
+Type Count: 2880
+Form: Input 011132, Output 001223
+Form: Input 011312, Output 001223
+Form: Input 022231, Output 001223
+Form: Input 022321, Output 001223
+Form: Input 101132, Output 001223
+Form: Input 101312, Output 001223
+Form: Input 131012, Output 001223
+Form: Input 131102, Output 001223
+Form: Input 202231, Output 001223
+Form: Input 202321, Output 001223
+Form: Input 232021, Output 001223
+Form: Input 232201, Output 001223
+Form: Input 311012, Output 001223
+Form: Input 311102, Output 001223
+Form: Input 322021, Output 001223
+Form: Input 322201, Output 001223
+
+Type Count: 2880
+Form: Input 011133, Output 001223
+Form: Input 011313, Output 001223
+Form: Input 022233, Output 001223
+Form: Input 022323, Output 001223
+Form: Input 101133, Output 001223
+Form: Input 101313, Output 001223
+Form: Input 131010, Output 001223
+Form: Input 131100, Output 001223
+Form: Input 202233, Output 001223
+Form: Input 202323, Output 001223
+Form: Input 232020, Output 001223
+Form: Input 232200, Output 001223
+Form: Input 311010, Output 001223
+Form: Input 311100, Output 001223
+Form: Input 322020, Output 001223
+Form: Input 322200, Output 001223
+
+Type Count: 1440
+Form: Input 011223, Output 001223
+Form: Input 022113, Output 001223
+Form: Input 101223, Output 001223
+Form: Input 131220, Output 001223
+Form: Input 202113, Output 001223
+Form: Input 232110, Output 001223
+Form: Input 311220, Output 001223
+Form: Input 322110, Output 001223
+
+Type Count: 2880
+Form: Input 011230, Output 001223
+Form: Input 011320, Output 001223
+Form: Input 022130, Output 001223
+Form: Input 022310, Output 001223
+Form: Input 101230, Output 001223
+Form: Input 101320, Output 001223
+Form: Input 131023, Output 001223
+Form: Input 131203, Output 001223
+Form: Input 202130, Output 001223
+Form: Input 202310, Output 001223
+Form: Input 232013, Output 001223
+Form: Input 232103, Output 001223
+Form: Input 311023, Output 001223
+Form: Input 311203, Output 001223
+Form: Input 322013, Output 001223
+Form: Input 322103, Output 001223
+
+Type Count: 2880
+Form: Input 011231, Output 001223
+Form: Input 011321, Output 001223
+Form: Input 022132, Output 001223
+Form: Input 022312, Output 001223
+Form: Input 101231, Output 001223
+Form: Input 101321, Output 001223
+Form: Input 131021, Output 001223
+Form: Input 131201, Output 001223
+Form: Input 202132, Output 001223
+Form: Input 202312, Output 001223
+Form: Input 232012, Output 001223
+Form: Input 232102, Output 001223
+Form: Input 311021, Output 001223
+Form: Input 311201, Output 001223
+Form: Input 322012, Output 001223
+Form: Input 322102, Output 001223
+
+Type Count: 2880
+Form: Input 011232, Output 001223
+Form: Input 011322, Output 001223
+Form: Input 022131, Output 001223
+Form: Input 022311, Output 001223
+Form: Input 101232, Output 001223
+Form: Input 101322, Output 001223
+Form: Input 131022, Output 001223
+Form: Input 131202, Output 001223
+Form: Input 202131, Output 001223
+Form: Input 202311, Output 001223
+Form: Input 232011, Output 001223
+Form: Input 232101, Output 001223
+Form: Input 311022, Output 001223
+Form: Input 311202, Output 001223
+Form: Input 322011, Output 001223
+Form: Input 322101, Output 001223
+
+Type Count: 2880
+Form: Input 011233, Output 001223
+Form: Input 011323, Output 001223
+Form: Input 022133, Output 001223
+Form: Input 022313, Output 001223
+Form: Input 101233, Output 001223
+Form: Input 101323, Output 001223
+Form: Input 131020, Output 001223
+Form: Input 131200, Output 001223
+Form: Input 202133, Output 001223
+Form: Input 202313, Output 001223
+Form: Input 232010, Output 001223
+Form: Input 232100, Output 001223
+Form: Input 311020, Output 001223
+Form: Input 311200, Output 001223
+Form: Input 322010, Output 001223
+Form: Input 322100, Output 001223
+
+Type Count: 1440
+Form: Input 011330, Output 001223
+Form: Input 022330, Output 001223
+Form: Input 101330, Output 001223
+Form: Input 131003, Output 001223
+Form: Input 202330, Output 001223
+Form: Input 232003, Output 001223
+Form: Input 311003, Output 001223
+Form: Input 322003, Output 001223
+
+Type Count: 1440
+Form: Input 011331, Output 001223
+Form: Input 022332, Output 001223
+Form: Input 101331, Output 001223
+Form: Input 131001, Output 001223
+Form: Input 202332, Output 001223
+Form: Input 232002, Output 001223
+Form: Input 311001, Output 001223
+Form: Input 322002, Output 001223
+
+Type Count: 1440
+Form: Input 011332, Output 001223
+Form: Input 022331, Output 001223
+Form: Input 101332, Output 001223
+Form: Input 131002, Output 001223
+Form: Input 202331, Output 001223
+Form: Input 232001, Output 001223
+Form: Input 311002, Output 001223
+Form: Input 322001, Output 001223
+
+Type Count: 1440
+Form: Input 011333, Output 001223
+Form: Input 022333, Output 001223
+Form: Input 101333, Output 001223
+Form: Input 131000, Output 001223
+Form: Input 202333, Output 001223
+Form: Input 232000, Output 001223
+Form: Input 311000, Output 001223
+Form: Input 322000, Output 001223
+
+Type Count: 1440
+Form: Input 012003, Output 001223
+Form: Input 021003, Output 001223
+Form: Input 102003, Output 001223
+Form: Input 132330, Output 001223
+Form: Input 201003, Output 001223
+Form: Input 231330, Output 001223
+Form: Input 312330, Output 001223
+Form: Input 321330, Output 001223
+
+Type Count: 2880
+Form: Input 012013, Output 001223
+Form: Input 012103, Output 001223
+Form: Input 021023, Output 001223
+Form: Input 021203, Output 001223
+Form: Input 102013, Output 001223
+Form: Input 102103, Output 001223
+Form: Input 132130, Output 001223
+Form: Input 132310, Output 001223
+Form: Input 201023, Output 001223
+Form: Input 201203, Output 001223
+Form: Input 231230, Output 001223
+Form: Input 231320, Output 001223
+Form: Input 312130, Output 001223
+Form: Input 312310, Output 001223
+Form: Input 321230, Output 001223
+Form: Input 321320, Output 001223
+
+Type Count: 2880
+Form: Input 012023, Output 001223
+Form: Input 012203, Output 001223
+Form: Input 021013, Output 001223
+Form: Input 021103, Output 001223
+Form: Input 102023, Output 001223
+Form: Input 102203, Output 001223
+Form: Input 132230, Output 001223
+Form: Input 132320, Output 001223
+Form: Input 201013, Output 001223
+Form: Input 201103, Output 001223
+Form: Input 231130, Output 001223
+Form: Input 231310, Output 001223
+Form: Input 312230, Output 001223
+Form: Input 312320, Output 001223
+Form: Input 321130, Output 001223
+Form: Input 321310, Output 001223
+
+Type Count: 2880
+Form: Input 012030, Output 001223
+Form: Input 012300, Output 001223
+Form: Input 021030, Output 001223
+Form: Input 021300, Output 001223
+Form: Input 102030, Output 001223
+Form: Input 102300, Output 001223
+Form: Input 132033, Output 001223
+Form: Input 132303, Output 001223
+Form: Input 201030, Output 001223
+Form: Input 201300, Output 001223
+Form: Input 231033, Output 001223
+Form: Input 231303, Output 001223
+Form: Input 312033, Output 001223
+Form: Input 312303, Output 001223
+Form: Input 321033, Output 001223
+Form: Input 321303, Output 001223
+
+Type Count: 2880
+Form: Input 012031, Output 001223
+Form: Input 012301, Output 001223
+Form: Input 021032, Output 001223
+Form: Input 021302, Output 001223
+Form: Input 102031, Output 001223
+Form: Input 102301, Output 001223
+Form: Input 132031, Output 001223
+Form: Input 132301, Output 001223
+Form: Input 201032, Output 001223
+Form: Input 201302, Output 001223
+Form: Input 231032, Output 001223
+Form: Input 231302, Output 001223
+Form: Input 312031, Output 001223
+Form: Input 312301, Output 001223
+Form: Input 321032, Output 001223
+Form: Input 321302, Output 001223
+
+Type Count: 2880
+Form: Input 012032, Output 001223
+Form: Input 012302, Output 001223
+Form: Input 021031, Output 001223
+Form: Input 021301, Output 001223
+Form: Input 102032, Output 001223
+Form: Input 102302, Output 001223
+Form: Input 132032, Output 001223
+Form: Input 132302, Output 001223
+Form: Input 201031, Output 001223
+Form: Input 201301, Output 001223
+Form: Input 231031, Output 001223
+Form: Input 231301, Output 001223
+Form: Input 312032, Output 001223
+Form: Input 312302, Output 001223
+Form: Input 321031, Output 001223
+Form: Input 321301, Output 001223
+
+Type Count: 2880
+Form: Input 012033, Output 001223
+Form: Input 012303, Output 001223
+Form: Input 021033, Output 001223
+Form: Input 021303, Output 001223
+Form: Input 102033, Output 001223
+Form: Input 102303, Output 001223
+Form: Input 132030, Output 001223
+Form: Input 132300, Output 001223
+Form: Input 201033, Output 001223
+Form: Input 201303, Output 001223
+Form: Input 231030, Output 001223
+Form: Input 231300, Output 001223
+Form: Input 312030, Output 001223
+Form: Input 312300, Output 001223
+Form: Input 321030, Output 001223
+Form: Input 321300, Output 001223
+
+Type Count: 1440
+Form: Input 012113, Output 001223
+Form: Input 021223, Output 001223
+Form: Input 102113, Output 001223
+Form: Input 132110, Output 001223
+Form: Input 201223, Output 001223
+Form: Input 231220, Output 001223
+Form: Input 312110, Output 001223
+Form: Input 321220, Output 001223
+
+Type Count: 2880
+Form: Input 012123, Output 001223
+Form: Input 012213, Output 001223
+Form: Input 021123, Output 001223
+Form: Input 021213, Output 001223
+Form: Input 102123, Output 001223
+Form: Input 102213, Output 001223
+Form: Input 132120, Output 001223
+Form: Input 132210, Output 001223
+Form: Input 201123, Output 001223
+Form: Input 201213, Output 001223
+Form: Input 231120, Output 001223
+Form: Input 231210, Output 001223
+Form: Input 312120, Output 001223
+Form: Input 312210, Output 001223
+Form: Input 321120, Output 001223
+Form: Input 321210, Output 001223
+
+Type Count: 2880
+Form: Input 012130, Output 001223
+Form: Input 012310, Output 001223
+Form: Input 021230, Output 001223
+Form: Input 021320, Output 001223
+Form: Input 102130, Output 001223
+Form: Input 102310, Output 001223
+Form: Input 132013, Output 001223
+Form: Input 132103, Output 001223
+Form: Input 201230, Output 001223
+Form: Input 201320, Output 001223
+Form: Input 231023, Output 001223
+Form: Input 231203, Output 001223
+Form: Input 312013, Output 001223
+Form: Input 312103, Output 001223
+Form: Input 321023, Output 001223
+Form: Input 321203, Output 001223
+
+Type Count: 2880
+Form: Input 012131, Output 001223
+Form: Input 012311, Output 001223
+Form: Input 021232, Output 001223
+Form: Input 021322, Output 001223
+Form: Input 102131, Output 001223
+Form: Input 102311, Output 001223
+Form: Input 132011, Output 001223
+Form: Input 132101, Output 001223
+Form: Input 201232, Output 001223
+Form: Input 201322, Output 001223
+Form: Input 231022, Output 001223
+Form: Input 231202, Output 001223
+Form: Input 312011, Output 001223
+Form: Input 312101, Output 001223
+Form: Input 321022, Output 001223
+Form: Input 321202, Output 001223
+
+Type Count: 2880
+Form: Input 012132, Output 001223
+Form: Input 012312, Output 001223
+Form: Input 021231, Output 001223
+Form: Input 021321, Output 001223
+Form: Input 102132, Output 001223
+Form: Input 102312, Output 001223
+Form: Input 132012, Output 001223
+Form: Input 132102, Output 001223
+Form: Input 201231, Output 001223
+Form: Input 201321, Output 001223
+Form: Input 231021, Output 001223
+Form: Input 231201, Output 001223
+Form: Input 312012, Output 001223
+Form: Input 312102, Output 001223
+Form: Input 321021, Output 001223
+Form: Input 321201, Output 001223
+
+Type Count: 2880
+Form: Input 012133, Output 001223
+Form: Input 012313, Output 001223
+Form: Input 021233, Output 001223
+Form: Input 021323, Output 001223
+Form: Input 102133, Output 001223
+Form: Input 102313, Output 001223
+Form: Input 132010, Output 001223
+Form: Input 132100, Output 001223
+Form: Input 201233, Output 001223
+Form: Input 201323, Output 001223
+Form: Input 231020, Output 001223
+Form: Input 231200, Output 001223
+Form: Input 312010, Output 001223
+Form: Input 312100, Output 001223
+Form: Input 321020, Output 001223
+Form: Input 321200, Output 001223
+
+Type Count: 1440
+Form: Input 012223, Output 001223
+Form: Input 021113, Output 001223
+Form: Input 102223, Output 001223
+Form: Input 132220, Output 001223
+Form: Input 201113, Output 001223
+Form: Input 231110, Output 001223
+Form: Input 312220, Output 001223
+Form: Input 321110, Output 001223
+
+Type Count: 2880
+Form: Input 012230, Output 001223
+Form: Input 012320, Output 001223
+Form: Input 021130, Output 001223
+Form: Input 021310, Output 001223
+Form: Input 102230, Output 001223
+Form: Input 102320, Output 001223
+Form: Input 132023, Output 001223
+Form: Input 132203, Output 001223
+Form: Input 201130, Output 001223
+Form: Input 201310, Output 001223
+Form: Input 231013, Output 001223
+Form: Input 231103, Output 001223
+Form: Input 312023, Output 001223
+Form: Input 312203, Output 001223
+Form: Input 321013, Output 001223
+Form: Input 321103, Output 001223
+
+Type Count: 2880
+Form: Input 012231, Output 001223
+Form: Input 012321, Output 001223
+Form: Input 021132, Output 001223
+Form: Input 021312, Output 001223
+Form: Input 102231, Output 001223
+Form: Input 102321, Output 001223
+Form: Input 132021, Output 001223
+Form: Input 132201, Output 001223
+Form: Input 201132, Output 001223
+Form: Input 201312, Output 001223
+Form: Input 231012, Output 001223
+Form: Input 231102, Output 001223
+Form: Input 312021, Output 001223
+Form: Input 312201, Output 001223
+Form: Input 321012, Output 001223
+Form: Input 321102, Output 001223
+
+Type Count: 2880
+Form: Input 012232, Output 001223
+Form: Input 012322, Output 001223
+Form: Input 021131, Output 001223
+Form: Input 021311, Output 001223
+Form: Input 102232, Output 001223
+Form: Input 102322, Output 001223
+Form: Input 132022, Output 001223
+Form: Input 132202, Output 001223
+Form: Input 201131, Output 001223
+Form: Input 201311, Output 001223
+Form: Input 231011, Output 001223
+Form: Input 231101, Output 001223
+Form: Input 312022, Output 001223
+Form: Input 312202, Output 001223
+Form: Input 321011, Output 001223
+Form: Input 321101, Output 001223
+
+Type Count: 2880
+Form: Input 012233, Output 001223
+Form: Input 012323, Output 001223
+Form: Input 021133, Output 001223
+Form: Input 021313, Output 001223
+Form: Input 102233, Output 001223
+Form: Input 102323, Output 001223
+Form: Input 132020, Output 001223
+Form: Input 132200, Output 001223
+Form: Input 201133, Output 001223
+Form: Input 201313, Output 001223
+Form: Input 231010, Output 001223
+Form: Input 231100, Output 001223
+Form: Input 312020, Output 001223
+Form: Input 312200, Output 001223
+Form: Input 321010, Output 001223
+Form: Input 321100, Output 001223
+
+Type Count: 1440
+Form: Input 012330, Output 001223
+Form: Input 021330, Output 001223
+Form: Input 102330, Output 001223
+Form: Input 132003, Output 001223
+Form: Input 201330, Output 001223
+Form: Input 231003, Output 001223
+Form: Input 312003, Output 001223
+Form: Input 321003, Output 001223
+
+Type Count: 1440
+Form: Input 012331, Output 001223
+Form: Input 021332, Output 001223
+Form: Input 102331, Output 001223
+Form: Input 132001, Output 001223
+Form: Input 201332, Output 001223
+Form: Input 231002, Output 001223
+Form: Input 312001, Output 001223
+Form: Input 321002, Output 001223
+
+Type Count: 1440
+Form: Input 012332, Output 001223
+Form: Input 021331, Output 001223
+Form: Input 102332, Output 001223
+Form: Input 132002, Output 001223
+Form: Input 201331, Output 001223
+Form: Input 231001, Output 001223
+Form: Input 312002, Output 001223
+Form: Input 321001, Output 001223
+
+Type Count: 1440
+Form: Input 012333, Output 001223
+Form: Input 021333, Output 001223
+Form: Input 102333, Output 001223
+Form: Input 132000, Output 001223
+Form: Input 201333, Output 001223
+Form: Input 231000, Output 001223
+Form: Input 312000, Output 001223
+Form: Input 321000, Output 001223
+
+Type Count: 1440
+Form: Input 013000, Output 001223
+Form: Input 023000, Output 001223
+Form: Input 103000, Output 001223
+Form: Input 130333, Output 001223
+Form: Input 203000, Output 001223
+Form: Input 230333, Output 001223
+Form: Input 310333, Output 001223
+Form: Input 320333, Output 001223
+
+Type Count: 1440
+Form: Input 013001, Output 001223
+Form: Input 023002, Output 001223
+Form: Input 103001, Output 001223
+Form: Input 130331, Output 001223
+Form: Input 203002, Output 001223
+Form: Input 230332, Output 001223
+Form: Input 310331, Output 001223
+Form: Input 320332, Output 001223
+
+Type Count: 1440
+Form: Input 013002, Output 001223
+Form: Input 023001, Output 001223
+Form: Input 103002, Output 001223
+Form: Input 130332, Output 001223
+Form: Input 203001, Output 001223
+Form: Input 230331, Output 001223
+Form: Input 310332, Output 001223
+Form: Input 320331, Output 001223
+
+Type Count: 1440
+Form: Input 013003, Output 001223
+Form: Input 023003, Output 001223
+Form: Input 103003, Output 001223
+Form: Input 130330, Output 001223
+Form: Input 203003, Output 001223
+Form: Input 230330, Output 001223
+Form: Input 310330, Output 001223
+Form: Input 320330, Output 001223
+
+Type Count: 2880
+Form: Input 013010, Output 001223
+Form: Input 013100, Output 001223
+Form: Input 023020, Output 001223
+Form: Input 023200, Output 001223
+Form: Input 103010, Output 001223
+Form: Input 103100, Output 001223
+Form: Input 130133, Output 001223
+Form: Input 130313, Output 001223
+Form: Input 203020, Output 001223
+Form: Input 203200, Output 001223
+Form: Input 230233, Output 001223
+Form: Input 230323, Output 001223
+Form: Input 310133, Output 001223
+Form: Input 310313, Output 001223
+Form: Input 320233, Output 001223
+Form: Input 320323, Output 001223
+
+Type Count: 2880
+Form: Input 013011, Output 001223
+Form: Input 013101, Output 001223
+Form: Input 023022, Output 001223
+Form: Input 023202, Output 001223
+Form: Input 103011, Output 001223
+Form: Input 103101, Output 001223
+Form: Input 130131, Output 001223
+Form: Input 130311, Output 001223
+Form: Input 203022, Output 001223
+Form: Input 203202, Output 001223
+Form: Input 230232, Output 001223
+Form: Input 230322, Output 001223
+Form: Input 310131, Output 001223
+Form: Input 310311, Output 001223
+Form: Input 320232, Output 001223
+Form: Input 320322, Output 001223
+
+Type Count: 2880
+Form: Input 013012, Output 001223
+Form: Input 013102, Output 001223
+Form: Input 023021, Output 001223
+Form: Input 023201, Output 001223
+Form: Input 103012, Output 001223
+Form: Input 103102, Output 001223
+Form: Input 130132, Output 001223
+Form: Input 130312, Output 001223
+Form: Input 203021, Output 001223
+Form: Input 203201, Output 001223
+Form: Input 230231, Output 001223
+Form: Input 230321, Output 001223
+Form: Input 310132, Output 001223
+Form: Input 310312, Output 001223
+Form: Input 320231, Output 001223
+Form: Input 320321, Output 001223
+
+Type Count: 2880
+Form: Input 013013, Output 001223
+Form: Input 013103, Output 001223
+Form: Input 023023, Output 001223
+Form: Input 023203, Output 001223
+Form: Input 103013, Output 001223
+Form: Input 103103, Output 001223
+Form: Input 130130, Output 001223
+Form: Input 130310, Output 001223
+Form: Input 203023, Output 001223
+Form: Input 203203, Output 001223
+Form: Input 230230, Output 001223
+Form: Input 230320, Output 001223
+Form: Input 310130, Output 001223
+Form: Input 310310, Output 001223
+Form: Input 320230, Output 001223
+Form: Input 320320, Output 001223
+
+Type Count: 2880
+Form: Input 013020, Output 001223
+Form: Input 013200, Output 001223
+Form: Input 023010, Output 001223
+Form: Input 023100, Output 001223
+Form: Input 103020, Output 001223
+Form: Input 103200, Output 001223
+Form: Input 130233, Output 001223
+Form: Input 130323, Output 001223
+Form: Input 203010, Output 001223
+Form: Input 203100, Output 001223
+Form: Input 230133, Output 001223
+Form: Input 230313, Output 001223
+Form: Input 310233, Output 001223
+Form: Input 310323, Output 001223
+Form: Input 320133, Output 001223
+Form: Input 320313, Output 001223
+
+Type Count: 2880
+Form: Input 013021, Output 001223
+Form: Input 013201, Output 001223
+Form: Input 023012, Output 001223
+Form: Input 023102, Output 001223
+Form: Input 103021, Output 001223
+Form: Input 103201, Output 001223
+Form: Input 130231, Output 001223
+Form: Input 130321, Output 001223
+Form: Input 203012, Output 001223
+Form: Input 203102, Output 001223
+Form: Input 230132, Output 001223
+Form: Input 230312, Output 001223
+Form: Input 310231, Output 001223
+Form: Input 310321, Output 001223
+Form: Input 320132, Output 001223
+Form: Input 320312, Output 001223
+
+Type Count: 2880
+Form: Input 013022, Output 001223
+Form: Input 013202, Output 001223
+Form: Input 023011, Output 001223
+Form: Input 023101, Output 001223
+Form: Input 103022, Output 001223
+Form: Input 103202, Output 001223
+Form: Input 130232, Output 001223
+Form: Input 130322, Output 001223
+Form: Input 203011, Output 001223
+Form: Input 203101, Output 001223
+Form: Input 230131, Output 001223
+Form: Input 230311, Output 001223
+Form: Input 310232, Output 001223
+Form: Input 310322, Output 001223
+Form: Input 320131, Output 001223
+Form: Input 320311, Output 001223
+
+Type Count: 2880
+Form: Input 013023, Output 001223
+Form: Input 013203, Output 001223
+Form: Input 023013, Output 001223
+Form: Input 023103, Output 001223
+Form: Input 103023, Output 001223
+Form: Input 103203, Output 001223
+Form: Input 130230, Output 001223
+Form: Input 130320, Output 001223
+Form: Input 203013, Output 001223
+Form: Input 203103, Output 001223
+Form: Input 230130, Output 001223
+Form: Input 230310, Output 001223
+Form: Input 310230, Output 001223
+Form: Input 310320, Output 001223
+Form: Input 320130, Output 001223
+Form: Input 320310, Output 001223
+
+Type Count: 2880
+Form: Input 013030, Output 001223
+Form: Input 013300, Output 001223
+Form: Input 023030, Output 001223
+Form: Input 023300, Output 001223
+Form: Input 103030, Output 001223
+Form: Input 103300, Output 001223
+Form: Input 130033, Output 001223
+Form: Input 130303, Output 001223
+Form: Input 203030, Output 001223
+Form: Input 203300, Output 001223
+Form: Input 230033, Output 001223
+Form: Input 230303, Output 001223
+Form: Input 310033, Output 001223
+Form: Input 310303, Output 001223
+Form: Input 320033, Output 001223
+Form: Input 320303, Output 001223
+
+Type Count: 2880
+Form: Input 013031, Output 001223
+Form: Input 013301, Output 001223
+Form: Input 023032, Output 001223
+Form: Input 023302, Output 001223
+Form: Input 103031, Output 001223
+Form: Input 103301, Output 001223
+Form: Input 130031, Output 001223
+Form: Input 130301, Output 001223
+Form: Input 203032, Output 001223
+Form: Input 203302, Output 001223
+Form: Input 230032, Output 001223
+Form: Input 230302, Output 001223
+Form: Input 310031, Output 001223
+Form: Input 310301, Output 001223
+Form: Input 320032, Output 001223
+Form: Input 320302, Output 001223
+
+Type Count: 2880
+Form: Input 013032, Output 001223
+Form: Input 013302, Output 001223
+Form: Input 023031, Output 001223
+Form: Input 023301, Output 001223
+Form: Input 103032, Output 001223
+Form: Input 103302, Output 001223
+Form: Input 130032, Output 001223
+Form: Input 130302, Output 001223
+Form: Input 203031, Output 001223
+Form: Input 203301, Output 001223
+Form: Input 230031, Output 001223
+Form: Input 230301, Output 001223
+Form: Input 310032, Output 001223
+Form: Input 310302, Output 001223
+Form: Input 320031, Output 001223
+Form: Input 320301, Output 001223
+
+Type Count: 2880
+Form: Input 013033, Output 001223
+Form: Input 013303, Output 001223
+Form: Input 023033, Output 001223
+Form: Input 023303, Output 001223
+Form: Input 103033, Output 001223
+Form: Input 103303, Output 001223
+Form: Input 130030, Output 001223
+Form: Input 130300, Output 001223
+Form: Input 203033, Output 001223
+Form: Input 203303, Output 001223
+Form: Input 230030, Output 001223
+Form: Input 230300, Output 001223
+Form: Input 310030, Output 001223
+Form: Input 310300, Output 001223
+Form: Input 320030, Output 001223
+Form: Input 320300, Output 001223
+
+Type Count: 1440
+Form: Input 013110, Output 001223
+Form: Input 023220, Output 001223
+Form: Input 103110, Output 001223
+Form: Input 130113, Output 001223
+Form: Input 203220, Output 001223
+Form: Input 230223, Output 001223
+Form: Input 310113, Output 001223
+Form: Input 320223, Output 001223
+
+Type Count: 1440
+Form: Input 013111, Output 001223
+Form: Input 023222, Output 001223
+Form: Input 103111, Output 001223
+Form: Input 130111, Output 001223
+Form: Input 203222, Output 001223
+Form: Input 230222, Output 001223
+Form: Input 310111, Output 001223
+Form: Input 320222, Output 001223
+
+Type Count: 1440
+Form: Input 013112, Output 001223
+Form: Input 023221, Output 001223
+Form: Input 103112, Output 001223
+Form: Input 130112, Output 001223
+Form: Input 203221, Output 001223
+Form: Input 230221, Output 001223
+Form: Input 310112, Output 001223
+Form: Input 320221, Output 001223
+
+Type Count: 1440
+Form: Input 013113, Output 001223
+Form: Input 023223, Output 001223
+Form: Input 103113, Output 001223
+Form: Input 130110, Output 001223
+Form: Input 203223, Output 001223
+Form: Input 230220, Output 001223
+Form: Input 310110, Output 001223
+Form: Input 320220, Output 001223
+
+Type Count: 2880
+Form: Input 013120, Output 001223
+Form: Input 013210, Output 001223
+Form: Input 023120, Output 001223
+Form: Input 023210, Output 001223
+Form: Input 103120, Output 001223
+Form: Input 103210, Output 001223
+Form: Input 130123, Output 001223
+Form: Input 130213, Output 001223
+Form: Input 203120, Output 001223
+Form: Input 203210, Output 001223
+Form: Input 230123, Output 001223
+Form: Input 230213, Output 001223
+Form: Input 310123, Output 001223
+Form: Input 310213, Output 001223
+Form: Input 320123, Output 001223
+Form: Input 320213, Output 001223
+
+Type Count: 2880
+Form: Input 013121, Output 001223
+Form: Input 013211, Output 001223
+Form: Input 023122, Output 001223
+Form: Input 023212, Output 001223
+Form: Input 103121, Output 001223
+Form: Input 103211, Output 001223
+Form: Input 130121, Output 001223
+Form: Input 130211, Output 001223
+Form: Input 203122, Output 001223
+Form: Input 203212, Output 001223
+Form: Input 230122, Output 001223
+Form: Input 230212, Output 001223
+Form: Input 310121, Output 001223
+Form: Input 310211, Output 001223
+Form: Input 320122, Output 001223
+Form: Input 320212, Output 001223
+
+Type Count: 2880
+Form: Input 013122, Output 001223
+Form: Input 013212, Output 001223
+Form: Input 023121, Output 001223
+Form: Input 023211, Output 001223
+Form: Input 103122, Output 001223
+Form: Input 103212, Output 001223
+Form: Input 130122, Output 001223
+Form: Input 130212, Output 001223
+Form: Input 203121, Output 001223
+Form: Input 203211, Output 001223
+Form: Input 230121, Output 001223
+Form: Input 230211, Output 001223
+Form: Input 310122, Output 001223
+Form: Input 310212, Output 001223
+Form: Input 320121, Output 001223
+Form: Input 320211, Output 001223
+
+Type Count: 2880
+Form: Input 013123, Output 001223
+Form: Input 013213, Output 001223
+Form: Input 023123, Output 001223
+Form: Input 023213, Output 001223
+Form: Input 103123, Output 001223
+Form: Input 103213, Output 001223
+Form: Input 130120, Output 001223
+Form: Input 130210, Output 001223
+Form: Input 203123, Output 001223
+Form: Input 203213, Output 001223
+Form: Input 230120, Output 001223
+Form: Input 230210, Output 001223
+Form: Input 310120, Output 001223
+Form: Input 310210, Output 001223
+Form: Input 320120, Output 001223
+Form: Input 320210, Output 001223
+
+Type Count: 2880
+Form: Input 013130, Output 001223
+Form: Input 013310, Output 001223
+Form: Input 023230, Output 001223
+Form: Input 023320, Output 001223
+Form: Input 103130, Output 001223
+Form: Input 103310, Output 001223
+Form: Input 130013, Output 001223
+Form: Input 130103, Output 001223
+Form: Input 203230, Output 001223
+Form: Input 203320, Output 001223
+Form: Input 230023, Output 001223
+Form: Input 230203, Output 001223
+Form: Input 310013, Output 001223
+Form: Input 310103, Output 001223
+Form: Input 320023, Output 001223
+Form: Input 320203, Output 001223
+
+Type Count: 2880
+Form: Input 013131, Output 001223
+Form: Input 013311, Output 001223
+Form: Input 023232, Output 001223
+Form: Input 023322, Output 001223
+Form: Input 103131, Output 001223
+Form: Input 103311, Output 001223
+Form: Input 130011, Output 001223
+Form: Input 130101, Output 001223
+Form: Input 203232, Output 001223
+Form: Input 203322, Output 001223
+Form: Input 230022, Output 001223
+Form: Input 230202, Output 001223
+Form: Input 310011, Output 001223
+Form: Input 310101, Output 001223
+Form: Input 320022, Output 001223
+Form: Input 320202, Output 001223
+
+Type Count: 2880
+Form: Input 013132, Output 001223
+Form: Input 013312, Output 001223
+Form: Input 023231, Output 001223
+Form: Input 023321, Output 001223
+Form: Input 103132, Output 001223
+Form: Input 103312, Output 001223
+Form: Input 130012, Output 001223
+Form: Input 130102, Output 001223
+Form: Input 203231, Output 001223
+Form: Input 203321, Output 001223
+Form: Input 230021, Output 001223
+Form: Input 230201, Output 001223
+Form: Input 310012, Output 001223
+Form: Input 310102, Output 001223
+Form: Input 320021, Output 001223
+Form: Input 320201, Output 001223
+
+Type Count: 2880
+Form: Input 013133, Output 001223
+Form: Input 013313, Output 001223
+Form: Input 023233, Output 001223
+Form: Input 023323, Output 001223
+Form: Input 103133, Output 001223
+Form: Input 103313, Output 001223
+Form: Input 130010, Output 001223
+Form: Input 130100, Output 001223
+Form: Input 203233, Output 001223
+Form: Input 203323, Output 001223
+Form: Input 230020, Output 001223
+Form: Input 230200, Output 001223
+Form: Input 310010, Output 001223
+Form: Input 310100, Output 001223
+Form: Input 320020, Output 001223
+Form: Input 320200, Output 001223
+
+Type Count: 1440
+Form: Input 013220, Output 001223
+Form: Input 023110, Output 001223
+Form: Input 103220, Output 001223
+Form: Input 130223, Output 001223
+Form: Input 203110, Output 001223
+Form: Input 230113, Output 001223
+Form: Input 310223, Output 001223
+Form: Input 320113, Output 001223
+
+Type Count: 1440
+Form: Input 013221, Output 001223
+Form: Input 023112, Output 001223
+Form: Input 103221, Output 001223
+Form: Input 130221, Output 001223
+Form: Input 203112, Output 001223
+Form: Input 230112, Output 001223
+Form: Input 310221, Output 001223
+Form: Input 320112, Output 001223
+
+Type Count: 1440
+Form: Input 013222, Output 001223
+Form: Input 023111, Output 001223
+Form: Input 103222, Output 001223
+Form: Input 130222, Output 001223
+Form: Input 203111, Output 001223
+Form: Input 230111, Output 001223
+Form: Input 310222, Output 001223
+Form: Input 320111, Output 001223
+
+Type Count: 1440
+Form: Input 013223, Output 001223
+Form: Input 023113, Output 001223
+Form: Input 103223, Output 001223
+Form: Input 130220, Output 001223
+Form: Input 203113, Output 001223
+Form: Input 230110, Output 001223
+Form: Input 310220, Output 001223
+Form: Input 320110, Output 001223
+
+Type Count: 2880
+Form: Input 013230, Output 001223
+Form: Input 013320, Output 001223
+Form: Input 023130, Output 001223
+Form: Input 023310, Output 001223
+Form: Input 103230, Output 001223
+Form: Input 103320, Output 001223
+Form: Input 130023, Output 001223
+Form: Input 130203, Output 001223
+Form: Input 203130, Output 001223
+Form: Input 203310, Output 001223
+Form: Input 230013, Output 001223
+Form: Input 230103, Output 001223
+Form: Input 310023, Output 001223
+Form: Input 310203, Output 001223
+Form: Input 320013, Output 001223
+Form: Input 320103, Output 001223
+
+Type Count: 2880
+Form: Input 013231, Output 001223
+Form: Input 013321, Output 001223
+Form: Input 023132, Output 001223
+Form: Input 023312, Output 001223
+Form: Input 103231, Output 001223
+Form: Input 103321, Output 001223
+Form: Input 130021, Output 001223
+Form: Input 130201, Output 001223
+Form: Input 203132, Output 001223
+Form: Input 203312, Output 001223
+Form: Input 230012, Output 001223
+Form: Input 230102, Output 001223
+Form: Input 310021, Output 001223
+Form: Input 310201, Output 001223
+Form: Input 320012, Output 001223
+Form: Input 320102, Output 001223
+
+Type Count: 2880
+Form: Input 013232, Output 001223
+Form: Input 013322, Output 001223
+Form: Input 023131, Output 001223
+Form: Input 023311, Output 001223
+Form: Input 103232, Output 001223
+Form: Input 103322, Output 001223
+Form: Input 130022, Output 001223
+Form: Input 130202, Output 001223
+Form: Input 203131, Output 001223
+Form: Input 203311, Output 001223
+Form: Input 230011, Output 001223
+Form: Input 230101, Output 001223
+Form: Input 310022, Output 001223
+Form: Input 310202, Output 001223
+Form: Input 320011, Output 001223
+Form: Input 320101, Output 001223
+
+Type Count: 2880
+Form: Input 013233, Output 001223
+Form: Input 013323, Output 001223
+Form: Input 023133, Output 001223
+Form: Input 023313, Output 001223
+Form: Input 103233, Output 001223
+Form: Input 103323, Output 001223
+Form: Input 130020, Output 001223
+Form: Input 130200, Output 001223
+Form: Input 203133, Output 001223
+Form: Input 203313, Output 001223
+Form: Input 230010, Output 001223
+Form: Input 230100, Output 001223
+Form: Input 310020, Output 001223
+Form: Input 310200, Output 001223
+Form: Input 320010, Output 001223
+Form: Input 320100, Output 001223
+
+Type Count: 1440
+Form: Input 013330, Output 001223
+Form: Input 023330, Output 001223
+Form: Input 103330, Output 001223
+Form: Input 130003, Output 001223
+Form: Input 203330, Output 001223
+Form: Input 230003, Output 001223
+Form: Input 310003, Output 001223
+Form: Input 320003, Output 001223
+
+Type Count: 1440
+Form: Input 013331, Output 001223
+Form: Input 023332, Output 001223
+Form: Input 103331, Output 001223
+Form: Input 130001, Output 001223
+Form: Input 203332, Output 001223
+Form: Input 230002, Output 001223
+Form: Input 310001, Output 001223
+Form: Input 320002, Output 001223
+
+Type Count: 1440
+Form: Input 013332, Output 001223
+Form: Input 023331, Output 001223
+Form: Input 103332, Output 001223
+Form: Input 130002, Output 001223
+Form: Input 203331, Output 001223
+Form: Input 230001, Output 001223
+Form: Input 310002, Output 001223
+Form: Input 320001, Output 001223
+
+Type Count: 1440
+Form: Input 013333, Output 001223
+Form: Input 023333, Output 001223
+Form: Input 103333, Output 001223
+Form: Input 130000, Output 001223
+Form: Input 203333, Output 001223
+Form: Input 230000, Output 001223
+Form: Input 310000, Output 001223
+Form: Input 320000, Output 001223
+
+Type Count: 720
+Form: Input 030000, Output 001223
+Form: Input 033333, Output 001223
+Form: Input 300000, Output 001223
+Form: Input 303333, Output 001223
+
+Type Count: 1440
+Form: Input 030001, Output 001223
+Form: Input 030002, Output 001223
+Form: Input 033331, Output 001223
+Form: Input 033332, Output 001223
+Form: Input 300001, Output 001223
+Form: Input 300002, Output 001223
+Form: Input 303331, Output 001223
+Form: Input 303332, Output 001223
+
+Type Count: 720
+Form: Input 030003, Output 001223
+Form: Input 033330, Output 001223
+Form: Input 300003, Output 001223
+Form: Input 303330, Output 001223
+
+Type Count: 2880
+Form: Input 030010, Output 001223
+Form: Input 030020, Output 001223
+Form: Input 030100, Output 001223
+Form: Input 030200, Output 001223
+Form: Input 033133, Output 001223
+Form: Input 033233, Output 001223
+Form: Input 033313, Output 001223
+Form: Input 033323, Output 001223
+Form: Input 300010, Output 001223
+Form: Input 300020, Output 001223
+Form: Input 300100, Output 001223
+Form: Input 300200, Output 001223
+Form: Input 303133, Output 001223
+Form: Input 303233, Output 001223
+Form: Input 303313, Output 001223
+Form: Input 303323, Output 001223
+
+Type Count: 2880
+Form: Input 030011, Output 001223
+Form: Input 030022, Output 001223
+Form: Input 030101, Output 001223
+Form: Input 030202, Output 001223
+Form: Input 033131, Output 001223
+Form: Input 033232, Output 001223
+Form: Input 033311, Output 001223
+Form: Input 033322, Output 001223
+Form: Input 300011, Output 001223
+Form: Input 300022, Output 001223
+Form: Input 300101, Output 001223
+Form: Input 300202, Output 001223
+Form: Input 303131, Output 001223
+Form: Input 303232, Output 001223
+Form: Input 303311, Output 001223
+Form: Input 303322, Output 001223
+
+Type Count: 2880
+Form: Input 030012, Output 001223
+Form: Input 030021, Output 001223
+Form: Input 030102, Output 001223
+Form: Input 030201, Output 001223
+Form: Input 033132, Output 001223
+Form: Input 033231, Output 001223
+Form: Input 033312, Output 001223
+Form: Input 033321, Output 001223
+Form: Input 300012, Output 001223
+Form: Input 300021, Output 001223
+Form: Input 300102, Output 001223
+Form: Input 300201, Output 001223
+Form: Input 303132, Output 001223
+Form: Input 303231, Output 001223
+Form: Input 303312, Output 001223
+Form: Input 303321, Output 001223
+
+Type Count: 2880
+Form: Input 030013, Output 001223
+Form: Input 030023, Output 001223
+Form: Input 030103, Output 001223
+Form: Input 030203, Output 001223
+Form: Input 033130, Output 001223
+Form: Input 033230, Output 001223
+Form: Input 033310, Output 001223
+Form: Input 033320, Output 001223
+Form: Input 300013, Output 001223
+Form: Input 300023, Output 001223
+Form: Input 300103, Output 001223
+Form: Input 300203, Output 001223
+Form: Input 303130, Output 001223
+Form: Input 303230, Output 001223
+Form: Input 303310, Output 001223
+Form: Input 303320, Output 001223
+
+Type Count: 1440
+Form: Input 030030, Output 001223
+Form: Input 030300, Output 001223
+Form: Input 033033, Output 001223
+Form: Input 033303, Output 001223
+Form: Input 300030, Output 001223
+Form: Input 300300, Output 001223
+Form: Input 303033, Output 001223
+Form: Input 303303, Output 001223
+
+Type Count: 2880
+Form: Input 030031, Output 001223
+Form: Input 030032, Output 001223
+Form: Input 030301, Output 001223
+Form: Input 030302, Output 001223
+Form: Input 033031, Output 001223
+Form: Input 033032, Output 001223
+Form: Input 033301, Output 001223
+Form: Input 033302, Output 001223
+Form: Input 300031, Output 001223
+Form: Input 300032, Output 001223
+Form: Input 300301, Output 001223
+Form: Input 300302, Output 001223
+Form: Input 303031, Output 001223
+Form: Input 303032, Output 001223
+Form: Input 303301, Output 001223
+Form: Input 303302, Output 001223
+
+Type Count: 1440
+Form: Input 030033, Output 001223
+Form: Input 030303, Output 001223
+Form: Input 033030, Output 001223
+Form: Input 033300, Output 001223
+Form: Input 300033, Output 001223
+Form: Input 300303, Output 001223
+Form: Input 303030, Output 001223
+Form: Input 303300, Output 001223
+
+Type Count: 1440
+Form: Input 030110, Output 001223
+Form: Input 030220, Output 001223
+Form: Input 033113, Output 001223
+Form: Input 033223, Output 001223
+Form: Input 300110, Output 001223
+Form: Input 300220, Output 001223
+Form: Input 303113, Output 001223
+Form: Input 303223, Output 001223
+
+Type Count: 1440
+Form: Input 030111, Output 001223
+Form: Input 030222, Output 001223
+Form: Input 033111, Output 001223
+Form: Input 033222, Output 001223
+Form: Input 300111, Output 001223
+Form: Input 300222, Output 001223
+Form: Input 303111, Output 001223
+Form: Input 303222, Output 001223
+
+Type Count: 1440
+Form: Input 030112, Output 001223
+Form: Input 030221, Output 001223
+Form: Input 033112, Output 001223
+Form: Input 033221, Output 001223
+Form: Input 300112, Output 001223
+Form: Input 300221, Output 001223
+Form: Input 303112, Output 001223
+Form: Input 303221, Output 001223
+
+Type Count: 1440
+Form: Input 030113, Output 001223
+Form: Input 030223, Output 001223
+Form: Input 033110, Output 001223
+Form: Input 033220, Output 001223
+Form: Input 300113, Output 001223
+Form: Input 300223, Output 001223
+Form: Input 303110, Output 001223
+Form: Input 303220, Output 001223
+
+Type Count: 1440
+Form: Input 030120, Output 001223
+Form: Input 030210, Output 001223
+Form: Input 033123, Output 001223
+Form: Input 033213, Output 001223
+Form: Input 300120, Output 001223
+Form: Input 300210, Output 001223
+Form: Input 303123, Output 001223
+Form: Input 303213, Output 001223
+
+Type Count: 2880
+Form: Input 030121, Output 001223
+Form: Input 030122, Output 001223
+Form: Input 030211, Output 001223
+Form: Input 030212, Output 001223
+Form: Input 033121, Output 001223
+Form: Input 033122, Output 001223
+Form: Input 033211, Output 001223
+Form: Input 033212, Output 001223
+Form: Input 300121, Output 001223
+Form: Input 300122, Output 001223
+Form: Input 300211, Output 001223
+Form: Input 300212, Output 001223
+Form: Input 303121, Output 001223
+Form: Input 303122, Output 001223
+Form: Input 303211, Output 001223
+Form: Input 303212, Output 001223
+
+Type Count: 1440
+Form: Input 030123, Output 001223
+Form: Input 030213, Output 001223
+Form: Input 033120, Output 001223
+Form: Input 033210, Output 001223
+Form: Input 300123, Output 001223
+Form: Input 300213, Output 001223
+Form: Input 303120, Output 001223
+Form: Input 303210, Output 001223
+
+Type Count: 2880
+Form: Input 030130, Output 001223
+Form: Input 030230, Output 001223
+Form: Input 030310, Output 001223
+Form: Input 030320, Output 001223
+Form: Input 033013, Output 001223
+Form: Input 033023, Output 001223
+Form: Input 033103, Output 001223
+Form: Input 033203, Output 001223
+Form: Input 300130, Output 001223
+Form: Input 300230, Output 001223
+Form: Input 300310, Output 001223
+Form: Input 300320, Output 001223
+Form: Input 303013, Output 001223
+Form: Input 303023, Output 001223
+Form: Input 303103, Output 001223
+Form: Input 303203, Output 001223
+
+Type Count: 2880
+Form: Input 030131, Output 001223
+Form: Input 030232, Output 001223
+Form: Input 030311, Output 001223
+Form: Input 030322, Output 001223
+Form: Input 033011, Output 001223
+Form: Input 033022, Output 001223
+Form: Input 033101, Output 001223
+Form: Input 033202, Output 001223
+Form: Input 300131, Output 001223
+Form: Input 300232, Output 001223
+Form: Input 300311, Output 001223
+Form: Input 300322, Output 001223
+Form: Input 303011, Output 001223
+Form: Input 303022, Output 001223
+Form: Input 303101, Output 001223
+Form: Input 303202, Output 001223
+
+Type Count: 2880
+Form: Input 030132, Output 001223
+Form: Input 030231, Output 001223
+Form: Input 030312, Output 001223
+Form: Input 030321, Output 001223
+Form: Input 033012, Output 001223
+Form: Input 033021, Output 001223
+Form: Input 033102, Output 001223
+Form: Input 033201, Output 001223
+Form: Input 300132, Output 001223
+Form: Input 300231, Output 001223
+Form: Input 300312, Output 001223
+Form: Input 300321, Output 001223
+Form: Input 303012, Output 001223
+Form: Input 303021, Output 001223
+Form: Input 303102, Output 001223
+Form: Input 303201, Output 001223
+
+Type Count: 2880
+Form: Input 030133, Output 001223
+Form: Input 030233, Output 001223
+Form: Input 030313, Output 001223
+Form: Input 030323, Output 001223
+Form: Input 033010, Output 001223
+Form: Input 033020, Output 001223
+Form: Input 033100, Output 001223
+Form: Input 033200, Output 001223
+Form: Input 300133, Output 001223
+Form: Input 300233, Output 001223
+Form: Input 300313, Output 001223
+Form: Input 300323, Output 001223
+Form: Input 303010, Output 001223
+Form: Input 303020, Output 001223
+Form: Input 303100, Output 001223
+Form: Input 303200, Output 001223
+
+Type Count: 720
+Form: Input 030330, Output 001223
+Form: Input 033003, Output 001223
+Form: Input 300330, Output 001223
+Form: Input 303003, Output 001223
+
+Type Count: 1440
+Form: Input 030331, Output 001223
+Form: Input 030332, Output 001223
+Form: Input 033001, Output 001223
+Form: Input 033002, Output 001223
+Form: Input 300331, Output 001223
+Form: Input 300332, Output 001223
+Form: Input 303001, Output 001223
+Form: Input 303002, Output 001223
+
+Type Count: 720
+Form: Input 030333, Output 001223
+Form: Input 033000, Output 001223
+Form: Input 300333, Output 001223
+Form: Input 303000, Output 001223
+
+Type Count: 1440
+Form: Input 031000, Output 001223
+Form: Input 031333, Output 001223
+Form: Input 032000, Output 001223
+Form: Input 032333, Output 001223
+Form: Input 301000, Output 001223
+Form: Input 301333, Output 001223
+Form: Input 302000, Output 001223
+Form: Input 302333, Output 001223
+
+Type Count: 1440
+Form: Input 031001, Output 001223
+Form: Input 031331, Output 001223
+Form: Input 032002, Output 001223
+Form: Input 032332, Output 001223
+Form: Input 301001, Output 001223
+Form: Input 301331, Output 001223
+Form: Input 302002, Output 001223
+Form: Input 302332, Output 001223
+
+Type Count: 1440
+Form: Input 031002, Output 001223
+Form: Input 031332, Output 001223
+Form: Input 032001, Output 001223
+Form: Input 032331, Output 001223
+Form: Input 301002, Output 001223
+Form: Input 301332, Output 001223
+Form: Input 302001, Output 001223
+Form: Input 302331, Output 001223
+
+Type Count: 1440
+Form: Input 031003, Output 001223
+Form: Input 031330, Output 001223
+Form: Input 032003, Output 001223
+Form: Input 032330, Output 001223
+Form: Input 301003, Output 001223
+Form: Input 301330, Output 001223
+Form: Input 302003, Output 001223
+Form: Input 302330, Output 001223
+
+Type Count: 2880
+Form: Input 031010, Output 001223
+Form: Input 031100, Output 001223
+Form: Input 031133, Output 001223
+Form: Input 031313, Output 001223
+Form: Input 032020, Output 001223
+Form: Input 032200, Output 001223
+Form: Input 032233, Output 001223
+Form: Input 032323, Output 001223
+Form: Input 301010, Output 001223
+Form: Input 301100, Output 001223
+Form: Input 301133, Output 001223
+Form: Input 301313, Output 001223
+Form: Input 302020, Output 001223
+Form: Input 302200, Output 001223
+Form: Input 302233, Output 001223
+Form: Input 302323, Output 001223
+
+Type Count: 2880
+Form: Input 031011, Output 001223
+Form: Input 031101, Output 001223
+Form: Input 031131, Output 001223
+Form: Input 031311, Output 001223
+Form: Input 032022, Output 001223
+Form: Input 032202, Output 001223
+Form: Input 032232, Output 001223
+Form: Input 032322, Output 001223
+Form: Input 301011, Output 001223
+Form: Input 301101, Output 001223
+Form: Input 301131, Output 001223
+Form: Input 301311, Output 001223
+Form: Input 302022, Output 001223
+Form: Input 302202, Output 001223
+Form: Input 302232, Output 001223
+Form: Input 302322, Output 001223
+
+Type Count: 2880
+Form: Input 031012, Output 001223
+Form: Input 031102, Output 001223
+Form: Input 031132, Output 001223
+Form: Input 031312, Output 001223
+Form: Input 032021, Output 001223
+Form: Input 032201, Output 001223
+Form: Input 032231, Output 001223
+Form: Input 032321, Output 001223
+Form: Input 301012, Output 001223
+Form: Input 301102, Output 001223
+Form: Input 301132, Output 001223
+Form: Input 301312, Output 001223
+Form: Input 302021, Output 001223
+Form: Input 302201, Output 001223
+Form: Input 302231, Output 001223
+Form: Input 302321, Output 001223
+
+Type Count: 2880
+Form: Input 031013, Output 001223
+Form: Input 031103, Output 001223
+Form: Input 031130, Output 001223
+Form: Input 031310, Output 001223
+Form: Input 032023, Output 001223
+Form: Input 032203, Output 001223
+Form: Input 032230, Output 001223
+Form: Input 032320, Output 001223
+Form: Input 301013, Output 001223
+Form: Input 301103, Output 001223
+Form: Input 301130, Output 001223
+Form: Input 301310, Output 001223
+Form: Input 302023, Output 001223
+Form: Input 302203, Output 001223
+Form: Input 302230, Output 001223
+Form: Input 302320, Output 001223
+
+Type Count: 2880
+Form: Input 031020, Output 001223
+Form: Input 031200, Output 001223
+Form: Input 031233, Output 001223
+Form: Input 031323, Output 001223
+Form: Input 032010, Output 001223
+Form: Input 032100, Output 001223
+Form: Input 032133, Output 001223
+Form: Input 032313, Output 001223
+Form: Input 301020, Output 001223
+Form: Input 301200, Output 001223
+Form: Input 301233, Output 001223
+Form: Input 301323, Output 001223
+Form: Input 302010, Output 001223
+Form: Input 302100, Output 001223
+Form: Input 302133, Output 001223
+Form: Input 302313, Output 001223
+
+Type Count: 2880
+Form: Input 031021, Output 001223
+Form: Input 031201, Output 001223
+Form: Input 031231, Output 001223
+Form: Input 031321, Output 001223
+Form: Input 032012, Output 001223
+Form: Input 032102, Output 001223
+Form: Input 032132, Output 001223
+Form: Input 032312, Output 001223
+Form: Input 301021, Output 001223
+Form: Input 301201, Output 001223
+Form: Input 301231, Output 001223
+Form: Input 301321, Output 001223
+Form: Input 302012, Output 001223
+Form: Input 302102, Output 001223
+Form: Input 302132, Output 001223
+Form: Input 302312, Output 001223
+
+Type Count: 2880
+Form: Input 031022, Output 001223
+Form: Input 031202, Output 001223
+Form: Input 031232, Output 001223
+Form: Input 031322, Output 001223
+Form: Input 032011, Output 001223
+Form: Input 032101, Output 001223
+Form: Input 032131, Output 001223
+Form: Input 032311, Output 001223
+Form: Input 301022, Output 001223
+Form: Input 301202, Output 001223
+Form: Input 301232, Output 001223
+Form: Input 301322, Output 001223
+Form: Input 302011, Output 001223
+Form: Input 302101, Output 001223
+Form: Input 302131, Output 001223
+Form: Input 302311, Output 001223
+
+Type Count: 2880
+Form: Input 031023, Output 001223
+Form: Input 031203, Output 001223
+Form: Input 031230, Output 001223
+Form: Input 031320, Output 001223
+Form: Input 032013, Output 001223
+Form: Input 032103, Output 001223
+Form: Input 032130, Output 001223
+Form: Input 032310, Output 001223
+Form: Input 301023, Output 001223
+Form: Input 301203, Output 001223
+Form: Input 301230, Output 001223
+Form: Input 301320, Output 001223
+Form: Input 302013, Output 001223
+Form: Input 302103, Output 001223
+Form: Input 302130, Output 001223
+Form: Input 302310, Output 001223
+
+Type Count: 2880
+Form: Input 031030, Output 001223
+Form: Input 031033, Output 001223
+Form: Input 031300, Output 001223
+Form: Input 031303, Output 001223
+Form: Input 032030, Output 001223
+Form: Input 032033, Output 001223
+Form: Input 032300, Output 001223
+Form: Input 032303, Output 001223
+Form: Input 301030, Output 001223
+Form: Input 301033, Output 001223
+Form: Input 301300, Output 001223
+Form: Input 301303, Output 001223
+Form: Input 302030, Output 001223
+Form: Input 302033, Output 001223
+Form: Input 302300, Output 001223
+Form: Input 302303, Output 001223
+
+Type Count: 1440
+Form: Input 031032, Output 001223
+Form: Input 031302, Output 001223
+Form: Input 032031, Output 001223
+Form: Input 032301, Output 001223
+Form: Input 301032, Output 001223
+Form: Input 301302, Output 001223
+Form: Input 302031, Output 001223
+Form: Input 302301, Output 001223
+
+Type Count: 1440
+Form: Input 031110, Output 001223
+Form: Input 031113, Output 001223
+Form: Input 032220, Output 001223
+Form: Input 032223, Output 001223
+Form: Input 301110, Output 001223
+Form: Input 301113, Output 001223
+Form: Input 302220, Output 001223
+Form: Input 302223, Output 001223
+
+Type Count: 720
+Form: Input 031112, Output 001223
+Form: Input 032221, Output 001223
+Form: Input 301112, Output 001223
+Form: Input 302221, Output 001223
+
+Type Count: 2880
+Form: Input 031120, Output 001223
+Form: Input 031123, Output 001223
+Form: Input 031210, Output 001223
+Form: Input 031213, Output 001223
+Form: Input 032120, Output 001223
+Form: Input 032123, Output 001223
+Form: Input 032210, Output 001223
+Form: Input 032213, Output 001223
+Form: Input 301120, Output 001223
+Form: Input 301123, Output 001223
+Form: Input 301210, Output 001223
+Form: Input 301213, Output 001223
+Form: Input 302120, Output 001223
+Form: Input 302123, Output 001223
+Form: Input 302210, Output 001223
+Form: Input 302213, Output 001223
+
+Type Count: 1440
+Form: Input 031121, Output 001223
+Form: Input 031211, Output 001223
+Form: Input 032122, Output 001223
+Form: Input 032212, Output 001223
+Form: Input 301121, Output 001223
+Form: Input 301211, Output 001223
+Form: Input 302122, Output 001223
+Form: Input 302212, Output 001223
+
+Type Count: 1440
+Form: Input 031122, Output 001223
+Form: Input 031212, Output 001223
+Form: Input 032121, Output 001223
+Form: Input 032211, Output 001223
+Form: Input 301122, Output 001223
+Form: Input 301212, Output 001223
+Form: Input 302121, Output 001223
+Form: Input 302211, Output 001223
+
+Type Count: 1440
+Form: Input 031220, Output 001223
+Form: Input 031223, Output 001223
+Form: Input 032110, Output 001223
+Form: Input 032113, Output 001223
+Form: Input 301220, Output 001223
+Form: Input 301223, Output 001223
+Form: Input 302110, Output 001223
+Form: Input 302113, Output 001223
+
+Type Count: 720
+Form: Input 031221, Output 001223
+Form: Input 032112, Output 001223
+Form: Input 301221, Output 001223
+Form: Input 302112, Output 001223
+
+Type Count: 720
+Form: Input 031222, Output 001223
+Form: Input 032111, Output 001223
+Form: Input 301222, Output 001223
+Form: Input 302111, Output 001223
+
+Type Count: 1440
+Form: Input 110000, Output 001223
+Form: Input 113333, Output 001223
+Form: Input 120000, Output 001223
+Form: Input 123333, Output 001223
+Form: Input 210000, Output 001223
+Form: Input 213333, Output 001223
+Form: Input 220000, Output 001223
+Form: Input 223333, Output 001223
+
+Type Count: 2880
+Form: Input 110001, Output 001223
+Form: Input 110002, Output 001223
+Form: Input 113331, Output 001223
+Form: Input 113332, Output 001223
+Form: Input 120001, Output 001223
+Form: Input 120002, Output 001223
+Form: Input 123331, Output 001223
+Form: Input 123332, Output 001223
+Form: Input 210001, Output 001223
+Form: Input 210002, Output 001223
+Form: Input 213331, Output 001223
+Form: Input 213332, Output 001223
+Form: Input 220001, Output 001223
+Form: Input 220002, Output 001223
+Form: Input 223331, Output 001223
+Form: Input 223332, Output 001223
+
+Type Count: 720
+Form: Input 110003, Output 001223
+Form: Input 113330, Output 001223
+Form: Input 220003, Output 001223
+Form: Input 223330, Output 001223
+
+Type Count: 5760
+Form: Input 110010, Output 001223
+Form: Input 110020, Output 001223
+Form: Input 110100, Output 001223
+Form: Input 110200, Output 001223
+Form: Input 113133, Output 001223
+Form: Input 113233, Output 001223
+Form: Input 113313, Output 001223
+Form: Input 113323, Output 001223
+Form: Input 120010, Output 001223
+Form: Input 120020, Output 001223
+Form: Input 120100, Output 001223
+Form: Input 120200, Output 001223
+Form: Input 123133, Output 001223
+Form: Input 123233, Output 001223
+Form: Input 123313, Output 001223
+Form: Input 123323, Output 001223
+Form: Input 210010, Output 001223
+Form: Input 210020, Output 001223
+Form: Input 210100, Output 001223
+Form: Input 210200, Output 001223
+Form: Input 213133, Output 001223
+Form: Input 213233, Output 001223
+Form: Input 213313, Output 001223
+Form: Input 213323, Output 001223
+Form: Input 220010, Output 001223
+Form: Input 220020, Output 001223
+Form: Input 220100, Output 001223
+Form: Input 220200, Output 001223
+Form: Input 223133, Output 001223
+Form: Input 223233, Output 001223
+Form: Input 223313, Output 001223
+Form: Input 223323, Output 001223
+
+Type Count: 11520
+Form: Input 110011, Output 001223
+Form: Input 110012, Output 001223
+Form: Input 110021, Output 001223
+Form: Input 110022, Output 001223
+Form: Input 110101, Output 001223
+Form: Input 110102, Output 001223
+Form: Input 110201, Output 001223
+Form: Input 110202, Output 001223
+Form: Input 113131, Output 001223
+Form: Input 113132, Output 001223
+Form: Input 113231, Output 001223
+Form: Input 113232, Output 001223
+Form: Input 113311, Output 001223
+Form: Input 113312, Output 001223
+Form: Input 113321, Output 001223
+Form: Input 113322, Output 001223
+Form: Input 120011, Output 001223
+Form: Input 120012, Output 001223
+Form: Input 120021, Output 001223
+Form: Input 120022, Output 001223
+Form: Input 120101, Output 001223
+Form: Input 120102, Output 001223
+Form: Input 120201, Output 001223
+Form: Input 120202, Output 001223
+Form: Input 123131, Output 001223
+Form: Input 123132, Output 001223
+Form: Input 123231, Output 001223
+Form: Input 123232, Output 001223
+Form: Input 123311, Output 001223
+Form: Input 123312, Output 001223
+Form: Input 123321, Output 001223
+Form: Input 123322, Output 001223
+Form: Input 210011, Output 001223
+Form: Input 210012, Output 001223
+Form: Input 210021, Output 001223
+Form: Input 210022, Output 001223
+Form: Input 210101, Output 001223
+Form: Input 210102, Output 001223
+Form: Input 210201, Output 001223
+Form: Input 210202, Output 001223
+Form: Input 213131, Output 001223
+Form: Input 213132, Output 001223
+Form: Input 213231, Output 001223
+Form: Input 213232, Output 001223
+Form: Input 213311, Output 001223
+Form: Input 213312, Output 001223
+Form: Input 213321, Output 001223
+Form: Input 213322, Output 001223
+Form: Input 220011, Output 001223
+Form: Input 220012, Output 001223
+Form: Input 220021, Output 001223
+Form: Input 220022, Output 001223
+Form: Input 220101, Output 001223
+Form: Input 220102, Output 001223
+Form: Input 220201, Output 001223
+Form: Input 220202, Output 001223
+Form: Input 223131, Output 001223
+Form: Input 223132, Output 001223
+Form: Input 223231, Output 001223
+Form: Input 223232, Output 001223
+Form: Input 223311, Output 001223
+Form: Input 223312, Output 001223
+Form: Input 223321, Output 001223
+Form: Input 223322, Output 001223
+
+Type Count: 1440
+Form: Input 110013, Output 001223
+Form: Input 110103, Output 001223
+Form: Input 113130, Output 001223
+Form: Input 113310, Output 001223
+Form: Input 220023, Output 001223
+Form: Input 220203, Output 001223
+Form: Input 223230, Output 001223
+Form: Input 223320, Output 001223
+
+Type Count: 1440
+Form: Input 110023, Output 001223
+Form: Input 110203, Output 001223
+Form: Input 113230, Output 001223
+Form: Input 113320, Output 001223
+Form: Input 220013, Output 001223
+Form: Input 220103, Output 001223
+Form: Input 223130, Output 001223
+Form: Input 223310, Output 001223
+
+Type Count: 1440
+Form: Input 110030, Output 001223
+Form: Input 110300, Output 001223
+Form: Input 113033, Output 001223
+Form: Input 113303, Output 001223
+Form: Input 220030, Output 001223
+Form: Input 220300, Output 001223
+Form: Input 223033, Output 001223
+Form: Input 223303, Output 001223
+
+Type Count: 1440
+Form: Input 110031, Output 001223
+Form: Input 110301, Output 001223
+Form: Input 113031, Output 001223
+Form: Input 113301, Output 001223
+Form: Input 220032, Output 001223
+Form: Input 220302, Output 001223
+Form: Input 223032, Output 001223
+Form: Input 223302, Output 001223
+
+Type Count: 1440
+Form: Input 110032, Output 001223
+Form: Input 110302, Output 001223
+Form: Input 113032, Output 001223
+Form: Input 113302, Output 001223
+Form: Input 220031, Output 001223
+Form: Input 220301, Output 001223
+Form: Input 223031, Output 001223
+Form: Input 223301, Output 001223
+
+Type Count: 1440
+Form: Input 110033, Output 001223
+Form: Input 110303, Output 001223
+Form: Input 113030, Output 001223
+Form: Input 113300, Output 001223
+Form: Input 220033, Output 001223
+Form: Input 220303, Output 001223
+Form: Input 223030, Output 001223
+Form: Input 223300, Output 001223
+
+Type Count: 5760
+Form: Input 110110, Output 001223
+Form: Input 110120, Output 001223
+Form: Input 110210, Output 001223
+Form: Input 110220, Output 001223
+Form: Input 113113, Output 001223
+Form: Input 113123, Output 001223
+Form: Input 113213, Output 001223
+Form: Input 113223, Output 001223
+Form: Input 120110, Output 001223
+Form: Input 120120, Output 001223
+Form: Input 120210, Output 001223
+Form: Input 120220, Output 001223
+Form: Input 123113, Output 001223
+Form: Input 123123, Output 001223
+Form: Input 123213, Output 001223
+Form: Input 123223, Output 001223
+Form: Input 210110, Output 001223
+Form: Input 210120, Output 001223
+Form: Input 210210, Output 001223
+Form: Input 210220, Output 001223
+Form: Input 213113, Output 001223
+Form: Input 213123, Output 001223
+Form: Input 213213, Output 001223
+Form: Input 213223, Output 001223
+Form: Input 220110, Output 001223
+Form: Input 220120, Output 001223
+Form: Input 220210, Output 001223
+Form: Input 220220, Output 001223
+Form: Input 223113, Output 001223
+Form: Input 223123, Output 001223
+Form: Input 223213, Output 001223
+Form: Input 223223, Output 001223
+
+Type Count: 11520
+Form: Input 110111, Output 001223
+Form: Input 110112, Output 001223
+Form: Input 110121, Output 001223
+Form: Input 110122, Output 001223
+Form: Input 110211, Output 001223
+Form: Input 110212, Output 001223
+Form: Input 110221, Output 001223
+Form: Input 110222, Output 001223
+Form: Input 113111, Output 001223
+Form: Input 113112, Output 001223
+Form: Input 113121, Output 001223
+Form: Input 113122, Output 001223
+Form: Input 113211, Output 001223
+Form: Input 113212, Output 001223
+Form: Input 113221, Output 001223
+Form: Input 113222, Output 001223
+Form: Input 120111, Output 001223
+Form: Input 120112, Output 001223
+Form: Input 120121, Output 001223
+Form: Input 120122, Output 001223
+Form: Input 120211, Output 001223
+Form: Input 120212, Output 001223
+Form: Input 120221, Output 001223
+Form: Input 120222, Output 001223
+Form: Input 123111, Output 001223
+Form: Input 123112, Output 001223
+Form: Input 123121, Output 001223
+Form: Input 123122, Output 001223
+Form: Input 123211, Output 001223
+Form: Input 123212, Output 001223
+Form: Input 123221, Output 001223
+Form: Input 123222, Output 001223
+Form: Input 210111, Output 001223
+Form: Input 210112, Output 001223
+Form: Input 210121, Output 001223
+Form: Input 210122, Output 001223
+Form: Input 210211, Output 001223
+Form: Input 210212, Output 001223
+Form: Input 210221, Output 001223
+Form: Input 210222, Output 001223
+Form: Input 213111, Output 001223
+Form: Input 213112, Output 001223
+Form: Input 213121, Output 001223
+Form: Input 213122, Output 001223
+Form: Input 213211, Output 001223
+Form: Input 213212, Output 001223
+Form: Input 213221, Output 001223
+Form: Input 213222, Output 001223
+Form: Input 220111, Output 001223
+Form: Input 220112, Output 001223
+Form: Input 220121, Output 001223
+Form: Input 220122, Output 001223
+Form: Input 220211, Output 001223
+Form: Input 220212, Output 001223
+Form: Input 220221, Output 001223
+Form: Input 220222, Output 001223
+Form: Input 223111, Output 001223
+Form: Input 223112, Output 001223
+Form: Input 223121, Output 001223
+Form: Input 223122, Output 001223
+Form: Input 223211, Output 001223
+Form: Input 223212, Output 001223
+Form: Input 223221, Output 001223
+Form: Input 223222, Output 001223
+
+Type Count: 720
+Form: Input 110113, Output 001223
+Form: Input 113110, Output 001223
+Form: Input 220223, Output 001223
+Form: Input 223220, Output 001223
+
+Type Count: 1440
+Form: Input 110123, Output 001223
+Form: Input 110213, Output 001223
+Form: Input 113120, Output 001223
+Form: Input 113210, Output 001223
+Form: Input 220123, Output 001223
+Form: Input 220213, Output 001223
+Form: Input 223120, Output 001223
+Form: Input 223210, Output 001223
+
+Type Count: 1440
+Form: Input 110130, Output 001223
+Form: Input 110310, Output 001223
+Form: Input 113013, Output 001223
+Form: Input 113103, Output 001223
+Form: Input 220230, Output 001223
+Form: Input 220320, Output 001223
+Form: Input 223023, Output 001223
+Form: Input 223203, Output 001223
+
+Type Count: 1440
+Form: Input 110131, Output 001223
+Form: Input 110311, Output 001223
+Form: Input 113011, Output 001223
+Form: Input 113101, Output 001223
+Form: Input 220232, Output 001223
+Form: Input 220322, Output 001223
+Form: Input 223022, Output 001223
+Form: Input 223202, Output 001223
+
+Type Count: 1440
+Form: Input 110132, Output 001223
+Form: Input 110312, Output 001223
+Form: Input 113012, Output 001223
+Form: Input 113102, Output 001223
+Form: Input 220231, Output 001223
+Form: Input 220321, Output 001223
+Form: Input 223021, Output 001223
+Form: Input 223201, Output 001223
+
+Type Count: 1440
+Form: Input 110133, Output 001223
+Form: Input 110313, Output 001223
+Form: Input 113010, Output 001223
+Form: Input 113100, Output 001223
+Form: Input 220233, Output 001223
+Form: Input 220323, Output 001223
+Form: Input 223020, Output 001223
+Form: Input 223200, Output 001223
+
+Type Count: 720
+Form: Input 110223, Output 001223
+Form: Input 113220, Output 001223
+Form: Input 220113, Output 001223
+Form: Input 223110, Output 001223
+
+Type Count: 1440
+Form: Input 110230, Output 001223
+Form: Input 110320, Output 001223
+Form: Input 113023, Output 001223
+Form: Input 113203, Output 001223
+Form: Input 220130, Output 001223
+Form: Input 220310, Output 001223
+Form: Input 223013, Output 001223
+Form: Input 223103, Output 001223
+
+Type Count: 1440
+Form: Input 110231, Output 001223
+Form: Input 110321, Output 001223
+Form: Input 113021, Output 001223
+Form: Input 113201, Output 001223
+Form: Input 220132, Output 001223
+Form: Input 220312, Output 001223
+Form: Input 223012, Output 001223
+Form: Input 223102, Output 001223
+
+Type Count: 1440
+Form: Input 110232, Output 001223
+Form: Input 110322, Output 001223
+Form: Input 113022, Output 001223
+Form: Input 113202, Output 001223
+Form: Input 220131, Output 001223
+Form: Input 220311, Output 001223
+Form: Input 223011, Output 001223
+Form: Input 223101, Output 001223
+
+Type Count: 1440
+Form: Input 110233, Output 001223
+Form: Input 110323, Output 001223
+Form: Input 113020, Output 001223
+Form: Input 113200, Output 001223
+Form: Input 220133, Output 001223
+Form: Input 220313, Output 001223
+Form: Input 223010, Output 001223
+Form: Input 223100, Output 001223
+
+Type Count: 720
+Form: Input 110330, Output 001223
+Form: Input 113003, Output 001223
+Form: Input 220330, Output 001223
+Form: Input 223003, Output 001223
+
+Type Count: 720
+Form: Input 110331, Output 001223
+Form: Input 113001, Output 001223
+Form: Input 220332, Output 001223
+Form: Input 223002, Output 001223
+
+Type Count: 720
+Form: Input 110332, Output 001223
+Form: Input 113002, Output 001223
+Form: Input 220331, Output 001223
+Form: Input 223001, Output 001223
+
+Type Count: 720
+Form: Input 110333, Output 001223
+Form: Input 113000, Output 001223
+Form: Input 220333, Output 001223
+Form: Input 223000, Output 001223
+
+Type Count: 2880
+Form: Input 111000, Output 001223
+Form: Input 111333, Output 001223
+Form: Input 112000, Output 001223
+Form: Input 112333, Output 001223
+Form: Input 121000, Output 001223
+Form: Input 121333, Output 001223
+Form: Input 122000, Output 001223
+Form: Input 122333, Output 001223
+Form: Input 211000, Output 001223
+Form: Input 211333, Output 001223
+Form: Input 212000, Output 001223
+Form: Input 212333, Output 001223
+Form: Input 221000, Output 001223
+Form: Input 221333, Output 001223
+Form: Input 222000, Output 001223
+Form: Input 222333, Output 001223
+
+Type Count: 29520
+Form: Input 111001, Output 001223
+Form: Input 111002, Output 001223
+Form: Input 111011, Output 001223
+Form: Input 111012, Output 001223
+Form: Input 111021, Output 001223
+Form: Input 111022, Output 001223
+Form: Input 111031, Output 001223
+Form: Input 111101, Output 001223
+Form: Input 111102, Output 001223
+Form: Input 111131, Output 001223
+Form: Input 111132, Output 001223
+Form: Input 111201, Output 001223
+Form: Input 111202, Output 001223
+Form: Input 111231, Output 001223
+Form: Input 111232, Output 001223
+Form: Input 111301, Output 001223
+Form: Input 111311, Output 001223
+Form: Input 111312, Output 001223
+Form: Input 111321, Output 001223
+Form: Input 111322, Output 001223
+Form: Input 111331, Output 001223
+Form: Input 111332, Output 001223
+Form: Input 112001, Output 001223
+Form: Input 112002, Output 001223
+Form: Input 112011, Output 001223
+Form: Input 112012, Output 001223
+Form: Input 112021, Output 001223
+Form: Input 112022, Output 001223
+Form: Input 112101, Output 001223
+Form: Input 112102, Output 001223
+Form: Input 112131, Output 001223
+Form: Input 112132, Output 001223
+Form: Input 112201, Output 001223
+Form: Input 112202, Output 001223
+Form: Input 112231, Output 001223
+Form: Input 112232, Output 001223
+Form: Input 112311, Output 001223
+Form: Input 112312, Output 001223
+Form: Input 112321, Output 001223
+Form: Input 112322, Output 001223
+Form: Input 112331, Output 001223
+Form: Input 112332, Output 001223
+Form: Input 121001, Output 001223
+Form: Input 121002, Output 001223
+Form: Input 121011, Output 001223
+Form: Input 121012, Output 001223
+Form: Input 121021, Output 001223
+Form: Input 121022, Output 001223
+Form: Input 121101, Output 001223
+Form: Input 121102, Output 001223
+Form: Input 121131, Output 001223
+Form: Input 121132, Output 001223
+Form: Input 121201, Output 001223
+Form: Input 121202, Output 001223
+Form: Input 121231, Output 001223
+Form: Input 121232, Output 001223
+Form: Input 121311, Output 001223
+Form: Input 121312, Output 001223
+Form: Input 121321, Output 001223
+Form: Input 121322, Output 001223
+Form: Input 121331, Output 001223
+Form: Input 121332, Output 001223
+Form: Input 122001, Output 001223
+Form: Input 122002, Output 001223
+Form: Input 122011, Output 001223
+Form: Input 122012, Output 001223
+Form: Input 122021, Output 001223
+Form: Input 122022, Output 001223
+Form: Input 122101, Output 001223
+Form: Input 122102, Output 001223
+Form: Input 122131, Output 001223
+Form: Input 122132, Output 001223
+Form: Input 122201, Output 001223
+Form: Input 122202, Output 001223
+Form: Input 122231, Output 001223
+Form: Input 122232, Output 001223
+Form: Input 122311, Output 001223
+Form: Input 122312, Output 001223
+Form: Input 122321, Output 001223
+Form: Input 122322, Output 001223
+Form: Input 122331, Output 001223
+Form: Input 122332, Output 001223
+Form: Input 211001, Output 001223
+Form: Input 211002, Output 001223
+Form: Input 211011, Output 001223
+Form: Input 211012, Output 001223
+Form: Input 211021, Output 001223
+Form: Input 211022, Output 001223
+Form: Input 211101, Output 001223
+Form: Input 211102, Output 001223
+Form: Input 211131, Output 001223
+Form: Input 211132, Output 001223
+Form: Input 211201, Output 001223
+Form: Input 211202, Output 001223
+Form: Input 211231, Output 001223
+Form: Input 211232, Output 001223
+Form: Input 211311, Output 001223
+Form: Input 211312, Output 001223
+Form: Input 211321, Output 001223
+Form: Input 211322, Output 001223
+Form: Input 211331, Output 001223
+Form: Input 211332, Output 001223
+Form: Input 212001, Output 001223
+Form: Input 212002, Output 001223
+Form: Input 212011, Output 001223
+Form: Input 212012, Output 001223
+Form: Input 212021, Output 001223
+Form: Input 212022, Output 001223
+Form: Input 212101, Output 001223
+Form: Input 212102, Output 001223
+Form: Input 212131, Output 001223
+Form: Input 212132, Output 001223
+Form: Input 212201, Output 001223
+Form: Input 212202, Output 001223
+Form: Input 212231, Output 001223
+Form: Input 212232, Output 001223
+Form: Input 212311, Output 001223
+Form: Input 212312, Output 001223
+Form: Input 212321, Output 001223
+Form: Input 212322, Output 001223
+Form: Input 212331, Output 001223
+Form: Input 212332, Output 001223
+Form: Input 221001, Output 001223
+Form: Input 221002, Output 001223
+Form: Input 221011, Output 001223
+Form: Input 221012, Output 001223
+Form: Input 221021, Output 001223
+Form: Input 221022, Output 001223
+Form: Input 221101, Output 001223
+Form: Input 221102, Output 001223
+Form: Input 221131, Output 001223
+Form: Input 221132, Output 001223
+Form: Input 221201, Output 001223
+Form: Input 221202, Output 001223
+Form: Input 221231, Output 001223
+Form: Input 221232, Output 001223
+Form: Input 221311, Output 001223
+Form: Input 221312, Output 001223
+Form: Input 221321, Output 001223
+Form: Input 221322, Output 001223
+Form: Input 221331, Output 001223
+Form: Input 221332, Output 001223
+Form: Input 222001, Output 001223
+Form: Input 222002, Output 001223
+Form: Input 222011, Output 001223
+Form: Input 222012, Output 001223
+Form: Input 222021, Output 001223
+Form: Input 222022, Output 001223
+Form: Input 222032, Output 001223
+Form: Input 222101, Output 001223
+Form: Input 222102, Output 001223
+Form: Input 222131, Output 001223
+Form: Input 222132, Output 001223
+Form: Input 222201, Output 001223
+Form: Input 222202, Output 001223
+Form: Input 222231, Output 001223
+Form: Input 222232, Output 001223
+Form: Input 222302, Output 001223
+Form: Input 222311, Output 001223
+Form: Input 222312, Output 001223
+Form: Input 222321, Output 001223
+Form: Input 222322, Output 001223
+Form: Input 222331, Output 001223
+Form: Input 222332, Output 001223
+
+Type Count: 720
+Form: Input 111003, Output 001223
+Form: Input 111330, Output 001223
+Form: Input 222003, Output 001223
+Form: Input 222330, Output 001223
+
+Type Count: 11520
+Form: Input 111010, Output 001223
+Form: Input 111020, Output 001223
+Form: Input 111100, Output 001223
+Form: Input 111133, Output 001223
+Form: Input 111200, Output 001223
+Form: Input 111233, Output 001223
+Form: Input 111313, Output 001223
+Form: Input 111323, Output 001223
+Form: Input 112010, Output 001223
+Form: Input 112020, Output 001223
+Form: Input 112100, Output 001223
+Form: Input 112133, Output 001223
+Form: Input 112200, Output 001223
+Form: Input 112233, Output 001223
+Form: Input 112313, Output 001223
+Form: Input 112323, Output 001223
+Form: Input 121010, Output 001223
+Form: Input 121020, Output 001223
+Form: Input 121100, Output 001223
+Form: Input 121133, Output 001223
+Form: Input 121200, Output 001223
+Form: Input 121233, Output 001223
+Form: Input 121313, Output 001223
+Form: Input 121323, Output 001223
+Form: Input 122010, Output 001223
+Form: Input 122020, Output 001223
+Form: Input 122100, Output 001223
+Form: Input 122133, Output 001223
+Form: Input 122200, Output 001223
+Form: Input 122233, Output 001223
+Form: Input 122313, Output 001223
+Form: Input 122323, Output 001223
+Form: Input 211010, Output 001223
+Form: Input 211020, Output 001223
+Form: Input 211100, Output 001223
+Form: Input 211133, Output 001223
+Form: Input 211200, Output 001223
+Form: Input 211233, Output 001223
+Form: Input 211313, Output 001223
+Form: Input 211323, Output 001223
+Form: Input 212010, Output 001223
+Form: Input 212020, Output 001223
+Form: Input 212100, Output 001223
+Form: Input 212133, Output 001223
+Form: Input 212200, Output 001223
+Form: Input 212233, Output 001223
+Form: Input 212313, Output 001223
+Form: Input 212323, Output 001223
+Form: Input 221010, Output 001223
+Form: Input 221020, Output 001223
+Form: Input 221100, Output 001223
+Form: Input 221133, Output 001223
+Form: Input 221200, Output 001223
+Form: Input 221233, Output 001223
+Form: Input 221313, Output 001223
+Form: Input 221323, Output 001223
+Form: Input 222010, Output 001223
+Form: Input 222020, Output 001223
+Form: Input 222100, Output 001223
+Form: Input 222133, Output 001223
+Form: Input 222200, Output 001223
+Form: Input 222233, Output 001223
+Form: Input 222313, Output 001223
+Form: Input 222323, Output 001223
+
+Type Count: 1440
+Form: Input 111013, Output 001223
+Form: Input 111103, Output 001223
+Form: Input 111130, Output 001223
+Form: Input 111310, Output 001223
+Form: Input 222023, Output 001223
+Form: Input 222203, Output 001223
+Form: Input 222230, Output 001223
+Form: Input 222320, Output 001223
+
+Type Count: 1440
+Form: Input 111023, Output 001223
+Form: Input 111203, Output 001223
+Form: Input 111230, Output 001223
+Form: Input 111320, Output 001223
+Form: Input 222013, Output 001223
+Form: Input 222103, Output 001223
+Form: Input 222130, Output 001223
+Form: Input 222310, Output 001223
+
+Type Count: 1440
+Form: Input 111030, Output 001223
+Form: Input 111033, Output 001223
+Form: Input 111300, Output 001223
+Form: Input 111303, Output 001223
+Form: Input 222030, Output 001223
+Form: Input 222033, Output 001223
+Form: Input 222300, Output 001223
+Form: Input 222303, Output 001223
+
+Type Count: 720
+Form: Input 111032, Output 001223
+Form: Input 111302, Output 001223
+Form: Input 222031, Output 001223
+Form: Input 222301, Output 001223
+
+Type Count: 11520
+Form: Input 111110, Output 001223
+Form: Input 111113, Output 001223
+Form: Input 111120, Output 001223
+Form: Input 111123, Output 001223
+Form: Input 111210, Output 001223
+Form: Input 111213, Output 001223
+Form: Input 111220, Output 001223
+Form: Input 111223, Output 001223
+Form: Input 112110, Output 001223
+Form: Input 112113, Output 001223
+Form: Input 112120, Output 001223
+Form: Input 112123, Output 001223
+Form: Input 112210, Output 001223
+Form: Input 112213, Output 001223
+Form: Input 112220, Output 001223
+Form: Input 112223, Output 001223
+Form: Input 121110, Output 001223
+Form: Input 121113, Output 001223
+Form: Input 121120, Output 001223
+Form: Input 121123, Output 001223
+Form: Input 121210, Output 001223
+Form: Input 121213, Output 001223
+Form: Input 121220, Output 001223
+Form: Input 121223, Output 001223
+Form: Input 122110, Output 001223
+Form: Input 122113, Output 001223
+Form: Input 122120, Output 001223
+Form: Input 122123, Output 001223
+Form: Input 122210, Output 001223
+Form: Input 122213, Output 001223
+Form: Input 122220, Output 001223
+Form: Input 122223, Output 001223
+Form: Input 211110, Output 001223
+Form: Input 211113, Output 001223
+Form: Input 211120, Output 001223
+Form: Input 211123, Output 001223
+Form: Input 211210, Output 001223
+Form: Input 211213, Output 001223
+Form: Input 211220, Output 001223
+Form: Input 211223, Output 001223
+Form: Input 212110, Output 001223
+Form: Input 212113, Output 001223
+Form: Input 212120, Output 001223
+Form: Input 212123, Output 001223
+Form: Input 212210, Output 001223
+Form: Input 212213, Output 001223
+Form: Input 212220, Output 001223
+Form: Input 212223, Output 001223
+Form: Input 221110, Output 001223
+Form: Input 221113, Output 001223
+Form: Input 221120, Output 001223
+Form: Input 221123, Output 001223
+Form: Input 221210, Output 001223
+Form: Input 221213, Output 001223
+Form: Input 221220, Output 001223
+Form: Input 221223, Output 001223
+Form: Input 222110, Output 001223
+Form: Input 222113, Output 001223
+Form: Input 222120, Output 001223
+Form: Input 222123, Output 001223
+Form: Input 222210, Output 001223
+Form: Input 222213, Output 001223
+Form: Input 222220, Output 001223
+Form: Input 222223, Output 001223
+
+Type Count: 11520
+Form: Input 111111, Output 001223
+Form: Input 111112, Output 001223
+Form: Input 111121, Output 001223
+Form: Input 111122, Output 001223
+Form: Input 111211, Output 001223
+Form: Input 111212, Output 001223
+Form: Input 111221, Output 001223
+Form: Input 111222, Output 001223
+Form: Input 112111, Output 001223
+Form: Input 112112, Output 001223
+Form: Input 112121, Output 001223
+Form: Input 112122, Output 001223
+Form: Input 112211, Output 001223
+Form: Input 112212, Output 001223
+Form: Input 112221, Output 001223
+Form: Input 112222, Output 001223
+Form: Input 121111, Output 001223
+Form: Input 121112, Output 001223
+Form: Input 121121, Output 001223
+Form: Input 121122, Output 001223
+Form: Input 121211, Output 001223
+Form: Input 121212, Output 001223
+Form: Input 121221, Output 001223
+Form: Input 121222, Output 001223
+Form: Input 122111, Output 001223
+Form: Input 122112, Output 001223
+Form: Input 122121, Output 001223
+Form: Input 122122, Output 001223
+Form: Input 122211, Output 001223
+Form: Input 122212, Output 001223
+Form: Input 122221, Output 001223
+Form: Input 122222, Output 001223
+Form: Input 211111, Output 001223
+Form: Input 211112, Output 001223
+Form: Input 211121, Output 001223
+Form: Input 211122, Output 001223
+Form: Input 211211, Output 001223
+Form: Input 211212, Output 001223
+Form: Input 211221, Output 001223
+Form: Input 211222, Output 001223
+Form: Input 212111, Output 001223
+Form: Input 212112, Output 001223
+Form: Input 212121, Output 001223
+Form: Input 212122, Output 001223
+Form: Input 212211, Output 001223
+Form: Input 212212, Output 001223
+Form: Input 212221, Output 001223
+Form: Input 212222, Output 001223
+Form: Input 221111, Output 001223
+Form: Input 221112, Output 001223
+Form: Input 221121, Output 001223
+Form: Input 221122, Output 001223
+Form: Input 221211, Output 001223
+Form: Input 221212, Output 001223
+Form: Input 221221, Output 001223
+Form: Input 221222, Output 001223
+Form: Input 222111, Output 001223
+Form: Input 222112, Output 001223
+Form: Input 222121, Output 001223
+Form: Input 222122, Output 001223
+Form: Input 222211, Output 001223
+Form: Input 222212, Output 001223
+Form: Input 222221, Output 001223
+Form: Input 222222, Output 001223
+
+Type Count: 720
+Form: Input 112003, Output 001223
+Form: Input 112330, Output 001223
+Form: Input 221003, Output 001223
+Form: Input 221330, Output 001223
+
+Type Count: 1440
+Form: Input 112013, Output 001223
+Form: Input 112103, Output 001223
+Form: Input 112130, Output 001223
+Form: Input 112310, Output 001223
+Form: Input 221023, Output 001223
+Form: Input 221203, Output 001223
+Form: Input 221230, Output 001223
+Form: Input 221320, Output 001223
+
+Type Count: 1440
+Form: Input 112023, Output 001223
+Form: Input 112203, Output 001223
+Form: Input 112230, Output 001223
+Form: Input 112320, Output 001223
+Form: Input 221013, Output 001223
+Form: Input 221103, Output 001223
+Form: Input 221130, Output 001223
+Form: Input 221310, Output 001223
+
+Type Count: 1440
+Form: Input 112030, Output 001223
+Form: Input 112033, Output 001223
+Form: Input 112300, Output 001223
+Form: Input 112303, Output 001223
+Form: Input 221030, Output 001223
+Form: Input 221033, Output 001223
+Form: Input 221300, Output 001223
+Form: Input 221303, Output 001223
+
+Type Count: 720
+Form: Input 112031, Output 001223
+Form: Input 112301, Output 001223
+Form: Input 221032, Output 001223
+Form: Input 221302, Output 001223
+
+Type Count: 720
+Form: Input 112032, Output 001223
+Form: Input 112302, Output 001223
+Form: Input 221031, Output 001223
+Form: Input 221301, Output 001223
+
+Type Count: 720
+Form: Input 120003, Output 001223
+Form: Input 123330, Output 001223
+Form: Input 210003, Output 001223
+Form: Input 213330, Output 001223
+
+Type Count: 2880
+Form: Input 120013, Output 001223
+Form: Input 120023, Output 001223
+Form: Input 120103, Output 001223
+Form: Input 120203, Output 001223
+Form: Input 123130, Output 001223
+Form: Input 123230, Output 001223
+Form: Input 123310, Output 001223
+Form: Input 123320, Output 001223
+Form: Input 210013, Output 001223
+Form: Input 210023, Output 001223
+Form: Input 210103, Output 001223
+Form: Input 210203, Output 001223
+Form: Input 213130, Output 001223
+Form: Input 213230, Output 001223
+Form: Input 213310, Output 001223
+Form: Input 213320, Output 001223
+
+Type Count: 1440
+Form: Input 120030, Output 001223
+Form: Input 120300, Output 001223
+Form: Input 123033, Output 001223
+Form: Input 123303, Output 001223
+Form: Input 210030, Output 001223
+Form: Input 210300, Output 001223
+Form: Input 213033, Output 001223
+Form: Input 213303, Output 001223
+
+Type Count: 2880
+Form: Input 120031, Output 001223
+Form: Input 120032, Output 001223
+Form: Input 120301, Output 001223
+Form: Input 120302, Output 001223
+Form: Input 123031, Output 001223
+Form: Input 123032, Output 001223
+Form: Input 123301, Output 001223
+Form: Input 123302, Output 001223
+Form: Input 210031, Output 001223
+Form: Input 210032, Output 001223
+Form: Input 210301, Output 001223
+Form: Input 210302, Output 001223
+Form: Input 213031, Output 001223
+Form: Input 213032, Output 001223
+Form: Input 213301, Output 001223
+Form: Input 213302, Output 001223
+
+Type Count: 1440
+Form: Input 120033, Output 001223
+Form: Input 120303, Output 001223
+Form: Input 123030, Output 001223
+Form: Input 123300, Output 001223
+Form: Input 210033, Output 001223
+Form: Input 210303, Output 001223
+Form: Input 213030, Output 001223
+Form: Input 213300, Output 001223
+
+Type Count: 1440
+Form: Input 120113, Output 001223
+Form: Input 120223, Output 001223
+Form: Input 123110, Output 001223
+Form: Input 123220, Output 001223
+Form: Input 210113, Output 001223
+Form: Input 210223, Output 001223
+Form: Input 213110, Output 001223
+Form: Input 213220, Output 001223
+
+Type Count: 1440
+Form: Input 120123, Output 001223
+Form: Input 120213, Output 001223
+Form: Input 123120, Output 001223
+Form: Input 123210, Output 001223
+Form: Input 210123, Output 001223
+Form: Input 210213, Output 001223
+Form: Input 213120, Output 001223
+Form: Input 213210, Output 001223
+
+Type Count: 2880
+Form: Input 120130, Output 001223
+Form: Input 120230, Output 001223
+Form: Input 120310, Output 001223
+Form: Input 120320, Output 001223
+Form: Input 123013, Output 001223
+Form: Input 123023, Output 001223
+Form: Input 123103, Output 001223
+Form: Input 123203, Output 001223
+Form: Input 210130, Output 001223
+Form: Input 210230, Output 001223
+Form: Input 210310, Output 001223
+Form: Input 210320, Output 001223
+Form: Input 213013, Output 001223
+Form: Input 213023, Output 001223
+Form: Input 213103, Output 001223
+Form: Input 213203, Output 001223
+
+Type Count: 2880
+Form: Input 120131, Output 001223
+Form: Input 120232, Output 001223
+Form: Input 120311, Output 001223
+Form: Input 120322, Output 001223
+Form: Input 123011, Output 001223
+Form: Input 123022, Output 001223
+Form: Input 123101, Output 001223
+Form: Input 123202, Output 001223
+Form: Input 210131, Output 001223
+Form: Input 210232, Output 001223
+Form: Input 210311, Output 001223
+Form: Input 210322, Output 001223
+Form: Input 213011, Output 001223
+Form: Input 213022, Output 001223
+Form: Input 213101, Output 001223
+Form: Input 213202, Output 001223
+
+Type Count: 2880
+Form: Input 120132, Output 001223
+Form: Input 120231, Output 001223
+Form: Input 120312, Output 001223
+Form: Input 120321, Output 001223
+Form: Input 123012, Output 001223
+Form: Input 123021, Output 001223
+Form: Input 123102, Output 001223
+Form: Input 123201, Output 001223
+Form: Input 210132, Output 001223
+Form: Input 210231, Output 001223
+Form: Input 210312, Output 001223
+Form: Input 210321, Output 001223
+Form: Input 213012, Output 001223
+Form: Input 213021, Output 001223
+Form: Input 213102, Output 001223
+Form: Input 213201, Output 001223
+
+Type Count: 2880
+Form: Input 120133, Output 001223
+Form: Input 120233, Output 001223
+Form: Input 120313, Output 001223
+Form: Input 120323, Output 001223
+Form: Input 123010, Output 001223
+Form: Input 123020, Output 001223
+Form: Input 123100, Output 001223
+Form: Input 123200, Output 001223
+Form: Input 210133, Output 001223
+Form: Input 210233, Output 001223
+Form: Input 210313, Output 001223
+Form: Input 210323, Output 001223
+Form: Input 213010, Output 001223
+Form: Input 213020, Output 001223
+Form: Input 213100, Output 001223
+Form: Input 213200, Output 001223
+
+Type Count: 720
+Form: Input 120330, Output 001223
+Form: Input 123003, Output 001223
+Form: Input 210330, Output 001223
+Form: Input 213003, Output 001223
+
+Type Count: 1440
+Form: Input 120331, Output 001223
+Form: Input 120332, Output 001223
+Form: Input 123001, Output 001223
+Form: Input 123002, Output 001223
+Form: Input 210331, Output 001223
+Form: Input 210332, Output 001223
+Form: Input 213001, Output 001223
+Form: Input 213002, Output 001223
+
+Type Count: 720
+Form: Input 120333, Output 001223
+Form: Input 123000, Output 001223
+Form: Input 210333, Output 001223
+Form: Input 213000, Output 001223
+
+Type Count: 1440
+Form: Input 121003, Output 001223
+Form: Input 121330, Output 001223
+Form: Input 122003, Output 001223
+Form: Input 122330, Output 001223
+Form: Input 211003, Output 001223
+Form: Input 211330, Output 001223
+Form: Input 212003, Output 001223
+Form: Input 212330, Output 001223
+
+Type Count: 2880
+Form: Input 121013, Output 001223
+Form: Input 121103, Output 001223
+Form: Input 121130, Output 001223
+Form: Input 121310, Output 001223
+Form: Input 122023, Output 001223
+Form: Input 122203, Output 001223
+Form: Input 122230, Output 001223
+Form: Input 122320, Output 001223
+Form: Input 211013, Output 001223
+Form: Input 211103, Output 001223
+Form: Input 211130, Output 001223
+Form: Input 211310, Output 001223
+Form: Input 212023, Output 001223
+Form: Input 212203, Output 001223
+Form: Input 212230, Output 001223
+Form: Input 212320, Output 001223
+
+Type Count: 2880
+Form: Input 121023, Output 001223
+Form: Input 121203, Output 001223
+Form: Input 121230, Output 001223
+Form: Input 121320, Output 001223
+Form: Input 122013, Output 001223
+Form: Input 122103, Output 001223
+Form: Input 122130, Output 001223
+Form: Input 122310, Output 001223
+Form: Input 211023, Output 001223
+Form: Input 211203, Output 001223
+Form: Input 211230, Output 001223
+Form: Input 211320, Output 001223
+Form: Input 212013, Output 001223
+Form: Input 212103, Output 001223
+Form: Input 212130, Output 001223
+Form: Input 212310, Output 001223
+
+Type Count: 2880
+Form: Input 121030, Output 001223
+Form: Input 121033, Output 001223
+Form: Input 121300, Output 001223
+Form: Input 121303, Output 001223
+Form: Input 122030, Output 001223
+Form: Input 122033, Output 001223
+Form: Input 122300, Output 001223
+Form: Input 122303, Output 001223
+Form: Input 211030, Output 001223
+Form: Input 211033, Output 001223
+Form: Input 211300, Output 001223
+Form: Input 211303, Output 001223
+Form: Input 212030, Output 001223
+Form: Input 212033, Output 001223
+Form: Input 212300, Output 001223
+Form: Input 212303, Output 001223
+
+Type Count: 1440
+Form: Input 121031, Output 001223
+Form: Input 121301, Output 001223
+Form: Input 122032, Output 001223
+Form: Input 122302, Output 001223
+Form: Input 211031, Output 001223
+Form: Input 211301, Output 001223
+Form: Input 212032, Output 001223
+Form: Input 212302, Output 001223
+
+Type Count: 1440
+Form: Input 121032, Output 001223
+Form: Input 121302, Output 001223
+Form: Input 122031, Output 001223
+Form: Input 122301, Output 001223
+Form: Input 211032, Output 001223
+Form: Input 211302, Output 001223
+Form: Input 212031, Output 001223
+Form: Input 212301, Output 001223
